@@ -53,6 +53,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#id22">1.3.4. 4. 运算符</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id23">1.3.5. 5. 流程控制语句</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id24">1.3.6. 6. Go数据类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id33">1.3.7. 7.函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id44">1.3.8. 8.Go面向对象编程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id48">1.3.9. 9.接口</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="1.4%E4%BD%BF%E7%94%A8go-module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85.html">1.4. 使用go module导入本地包</a></li>
@@ -100,49 +103,69 @@
   <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#go" id="id33">Go基础语法与使用</a></p>
+<li><p><a class="reference internal" href="#go" id="id50">Go基础语法与使用</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id1" id="id34">1. 基础语法</a></p>
+<li><p><a class="reference internal" href="#id1" id="id51">1. 基础语法</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id2" id="id35">1.1. Go语言标记</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id36">1.2 行分隔符</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id37">1.3 注释</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id38">1.4 标识符</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id39">1.5 字符串拼接</a></p></li>
-<li><p><a class="reference internal" href="#id7" id="id40">1.6 Go语言的关键字</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id41">1.7 Go语言中的空格</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id52">1.1. Go语言标记</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id53">1.2 行分隔符</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id54">1.3 注释</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id55">1.4 标识符</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id56">1.5 字符串拼接</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id57">1.6 Go语言的关键字</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id58">1.7 Go语言中的空格</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id9" id="id42">2. 变量</a></p>
+<li><p><a class="reference internal" href="#id9" id="id59">2. 变量</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id10" id="id43">2.1 声明</a></p></li>
-<li><p><a class="reference internal" href="#id14" id="id44">2.2 赋值</a></p></li>
-<li><p><a class="reference internal" href="#id17" id="id45">2.2.3 变量作用域</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id60">2.1 声明</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id61">2.2 赋值</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id62">2.2.3 变量作用域</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id20" id="id46">3. 常量</a></p>
+<li><p><a class="reference internal" href="#id20" id="id63">3. 常量</a></p>
 <ul>
-<li><p><a class="reference internal" href="#iota" id="id47">3.1 iota 常量生成器</a></p></li>
-<li><p><a class="reference internal" href="#id21" id="id48">3.2 延迟明确常量的具体类型</a></p></li>
+<li><p><a class="reference internal" href="#iota" id="id64">3.1 iota 常量生成器</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id65">3.2 延迟明确常量的具体类型</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id22" id="id49">4. 运算符</a></p></li>
-<li><p><a class="reference internal" href="#id23" id="id50">5. 流程控制语句</a></p>
+<li><p><a class="reference internal" href="#id22" id="id66">4. 运算符</a></p></li>
+<li><p><a class="reference internal" href="#id23" id="id67">5. 流程控制语句</a></p>
 <ul>
-<li><p><a class="reference internal" href="#if-else" id="id51">5.1 1. <code class="docutils literal notranslate"><span class="pre">if-else</span></code>（分支结构）</a></p></li>
-<li><p><a class="reference internal" href="#for" id="id52">5.1.2 <code class="docutils literal notranslate"><span class="pre">for</span></code>循环</a></p></li>
-<li><p><a class="reference internal" href="#for-range" id="id53">5.1.3 <code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环</a></p></li>
-<li><p><a class="reference internal" href="#switch-case" id="id54">5.1.4 <code class="docutils literal notranslate"><span class="pre">switch-case</span></code>语句</a></p></li>
-<li><p><a class="reference internal" href="#goto" id="id55">5.1.5 <code class="docutils literal notranslate"><span class="pre">goto</span></code>语句</a></p></li>
+<li><p><a class="reference internal" href="#if-else" id="id68">5.1 1. <code class="docutils literal notranslate"><span class="pre">if-else</span></code>（分支结构）</a></p></li>
+<li><p><a class="reference internal" href="#for" id="id69">5.1.2 <code class="docutils literal notranslate"><span class="pre">for</span></code>循环</a></p></li>
+<li><p><a class="reference internal" href="#for-range" id="id70">5.1.3 <code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环</a></p></li>
+<li><p><a class="reference internal" href="#switch-case" id="id71">5.1.4 <code class="docutils literal notranslate"><span class="pre">switch-case</span></code>语句</a></p></li>
+<li><p><a class="reference internal" href="#goto" id="id72">5.1.5 <code class="docutils literal notranslate"><span class="pre">goto</span></code>语句</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id24" id="id56">6. Go数据类型</a></p>
+<li><p><a class="reference internal" href="#id24" id="id73">6. Go数据类型</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id25" id="id57">6.1 布尔型</a></p></li>
-<li><p><a class="reference internal" href="#id26" id="id58">6.2 数字类型</a></p></li>
-<li><p><a class="reference internal" href="#id27" id="id59">6.3 字符串类型</a></p></li>
-<li><p><a class="reference internal" href="#id28" id="id60">6.4 指针类型</a></p></li>
-<li><p><a class="reference internal" href="#id29" id="id61">6.5 复合类型</a></p></li>
+<li><p><a class="reference internal" href="#id25" id="id74">6.1 布尔型</a></p></li>
+<li><p><a class="reference internal" href="#id26" id="id75">6.2 数字类型</a></p></li>
+<li><p><a class="reference internal" href="#id27" id="id76">6.3 字符串类型</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id77">6.4 指针类型</a></p></li>
+<li><p><a class="reference internal" href="#id29" id="id78">6.5 复合类型</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id33" id="id79">7.函数</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id34" id="id80">7.1 声明函数</a></p></li>
+<li><p><a class="reference internal" href="#id35" id="id81">7.2 函数参数</a></p></li>
+<li><p><a class="reference internal" href="#id39" id="id82">7.3 匿名函数</a></p></li>
+<li><p><a class="reference internal" href="#defer" id="id83">7.4 defer延迟语句</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id44" id="id84">8.Go面向对象编程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id45" id="id85">8.1 封装</a></p></li>
+<li><p><a class="reference internal" href="#id46" id="id86">8.2 继承</a></p></li>
+<li><p><a class="reference internal" href="#id47" id="id87">8.3 多态</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id48" id="id88">9.接口</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id49" id="id89">9.1 接口定义</a></p></li>
 </ul>
 </li>
 </ul>
@@ -150,19 +173,19 @@
 </ul>
 </div>
 <section id="go">
-<h1><a class="toc-backref" href="#id33"><span class="section-number">1.3. </span>Go基础语法与使用</a><a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id50"><span class="section-number">1.3. </span>Go基础语法与使用</a><a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
 <section id="id1">
-<h2><a class="toc-backref" href="#id34"><span class="section-number">1.3.1. </span>1. 基础语法</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id51"><span class="section-number">1.3.1. </span>1. 基础语法</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <section id="id2">
-<h3><a class="toc-backref" href="#id35">1.1. Go语言标记</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id52">1.1. Go语言标记</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Go程序由关键字、字符串、常量、标识符、符号等多种标记组成。</p>
 </section>
 <section id="id3">
-<h3><a class="toc-backref" href="#id36">1.2 行分隔符</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id53">1.2 行分隔符</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>如果多行语句在一行，必须用；分隔符隔开，Go编辑器会自动在行尾加速；分隔符，所以不需要手动再语句后面再加；</p>
 </section>
 <section id="id4">
-<h3><a class="toc-backref" href="#id37">1.3 注释</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id54">1.3 注释</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>单行注释</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
 </pre></div>
@@ -176,7 +199,7 @@
 </div>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id38">1.4 标识符</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id55">1.4 标识符</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>标识符实际上就是一个或者多个字符、数字、下划线(_)组成的字符串序列。</p>
 <p>标识符的命名需要遵守以下规则：</p>
 <ul class="simple">
@@ -205,7 +228,7 @@ c-d         (错误命名：运算符是不允许的)
 </div>
 </section>
 <section id="id6">
-<h3><a class="toc-backref" href="#id39">1.5 字符串拼接</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id56">1.5 字符串拼接</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>字符串可以通过“+”号实现字符串连接。</p>
 <p>如下所示：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span>
@@ -217,7 +240,7 @@ c-d         (错误命名：运算符是不允许的)
 </div>
 </section>
 <section id="id7">
-<h3><a class="toc-backref" href="#id40">1.6 Go语言的关键字</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id57">1.6 Go语言的关键字</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>Go语言中的关键字一共有 25 个：</p>
 <table class="docutils align-default">
 <colgroup>
@@ -264,14 +287,14 @@ c-d         (错误命名：运算符是不允许的)
 </table>
 </section>
 <section id="id8">
-<h3><a class="toc-backref" href="#id41">1.7 Go语言中的空格</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id58">1.7 Go语言中的空格</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>空格让代码更容易阅读，Goland编辑器可以使用“Ctrl+Alt+L”命令进行快速格式化。</p>
 </section>
 </section>
 <section id="id9">
-<h2><a class="toc-backref" href="#id42"><span class="section-number">1.3.2. </span>2. 变量</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id59"><span class="section-number">1.3.2. </span>2. 变量</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <section id="id10">
-<h3><a class="toc-backref" href="#id43">2.1 声明</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id60">2.1 声明</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>声明变量的一般形式是使用 var 关键字：</p>
 <p>var name type</p>
 <p>其中，var 是声明变量的关键字，name 是变量名，type 是变量的类型。</p>
@@ -324,7 +347,7 @@ c-d         (错误命名：运算符是不允许的)
 </section>
 </section>
 <section id="id14">
-<h3><a class="toc-backref" href="#id44">2.2 赋值</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id61">2.2 赋值</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <section id="id15">
 <h4>2.2.1 单个变量赋值<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
@@ -365,7 +388,7 @@ c-d         (错误命名：运算符是不允许的)
 </section>
 </section>
 <section id="id17">
-<h3><a class="toc-backref" href="#id45">2.2.3 变量作用域</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id62">2.2.3 变量作用域</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <section id="id18">
 <h4>1. 局部变量<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <p>局部变量作用域只在函数体内。</p>
@@ -409,7 +432,7 @@ c-d         (错误命名：运算符是不允许的)
 </section>
 </section>
 <section id="id20">
-<h2><a class="toc-backref" href="#id46"><span class="section-number">1.3.3. </span>3. 常量</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id63"><span class="section-number">1.3.3. </span>3. 常量</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>常量的定义格式和变量的声明语法类似：<code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">name</span> <span class="pre">[type]</span> <span class="pre">=</span> <span class="pre">value</span></code>，例如：</p>
 <p>const pi = 3.14159 // 相当于 math.Pi 的近似值</p>
 <p>在Go语言中，你可以省略类型说明符
@@ -436,7 +459,7 @@ c-d         (错误命名：运算符是不允许的)
 </pre></div>
 </div>
 <section id="iota">
-<h3><a class="toc-backref" href="#id47">3.1 iota 常量生成器</a><a class="headerlink" href="#iota" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id64">3.1 iota 常量生成器</a><a class="headerlink" href="#iota" title="Permalink to this headline">¶</a></h3>
 <p>常量声明可以使用 iota
 常量生成器初始化，它用于生成一组以相似规则初始化的常量，但是不用每行都写一遍初始化表达式。在一个
 const 声明语句中，在第一个声明的常量所在的行，iota 将会被置为
@@ -456,7 +479,7 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 <p>周日将对应 0，周一为 1，以此类推。</p>
 </section>
 <section id="id21">
-<h3><a class="toc-backref" href="#id48">3.2 延迟明确常量的具体类型</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id65">3.2 延迟明确常量的具体类型</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>Go语言的常量有一个不同寻常指出：虽然一个常量可以有任意一个确定的基础类型（例如<code class="docutils literal notranslate"><span class="pre">int</span></code>或<code class="docutils literal notranslate"><span class="pre">float64</span></code>，或者是类似<code class="docutils literal notranslate"><span class="pre">time.Duration</span></code>这样的基础类型），但是许多常量并没有一个明确的基础类型。编译器为这些没有明确的基础类型的数字常量，提供比基础类型更高精度的算数运算。</p>
 <p>Go语言有6种未明确类型的常量类型：<strong>无类型的布尔型、无类型的整数、无类型的字符、无类型的浮点数、无类型的复数、无类型的字符串。</strong></p>
 <p>例如，无类型的浮点数常量math.Pi，可以直接用于任何需要浮点数或复数的地方：</p>
@@ -476,7 +499,7 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 </section>
 </section>
 <section id="id22">
-<h2><a class="toc-backref" href="#id49"><span class="section-number">1.3.4. </span>4. 运算符</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id66"><span class="section-number">1.3.4. </span>4. 运算符</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
 <p>运算符的优先级</p>
 <p>表达式如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span>
@@ -486,9 +509,9 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 <p>与其他语言的优先级是一样的，这里不做扩展。</p>
 </section>
 <section id="id23">
-<h2><a class="toc-backref" href="#id50"><span class="section-number">1.3.5. </span>5. 流程控制语句</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id67"><span class="section-number">1.3.5. </span>5. 流程控制语句</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
 <section id="if-else">
-<h3><a class="toc-backref" href="#id51">5.1 1. <code class="docutils literal notranslate"><span class="pre">if-else</span></code>（分支结构）</a><a class="headerlink" href="#if-else" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id68">5.1 1. <code class="docutils literal notranslate"><span class="pre">if-else</span></code>（分支结构）</a><a class="headerlink" href="#if-else" title="Permalink to this headline">¶</a></h3>
 <p>在Go语言中，关键字<code class="docutils literal notranslate"><span class="pre">if</span></code>用于判断某个条件（布尔型或逻辑型）。如果该条件成立，则会执行<code class="docutils literal notranslate"><span class="pre">if</span></code>后面由大括号<code class="docutils literal notranslate"><span class="pre">{}</span></code>括起来的代码块，否则就忽略该代码块继续执行后续的代码。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="p">{</span>
     <span class="k">return</span> <span class="mi">1</span>
@@ -517,7 +540,7 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 <p>关键字<code class="docutils literal notranslate"><span class="pre">if</span></code>和<code class="docutils literal notranslate"><span class="pre">else</span></code>之后的左大括号<code class="docutils literal notranslate"><span class="pre">{</span></code>必须和关键字在同一行。如果使用了<code class="docutils literal notranslate"><span class="pre">else-if</span></code>结构，则前段代码块的右大括号<code class="docutils literal notranslate"><span class="pre">}</span></code>必须和<code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>语句在同一行。这两条规则都是被编译器强制规定的，如果不满足，则编译不能通过。</p>
 </section>
 <section id="for">
-<h3><a class="toc-backref" href="#id52">5.1.2 <code class="docutils literal notranslate"><span class="pre">for</span></code>循环</a><a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id69">5.1.2 <code class="docutils literal notranslate"><span class="pre">for</span></code>循环</a><a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h3>
 <p>Go语言种的循环语句只支持<code class="docutils literal notranslate"><span class="pre">for</span></code>关键字，不支持<code class="docutils literal notranslate"><span class="pre">while</span></code>和<code class="docutils literal notranslate"><span class="pre">do-while</span></code>结构。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">product</span> <span class="o">:=</span> <span class="mi">1</span>
 <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">{</span>
@@ -585,7 +608,7 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 <p>在<code class="docutils literal notranslate"><span class="pre">for</span></code>循环中，如果循环被<code class="docutils literal notranslate"><span class="pre">break</span></code>、<code class="docutils literal notranslate"><span class="pre">goto</span></code>、<code class="docutils literal notranslate"><span class="pre">return</span></code>、<code class="docutils literal notranslate"><span class="pre">panic</span></code>等语句强制退出，则之后的语句不会被执行。</p>
 </section>
 <section id="for-range">
-<h3><a class="toc-backref" href="#id53">5.1.3 <code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环</a><a class="headerlink" href="#for-range" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id70">5.1.3 <code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环</a><a class="headerlink" href="#for-range" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环结构是Go语言特有的一种的迭代结构，其引用十分广泛。<code class="docutils literal notranslate"><span class="pre">for-range</span></code>可以遍历数组、切片、字符串、<code class="docutils literal notranslate"><span class="pre">map</span></code>及通道（<code class="docutils literal notranslate"><span class="pre">channel</span></code>）。</p>
 <p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>的语法结构：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">:=</span> <span class="nb">range</span> <span class="n">复合变量值</span> <span class="p">{</span>
@@ -672,7 +695,7 @@ Go语言和其他语言类似：可以通过<code class="docutils literal notran
 </div>
 </section>
 <section id="switch-case">
-<h3><a class="toc-backref" href="#id54">5.1.4 <code class="docutils literal notranslate"><span class="pre">switch-case</span></code>语句</a><a class="headerlink" href="#switch-case" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id71">5.1.4 <code class="docutils literal notranslate"><span class="pre">switch-case</span></code>语句</a><a class="headerlink" href="#switch-case" title="Permalink to this headline">¶</a></h3>
 <p>Go语言改进了传统的switch-case语句的语法设计：case与case之间是独立的代码块。不需要break跳出当前case代码块，以避免执行到下一行。</p>
 <p>代码示例如下：</p>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
@@ -714,7 +737,7 @@ Go语言和其他语言类似：可以通过<code class="docutils literal notran
 </div>
 </section>
 <section id="goto">
-<h3><a class="toc-backref" href="#id55">5.1.5 <code class="docutils literal notranslate"><span class="pre">goto</span></code>语句</a><a class="headerlink" href="#goto" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id72">5.1.5 <code class="docutils literal notranslate"><span class="pre">goto</span></code>语句</a><a class="headerlink" href="#goto" title="Permalink to this headline">¶</a></h3>
 <p>goto语句可以跳转到指定标签，进行代码间的无条件跳转。</p>
 <p>在快速跳出循环，避免重复退出的方面有一定的帮助，goto语句可以简化代码上实现过程。</p>
 <p>传统的连续退出两层循环的代码示例：</p>
@@ -803,7 +826,7 @@ Go语言和其他语言类似：可以通过<code class="docutils literal notran
 </section>
 </section>
 <section id="id24">
-<h2><a class="toc-backref" href="#id56"><span class="section-number">1.3.6. </span>6. Go数据类型</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id73"><span class="section-number">1.3.6. </span>6. Go数据类型</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -836,7 +859,7 @@ nt32）、uint（32或64）、int（32或64）、uintptr（存放指针）</p></
 </tbody>
 </table>
 <section id="id25">
-<h3><a class="toc-backref" href="#id57">6.1 布尔型</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id74">6.1 布尔型</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <p>只有两个相同类型的值才能比较：</p>
 <ul class="simple">
 <li><p>值的类型是接口（interface），两者必须都实现了相同的接口。</p></li>
@@ -868,11 +891,11 @@ nt32）、uint（32或64）、int（32或64）、uintptr（存放指针）</p></
 </div>
 </section>
 <section id="id26">
-<h3><a class="toc-backref" href="#id58">6.2 数字类型</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id75">6.2 数字类型</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <p>位运算采用补码。int、uint和uintptr，长度由操作系统类型决定。</p>
 </section>
 <section id="id27">
-<h3><a class="toc-backref" href="#id59">6.3 字符串类型</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id76">6.3 字符串类型</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <p>由一串固定长度的字符连接起来的字符序列，utf-8编码。值类型，字节的定长数组。</p>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//声明和初始化</span>
 <span class="nx">str</span> <span class="o">:=</span> <span class="s">&quot;string&quot;</span>
@@ -983,7 +1006,7 @@ nt32）、uint（32或64）、int（32或64）、uintptr（存放指针）</p></
 </div>
 </section>
 <section id="id28">
-<h3><a class="toc-backref" href="#id60">6.4 指针类型</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id77">6.4 指针类型</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <p>指针类型指存储内存地址的变量类型。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">b</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">66</span>
 <span class="n">var</span> <span class="n">p</span> <span class="o">*</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span>
@@ -1082,7 +1105,7 @@ nt32）、uint（32或64）、int（32或64）、uintptr（存放指针）</p></
 </div>
 </section>
 <section id="id29">
-<h3><a class="toc-backref" href="#id61">6.5 复合类型</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id78">6.5 复合类型</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <section id="id30">
 <h4>1.数组类型<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
 <p>数组是具有相同类型（整数、字符串、自定义类型等）的一组长度固定的数据项的序列。</p>
@@ -1279,6 +1302,557 @@ map2 := make(map[int]*[]int)
 </pre></div>
 </div>
 </section>
+</section>
+</section>
+<section id="id33">
+<h2><a class="toc-backref" href="#id79"><span class="section-number">1.3.7. </span>7.函数</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<section id="id34">
+<h3><a class="toc-backref" href="#id80">7.1 声明函数</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="n">function_name</span><span class="p">([</span><span class="n">parameter</span> <span class="nb">list</span><span class="p">])</span> <span class="p">[</span><span class="n">return_types</span><span class="p">]</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">bunction_body</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">array</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">ret</span> <span class="kt">int</span>
+    <span class="nx">ret</span> <span class="p">=</span> <span class="nx">min</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;最小值是: %d \n&quot;</span><span class="p">,</span> <span class="nx">ret</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">min</span><span class="p">(</span><span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">m</span> <span class="p">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arr</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">v</span> <span class="p">&lt;</span> <span class="nx">m</span> <span class="p">{</span>
+            <span class="nx">m</span> <span class="p">=</span> <span class="nx">v</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">m</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">compute</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="nx">compute</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="c1">//14 48</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">change</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">x</span> <span class="p">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="mi">100</span>
+    <span class="nx">y</span> <span class="p">=</span> <span class="nx">b</span> <span class="o">+</span> <span class="mi">100</span>
+    <span class="k">return</span>
+    <span class="c1">//return x, y</span>
+    <span class="c1">//return y, x</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="nx">b</span> <span class="o">:=</span> <span class="mi">2</span>
+    <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span> <span class="o">:=</span> <span class="nx">change</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span> <span class="c1">//111 102</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id35">
+<h3><a class="toc-backref" href="#id81">7.2 函数参数</a><a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<section id="id36">
+<h4>1.参数使用<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>形参：定义函数时，用于接收外部传入的数据。</p></li>
+<li><p>实参：调用函数时，传给形参的实际的数据。</p></li>
+</ul>
+</section>
+<section id="id37">
+<h4>2.可变参数<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">myFunc</span><span class="p">(</span><span class="nx">arg</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arg</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;the string is: %s\n&quot;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">myFunc</span><span class="p">(</span><span class="s">&quot;hujianli1&quot;</span><span class="p">,</span> <span class="s">&quot;hujianli2&quot;</span><span class="p">,</span> <span class="s">&quot;hujianli3&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id38">
+<h4>3.参数传递<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>值传递</p></li>
+</ul>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">exchange</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tmp</span> <span class="kt">int</span>
+    <span class="nx">tmp</span> <span class="p">=</span> <span class="nx">a</span>
+    <span class="nx">a</span> <span class="p">=</span> <span class="nx">b</span>
+    <span class="nx">b</span> <span class="p">=</span> <span class="nx">tmp</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="nx">b</span> <span class="o">:=</span> <span class="mi">2</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换前a=%d\n&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换前b=%d\n&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+    <span class="nx">exchange</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换后a=%d\n&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换后b=%d\n&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/* 交换前a=1</span>
+<span class="cm">交换前b=2</span>
+<span class="cm">交换后a=1</span>
+<span class="cm">交换后b=2 */</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>引用传递</p></li>
+</ul>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">exchange</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tmp</span> <span class="kt">int</span>
+    <span class="nx">tmp</span> <span class="p">=</span> <span class="o">*</span><span class="nx">a</span>
+    <span class="o">*</span><span class="nx">a</span> <span class="p">=</span> <span class="o">*</span><span class="nx">b</span>
+    <span class="o">*</span><span class="nx">b</span> <span class="p">=</span> <span class="nx">tmp</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="nx">b</span> <span class="o">:=</span> <span class="mi">2</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换前a=%d\n&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换前b=%d\n&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+    <span class="nx">exchange</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换后a=%d\n&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;交换后b=%d\n&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/* 交换前a=1</span>
+<span class="cm">交换前b=2</span>
+<span class="cm">交换后a=2</span>
+<span class="cm">交换后b=1 */</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id39">
+<h3><a class="toc-backref" href="#id82">7.3 匿名函数</a><a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<p>匿名函数（闭包），一类无须定义标识符（函数名）的函数或子程序。</p>
+<section id="id40">
+<h4>1.定义<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="p">(</span><span class="n">参数列表</span><span class="p">)</span> <span class="p">(</span><span class="n">返回值列表</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">函数体</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">:=</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">(</span><span class="nx">a</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;defer x, y = &quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="c1">//y为闭包引用</span>
+    <span class="p">}(</span><span class="nx">x</span><span class="p">)</span>
+    <span class="nx">x</span> <span class="o">+=</span> <span class="mi">10</span>
+    <span class="nx">y</span> <span class="o">+=</span> <span class="mi">100</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="cm">/*</span>
+<span class="cm">输出</span>
+<span class="cm">16 108</span>
+<span class="cm">defer x,y = 6 108</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</section>
+<section id="id41">
+<h4>2.调用<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>定义时调用</p></li>
+</ul>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//定义匿名函数并赋值给f变量</span>
+    <span class="nx">f</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">data</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;closure&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">f</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="c1">//closure 6</span>
+
+    <span class="c1">//直接声明并调用</span>
+    <span class="kd">func</span><span class="p">(</span><span class="nx">data</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;closure, directly&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+    <span class="p">}(</span><span class="mi">8</span><span class="p">)</span> <span class="c1">//closure, directly 8</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>回调函数（call then back）</p></li>
+</ul>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">visitPrint</span><span class="p">(</span><span class="nx">list</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">f</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">list</span> <span class="p">{</span>
+        <span class="nx">f</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">sli</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">}</span>
+    <span class="nx">visitPrint</span><span class="p">(</span><span class="nx">sli</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">1</span>
+<span class="cm">6</span>
+<span class="cm">8 */</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="defer">
+<h3><a class="toc-backref" href="#id83">7.4 defer延迟语句</a><a class="headerlink" href="#defer" title="Permalink to this headline">¶</a></h3>
+<p>defer用于函数结束（return或panic）前最后执行的动作，便于及时的释放资源（数据库连接、文件句柄、锁等）。</p>
+<section id="id42">
+<h4>1.defer语句执行逻辑：<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>函数执行到defer时，将defer后的语句压入专门存储defer语句的栈中，然后继续执行函数下一个语句。</p></li>
+<li><p>函数执行完毕，从defer栈顶依次取出语句执行（先进后出，后进先出）。</p></li>
+<li><p>defer语句放在defer栈时，相关值会复制入栈中。</p></li>
+</ol>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">deferCall</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">deferCall</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="nx">func1</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="nx">func2</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="nx">func3</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">func1</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">func2</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">func3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//输出</span>
+<span class="c1">//C</span>
+<span class="c1">//B</span>
+<span class="c1">//A</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">var</span> <span class="nx">name</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">&quot;go&quot;</span>
+
+<span class="kd">func</span> <span class="nx">myfunc</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;python&quot;</span>             <span class="c1">//最后一个动作，修改全局变量name为&quot;python&quot;</span>
+    <span class="p">}()</span>
+
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;myfunc()函数里的name: %s\n&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="c1">//全局变量name（&quot;go&quot;）未修改</span>
+    <span class="k">return</span> <span class="nx">name</span>                                <span class="c1">//倒数第二个动作，将全局变量name（&quot;go&quot;）赋值给myfunc函数返回值</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">myname</span> <span class="o">:=</span> <span class="nx">myfunc</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;main()函数里的name: %s\n&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;main()函数里的myname: %s\n&quot;</span><span class="p">,</span> <span class="nx">myname</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//输出</span>
+<span class="c1">//myfunc()函数里的name: go</span>
+<span class="c1">//main()函数里的name: python</span>
+<span class="c1">//main()函数里的myname: go</span>
+</pre></div>
+</div>
+</section>
+<section id="id43">
+<h4>2.defer常用应用场景：<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>关闭资源。
+创建资源（数据库连接、文件句柄、锁等）语句下一行，defer语句注册关闭资源，避免忘记。</p></li>
+<li><p>和recover()函数一起使用。
+程序宕机或panic时，recover()函数恢复执行，而不报错。</p></li>
+</ol>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">r</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">r</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Recovered in f&quot;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}()</span> <span class="c1">//func()函数含recover，不可封装成外部函数调用，必须defer func(){}()匿名函数调用</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Calling g.&quot;</span><span class="p">)</span>
+    <span class="nx">g</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Returned normally from g.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">g</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">3</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Panicking!&quot;</span><span class="p">)</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Defer in g&quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Printing in g&quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+    <span class="nx">g</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">f</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id44">
+<h2><a class="toc-backref" href="#id84"><span class="section-number">1.3.8. </span>8.Go面向对象编程</a><a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h2>
+<section id="id45">
+<h3><a class="toc-backref" href="#id85">8.1 封装</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<p>隐藏对象属性和实现细节，仅公开访问方式。</p>
+<p>Go使用结构体封装属性。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Triangle</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Bottom</span> <span class="kt">float32</span>
+    <span class="nx">Height</span> <span class="kt">float32</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>方法（Methods）是作用在接收者（receiver）（某种类型的变量）上的函数。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="p">(</span><span class="n">recv</span> <span class="n">recv_type</span><span class="p">)</span> <span class="n">methodName</span><span class="p">(</span><span class="n">parameter_list</span><span class="p">)</span> <span class="p">(</span><span class="n">return_value_list</span><span class="p">)</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">type</span> <span class="nx">Triangle</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Bottom</span> <span class="kt">float32</span>
+    <span class="nx">Height</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">Triangle</span><span class="p">)</span> <span class="nx">Area</span><span class="p">()</span> <span class="kt">float32</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Bottom</span> <span class="o">*</span> <span class="nx">t</span><span class="p">.</span><span class="nx">Height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="cm">/*  t := Triangle{</span>
+<span class="cm">            Bottom: 6,</span>
+<span class="cm">            Height: 4,</span>
+<span class="cm">        }</span>
+<span class="cm">    */</span>
+    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">Triangle</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">Area</span><span class="p">())</span> <span class="c1">//12</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>访问权限指类属性是公开还是私有的，Go通过首字母大小写来控制可见性。</strong></p>
+<p>常量、变量、类型、接口、结构体、函数等若是大写字母开头，则能被其他包访问或调用（public）；<strong>非大写开头则只能包内使用（private）</strong>。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>bubble/
+├── go.mod
+├── main.go
+└── person
+    └── person.go
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">bubble/go.mod</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">bubble</span>
+
+<span class="n">go</span> <span class="mf">1.16</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">bubble/main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+        <span class="s">&quot;bubble/person&quot;</span>
+        <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">s</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">Student</span><span class="p">)</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">SetName</span><span class="p">(</span><span class="s">&quot;yx&quot;</span><span class="p">)</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">Age</span> <span class="p">=</span> <span class="mi">22</span>
+        <span class="c1">// s.name = &quot;hujianli&quot;                  无法设置私有变量</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">GetName</span><span class="p">())</span>                <span class="c1">// yx</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">bubble/person/person.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">person</span>
+
+<span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span> <span class="p">{</span>
+        <span class="nx">name</span>  <span class="kt">string</span>
+        <span class="nx">score</span> <span class="kt">float32</span>
+        <span class="nx">Age</span>   <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Student</span><span class="p">)</span> <span class="nx">GetName</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">name</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Student</span><span class="p">)</span> <span class="nx">SetName</span><span class="p">(</span><span class="nx">newName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="nx">newName</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id46">
+<h3><a class="toc-backref" href="#id86">8.2 继承</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<p>结构体中内嵌匿名类型的方法来实现继承。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">type</span> <span class="nx">Engine</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="nx">Run</span><span class="p">()</span>
+    <span class="nx">Stop</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Bus</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Engine</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Bus</span><span class="p">)</span> <span class="nx">Working</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nx">Run</span><span class="p">()</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Bus</span><span class="p">)</span> <span class="nx">Run</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;running...........&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Bus</span><span class="p">)</span> <span class="nx">Stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Stopping...........&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">nEw_Name</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Bus</span><span class="p">)</span>
+    <span class="nx">nEw_Name</span><span class="p">.</span><span class="nx">Run</span><span class="p">()</span>
+    <span class="nx">nEw_Name</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id47">
+<h3><a class="toc-backref" href="#id87">8.3 多态</a><a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<p>多态指不同对象中同种行为的不同实现方法，通过接口实现。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="c1">// 现状接口</span>
+<span class="kd">type</span> <span class="nx">Shape</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="nx">Area</span><span class="p">()</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="c1">// 正方形</span>
+<span class="kd">type</span> <span class="nx">Square</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sideLen</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="c1">// 三角形</span>
+<span class="kd">type</span> <span class="nx">Triangle</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Bottom</span> <span class="kt">float32</span>
+    <span class="nx">Height</span> <span class="kt">float32</span>
+<span class="p">}</span>
+
+<span class="c1">// 正方形计算面积的方法</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">sq</span> <span class="nx">Square</span><span class="p">)</span> <span class="nx">Area</span><span class="p">()</span> <span class="kt">float32</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">sq</span><span class="p">.</span><span class="nx">sideLen</span> <span class="o">*</span> <span class="nx">sq</span><span class="p">.</span><span class="nx">sideLen</span>
+<span class="p">}</span>
+
+<span class="c1">// 三角形计算面积的方法</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="nx">Triangle</span><span class="p">)</span> <span class="nx">Area</span><span class="p">()</span> <span class="kt">float32</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">t</span><span class="p">.</span><span class="nx">Bottom</span> <span class="o">*</span> <span class="nx">t</span><span class="p">.</span><span class="nx">Height</span>
+<span class="p">}</span>
+
+<span class="c1">// 多态函数，传入接口根据接口实现相对于的方法</span>
+<span class="kd">func</span> <span class="nx">Polymorphism</span><span class="p">(</span><span class="nx">n</span> <span class="nx">Shape</span><span class="p">)</span> <span class="kt">float32</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Area</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">Triangle</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">}</span>
+    <span class="nx">s</span> <span class="o">:=</span> <span class="nx">Square</span><span class="p">{</span><span class="mi">8</span><span class="p">}</span>
+
+    <span class="nx">shapes</span> <span class="o">:=</span> <span class="p">[]</span><span class="nx">Shape</span><span class="p">{</span><span class="nx">t</span><span class="p">,</span> <span class="nx">s</span><span class="p">}</span>
+    <span class="k">for</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">shapes</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;图形数据：&quot;</span><span class="p">,</span> <span class="nx">shapes</span><span class="p">[</span><span class="nx">n</span><span class="p">])</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;面积：&quot;</span><span class="p">,</span> <span class="nx">shapes</span><span class="p">[</span><span class="nx">n</span><span class="p">].</span><span class="nx">Area</span><span class="p">())</span>
+    <span class="p">}</span>
+
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+    <span class="nx">t1</span> <span class="o">:=</span> <span class="nx">Polymorphism</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span>
+    <span class="nx">s1</span> <span class="o">:=</span> <span class="nx">Polymorphism</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">t1</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s1</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id48">
+<h2><a class="toc-backref" href="#id88"><span class="section-number">1.3.9. </span>9.接口</a><a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h2>
+<section id="id49">
+<h3><a class="toc-backref" href="#id89">9.1 接口定义</a><a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
+<p>接口类型是对其他类型行为的概括与抽象，定义了零及以上个方法，但没具体实现这些方法。
+接口本质上是指针类型，可以实现多态。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">接口定义格式</span>
+<span class="nb">type</span> <span class="n">接口名称</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">method1</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)</span> <span class="n">返回值列表</span>
+    <span class="n">method2</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)</span> <span class="n">返回值列表</span>
+    <span class="o">//...</span>
+    <span class="n">methodn</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)</span> <span class="n">返回值列表</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>空接口（interface{}），无任何方法声明，类似面向对象中的根类型，c中的void*，默认值nil。
+实现接口的类型支持相等运算，才能比较。</p>
 </section>
 </section>
 </section>

@@ -1244,3 +1244,586 @@ slice是对数组或切片连续片段的引用。
    }
    map1 := make(map[int][]int)
    map2 := make(map[int]*[]int)
+
+7.函数
+------
+
+7.1 声明函数
+~~~~~~~~~~~~
+
+::
+
+   func function_name([parameter list]) [return_types] {
+       //bunction_body
+   }
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       array := []int{6, 8, 10}
+       var ret int
+       ret = min(array)
+       fmt.Printf("最小值是: %d \n", ret)
+   }
+
+   func min(arr []int) (m int) {
+       m = arr[0]
+       for _, v := range arr {
+           if v < m {
+               m = v
+           }
+       }
+       return m
+   }
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func compute(x, y int) (int, int) {
+       return x + y, x * y
+   }
+   func main() {
+       a, b := compute(6, 8)
+       fmt.Println(a, b) //14 48
+   }
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func change(a, b int) (x, y int) {
+       x = a + 100
+       y = b + 100
+       return
+       //return x, y
+       //return y, x
+   }
+   func main() {
+       a := 1
+       b := 2
+       c, d := change(a, b)
+       fmt.Println(c, d) //111 102
+   }
+
+7.2 函数参数
+~~~~~~~~~~~~
+
+1.参数使用
+^^^^^^^^^^
+
+-  形参：定义函数时，用于接收外部传入的数据。
+-  实参：调用函数时，传给形参的实际的数据。
+
+2.可变参数
+^^^^^^^^^^
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func myFunc(arg ...string) {
+       for _, v := range arg {
+           fmt.Printf("the string is: %s\n", v)
+       }
+   }
+
+   func main() {
+       myFunc("hujianli1", "hujianli2", "hujianli3")
+   }
+
+3.参数传递
+^^^^^^^^^^
+
+-  值传递
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func exchange(a, b int) {
+       var tmp int
+       tmp = a
+       a = b
+       b = tmp
+   }
+   func main() {
+       a := 1
+       b := 2
+       fmt.Printf("交换前a=%d\n", a)
+       fmt.Printf("交换前b=%d\n", b)
+       exchange(a, b)
+       fmt.Printf("交换后a=%d\n", a)
+       fmt.Printf("交换后b=%d\n", b)
+   }
+
+   /* 交换前a=1
+   交换前b=2
+   交换后a=1
+   交换后b=2 */
+
+-  引用传递
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func exchange(a, b *int) {
+       var tmp int
+       tmp = *a
+       *a = *b
+       *b = tmp
+   }
+   func main() {
+       a := 1
+       b := 2
+       fmt.Printf("交换前a=%d\n", a)
+       fmt.Printf("交换前b=%d\n", b)
+       exchange(&a, &b)
+       fmt.Printf("交换后a=%d\n", a)
+       fmt.Printf("交换后b=%d\n", b)
+   }
+
+   /* 交换前a=1
+   交换前b=2
+   交换后a=2
+   交换后b=1 */
+
+7.3 匿名函数
+~~~~~~~~~~~~
+
+匿名函数（闭包），一类无须定义标识符（函数名）的函数或子程序。
+
+1.定义
+^^^^^^
+
+::
+
+   func (参数列表) (返回值列表) {
+       //函数体
+   }
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       x, y := 6, 8
+       defer func(a int) {
+           fmt.Println("defer x, y = ", a, y) //y为闭包引用
+       }(x)
+       x += 10
+       y += 100
+       fmt.Println(x, y)
+   }
+   /*
+   输出
+   16 108
+   defer x,y = 6 108
+   */
+
+2.调用
+^^^^^^
+
+-  定义时调用
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       //定义匿名函数并赋值给f变量
+       f := func(data int) {
+           fmt.Println("closure", data)
+       }
+       f(6) //closure 6
+
+       //直接声明并调用
+       func(data int) {
+           fmt.Println("closure, directly", data)
+       }(8) //closure, directly 8
+   }
+
+-  回调函数（call then back）
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func visitPrint(list []int, f func(int)) {
+       for _, value := range list {
+           f(value)
+       }
+   }
+
+   func main() {
+       sli := []int{1, 6, 8}
+       visitPrint(sli, func(value int) {
+           fmt.Println(value)
+       })
+   }
+
+   /*
+   1
+   6
+   8 */
+
+7.4 defer延迟语句
+~~~~~~~~~~~~~~~~~
+
+defer用于函数结束（return或panic）前最后执行的动作，便于及时的释放资源（数据库连接、文件句柄、锁等）。
+
+1.defer语句执行逻辑：
+^^^^^^^^^^^^^^^^^^^^^
+
+1. 函数执行到defer时，将defer后的语句压入专门存储defer语句的栈中，然后继续执行函数下一个语句。
+2. 函数执行完毕，从defer栈顶依次取出语句执行（先进后出，后进先出）。
+3. defer语句放在defer栈时，相关值会复制入栈中。
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       deferCall()
+   }
+
+   func deferCall() {
+       defer func1()
+       defer func2()
+       defer func3()
+   }
+
+   func func1() {
+       fmt.Println("A")
+   }
+
+   func func2() {
+       fmt.Println("B")
+   }
+
+   func func3() {
+       fmt.Println("C")
+   }
+
+   //输出
+   //C
+   //B
+   //A
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   var name string = "go"
+
+   func myfunc() string {
+       defer func() {
+           name = "python"             //最后一个动作，修改全局变量name为"python"
+       }()
+
+       fmt.Printf("myfunc()函数里的name: %s\n", name) //全局变量name（"go"）未修改
+       return name                                //倒数第二个动作，将全局变量name（"go"）赋值给myfunc函数返回值
+   }
+
+   func main() {
+       myname := myfunc()
+       fmt.Printf("main()函数里的name: %s\n", name)
+       fmt.Printf("main()函数里的myname: %s\n", myname)
+   }
+
+   //输出
+   //myfunc()函数里的name: go
+   //main()函数里的name: python
+   //main()函数里的myname: go
+
+2.defer常用应用场景：
+^^^^^^^^^^^^^^^^^^^^^
+
+1. 关闭资源。
+   创建资源（数据库连接、文件句柄、锁等）语句下一行，defer语句注册关闭资源，避免忘记。
+
+2. 和recover()函数一起使用。
+   程序宕机或panic时，recover()函数恢复执行，而不报错。
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func f() {
+       defer func() {
+           if r := recover(); r != nil {
+               fmt.Println("Recovered in f", r)
+           }
+       }() //func()函数含recover，不可封装成外部函数调用，必须defer func(){}()匿名函数调用
+       fmt.Println("Calling g.")
+       g(0)
+       fmt.Println("Returned normally from g.")
+   }
+
+   func g(i int) {
+       if i > 3 {
+           fmt.Println("Panicking!")
+           panic(fmt.Sprintf("%v", i))
+       }
+       defer fmt.Println("Defer in g", i)
+       fmt.Println("Printing in g", i)
+       g(i + 1)
+   }
+
+   func main() {
+       f()
+   }
+
+8.Go面向对象编程
+----------------
+
+8.1 封装
+~~~~~~~~
+
+隐藏对象属性和实现细节，仅公开访问方式。
+
+Go使用结构体封装属性。
+
+.. code:: go
+
+   type Triangle struct {
+       Bottom float32
+       Height float32
+   }
+
+方法（Methods）是作用在接收者（receiver）（某种类型的变量）上的函数。
+
+::
+
+   func (recv recv_type) methodName(parameter_list) (return_value_list) {...}
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   type Triangle struct {
+       Bottom float32
+       Height float32
+   }
+
+   func (t *Triangle) Area() float32 {
+       return (t.Bottom * t.Height) / 2
+   }
+
+   func main() {
+       /*  t := Triangle{
+               Bottom: 6,
+               Height: 4,
+           }
+       */
+       t := Triangle{6, 4}
+       fmt.Println(t.Area()) //12
+   }
+
+**访问权限指类属性是公开还是私有的，Go通过首字母大小写来控制可见性。**
+
+常量、变量、类型、接口、结构体、函数等若是大写字母开头，则能被其他包访问或调用（public）；\ **非大写开头则只能包内使用（private）**\ 。
+
+::
+
+   bubble/
+   ├── go.mod
+   ├── main.go
+   └── person
+       └── person.go
+
+``bubble/go.mod``
+
+::
+
+   module bubble
+
+   go 1.16
+
+``bubble/main.go``
+
+.. code:: go
+
+   package main
+
+   import (
+           "bubble/person"
+           "fmt"
+   )
+
+   func main() {
+           s := new(person.Student)
+           s.SetName("yx")
+           s.Age = 22
+           // s.name = "hujianli"                  无法设置私有变量
+           fmt.Println(s.GetName())                // yx
+   }
+
+``bubble/person/person.go``
+
+.. code:: go
+
+   package person
+
+   type Student struct {
+           name  string
+           score float32
+           Age   int
+   }
+
+   func (s *Student) GetName() string {
+           return s.name
+   }
+
+   func (s *Student) SetName(newName string) {
+           s.name = newName
+   }
+
+8.2 继承
+~~~~~~~~
+
+结构体中内嵌匿名类型的方法来实现继承。
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   type Engine interface {
+       Run()
+       Stop()
+   }
+
+   type Bus struct {
+       Engine
+   }
+
+   func (c *Bus) Working() {
+       c.Run()
+       c.Stop()
+   }
+
+   func (c *Bus) Run() {
+       fmt.Println("running...........")
+   }
+
+   func (c *Bus) Stop() {
+       fmt.Println("Stopping...........")
+   }
+
+   func main() {
+       nEw_Name := new(Bus)
+       nEw_Name.Run()
+       nEw_Name.Stop()
+   }
+
+8.3 多态
+~~~~~~~~
+
+多态指不同对象中同种行为的不同实现方法，通过接口实现。
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   // 现状接口
+   type Shape interface {
+       Area() float32
+   }
+
+   // 正方形
+   type Square struct {
+       sideLen float32
+   }
+
+   // 三角形
+   type Triangle struct {
+       Bottom float32
+       Height float32
+   }
+
+   // 正方形计算面积的方法
+   func (sq Square) Area() float32 {
+       return sq.sideLen * sq.sideLen
+   }
+
+   // 三角形计算面积的方法
+   func (t Triangle) Area() float32 {
+       return t.Bottom * t.Height
+   }
+
+   // 多态函数，传入接口根据接口实现相对于的方法
+   func Polymorphism(n Shape) float32 {
+       return n.Area()
+   }
+
+   func main() {
+       t := Triangle{6, 8}
+       s := Square{8}
+
+       shapes := []Shape{t, s}
+       for n, _ := range shapes {
+           fmt.Println("图形数据：", shapes[n])
+           fmt.Println("面积：", shapes[n].Area())
+       }
+
+       fmt.Println()
+       t1 := Polymorphism(t)
+       s1 := Polymorphism(s)
+       fmt.Println(t1)
+       fmt.Println(s1)
+   }
+
+9.接口
+------
+
+9.1 接口定义
+~~~~~~~~~~~~
+
+接口类型是对其他类型行为的概括与抽象，定义了零及以上个方法，但没具体实现这些方法。
+接口本质上是指针类型，可以实现多态。
+
+::
+
+   //接口定义格式
+   type 接口名称 interface {
+       method1(参数列表) 返回值列表
+       method2(参数列表) 返回值列表
+       //...
+       methodn(参数列表) 返回值列表
+   }
+
+空接口（interface{}），无任何方法声明，类似面向对象中的根类型，c中的void*，默认值nil。
+实现接口的类型支持相等运算，才能比较。
