@@ -972,3 +972,275 @@ goto在\ ``多错误处理``\ 中优势
        fmt.Printf("ptr address: %p\n", &ptr)         //ptr address: 0xc000006028
        fmt.Printf("point value of ptr : %v\n", *ptr) //point value of ptr : hangzhou, China
    }
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func exchange1(c, d int) {
+       t := c
+       c = d
+       d = t
+   }
+
+   func exchange2(c, d int) {
+       c, d = d, c
+   }
+
+   func exchange3(c, d *int) {
+       t := *c
+       *c = *d
+       *d = t
+   }
+
+   func exchange4(c, d *int) {
+       d, c = c, d
+   }
+
+   func exchange5(c, d *int) {
+       *d, *c = *c, *d
+   }
+
+   func main() {
+       x, y := 6, 8
+       x, y = y, x
+       fmt.Println(x, y) //8 6
+
+       x, y = 6, 8
+       exchange1(x, y)
+       fmt.Println(x, y) //6 8
+
+       x, y = 6, 8
+       exchange2(x, y)
+       fmt.Println(x, y) //6 8
+
+       x, y = 6, 8
+       exchange3(&x, &y)
+       fmt.Println(x, y) //8 6
+
+       x, y = 6, 8
+       exchange4(&x, &y)
+       fmt.Println(x, y) //6 8
+
+       x, y = 6, 8
+       exchange5(&x, &y)
+       fmt.Println(x, y) //8 6
+   }
+
+6.5 复合类型
+~~~~~~~~~~~~
+
+1.数组类型
+^^^^^^^^^^
+
+数组是具有相同类型（整数、字符串、自定义类型等）的一组长度固定的数据项的序列。
+
+.. code:: go
+
+   var array [10]int
+   var numbers = [5]float32{100.0, 8.0, 9.4, 6.8, 30.1}
+   var numbers = [...]float32{100.0, 8.0, 9.4, 6.8, 30.1}
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       var arr [6]int
+       var i, j int
+       for i = 0; i < 6; i++ {
+           arr[i] = i + 66
+       }
+       for j = 0; j < 6; j++ {
+           fmt.Printf("arr[%d] = %d\n", j, arr[j])
+       }
+   }
+
+   /**
+   arr[0] = 66
+   arr[1] = 67
+   arr[2] = 68
+   arr[3] = 69
+   arr[4] = 70
+   arr[5] = 71
+   **/
+
+2.结构体类型
+^^^^^^^^^^^^
+
+结构体是由0或多个任意类型的数据构成的数据集合。
+
+::
+
+   type 类型名 struct {
+       字段1 类型1
+       结构体成员2 类型2
+   }
+
+::
+
+   type Pointer struct {
+       A float32
+       B float32
+   }
+
+   type Color struct {
+       Red, Green, Blue byte
+   }
+
+   variable_name := struct_variable_type {value1, value2, ...}
+   variable_name := struct_variable_type {key2: value2, key1: value1, ...}
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   type Books struct {
+       title   string
+       author  string
+       subject string
+       press   string
+   }
+
+   func printBook(book Books) {
+       fmt.Printf("book.title: %s\n", book.title)
+       fmt.Printf("book.author: %s\n", book.author)
+       fmt.Printf("book.subject: %s\n", book.subject)
+       fmt.Printf("book.press: %s\n", book.press)
+   }
+
+   func printBook2(book *Books) {
+       fmt.Printf("book.title: %s\n", book.title)
+       fmt.Printf("book.author: %s\n", book.author)
+       fmt.Printf("book.subject: %s\n", book.subject)
+       fmt.Printf("book.press: %s\n", book.press)
+   }
+
+   func main() {
+       fmt.Println(Books{author: "yx", title: "学习 Go Web"})
+       fmt.Println()
+
+       var bookGo Books
+       bookGo.title = "学习 Go Web"
+       bookGo.author = "yx"
+       bookGo.subject = "Go"
+       bookGo.press = "电力工业出版社"
+       fmt.Printf("bookGo.title: %s\n", bookGo.title)
+       fmt.Printf("bookGo.author: %s\n", bookGo.author)
+       fmt.Printf("bookGo.subject: %s\n", bookGo.subject)
+       fmt.Printf("bookGo.press: %s\n", bookGo.press)
+       fmt.Println()
+       printBook(bookGo)
+       fmt.Println()
+       printBook2(&bookGo)
+   }
+
+3.切片类型
+^^^^^^^^^^
+
+slice是对数组或切片连续片段的引用。
+切片内部结构包含\ **内存地址pointer、大小len和容量cap**\ 。
+
+::
+
+   //不含结束位置,左开右闭
+   slice[开始位置:结束位置]
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   var sliceBuilder [20]int
+
+   func main() {
+       for i := 0; i < 20; i++ {
+           sliceBuilder[i] = i + 1
+       }
+       fmt.Println(sliceBuilder)       //[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]
+       fmt.Println(sliceBuilder[5:15]) //[6 7 8 9 10 11 12 13 14 15]
+       fmt.Println(sliceBuilder[15:])  //[16 17 18 19 20]
+       fmt.Println(sliceBuilder[:2])   //[1 2]
+
+       b := []int{6, 7, 8}
+       fmt.Println(b[:])   //[6 7 8]
+       fmt.Println(b[0:0]) //[]
+
+       var sliceStr []string
+       var sliceNum []int
+       var emptySliceNum = []int{}
+       fmt.Println(sliceStr, sliceNum, emptySliceNum)                      //[] [] []
+       fmt.Println(len(sliceStr), len(sliceNum), (emptySliceNum))          //0 0 []
+       fmt.Println(sliceStr == nil, sliceNum == nil, emptySliceNum == nil) //true true false
+
+       slice1 := make([]int, 6)
+       slice2 := make([]int, 6, 10)
+       fmt.Println(slice1, slice2)           //[0 0 0 0 0 0] [0 0 0 0 0 0]
+       fmt.Println(len(slice1), len(slice2)) //6 6
+       fmt.Println(cap(slice1), cap(slice2)) //6 10
+
+   }
+
+4.map类型
+^^^^^^^^^
+
+关联数组，字典，元素对（pair）的无序集合，引用类型。
+
+::
+
+   var name map[key_type]value_type
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   var literalMap map[string]string
+   var assignedMap map[string]string
+
+   func main() {
+       literalMap = map[string]string{"first": "go", "second": "web"}
+       createdMap := make(map[string]float32)
+       assignedMap = literalMap //引用
+       createdMap["k1"] = 99
+       createdMap["k2"] = 199
+       assignedMap["second"] = "program"
+
+       fmt.Println(literalMap["first"])  //go
+       fmt.Println(literalMap["second"]) //program
+       fmt.Println(literalMap["third"])  //
+       fmt.Println(createdMap["k1"])     //99
+       fmt.Println(createdMap["k2"])     //199
+
+   }
+
+::
+
+   createdMap := new(map[string]float32)
+   //错误
+   //声明了一个未初始化的变量并取了它的地址
+
+::
+
+   //map到达容量上限，自动增1
+   make(map[key_type]value_type, cap)
+   map := make(map[string]float32, 100)
+
+   achievement := map[string]float32{
+           "zhang": 99.5, "xiao": 88,
+           "wange": 96, "ma": 100,
+   }
+   map1 := make(map[int][]int)
+   map2 := make(map[int]*[]int)
