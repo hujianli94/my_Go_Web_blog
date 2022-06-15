@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.1. 安装Go &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.2. 开启Go的第一个程序" href="1.2%E5%BC%80%E5%90%AFGo%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F.html" />
+    <link rel="prev" title="1. Go基础入门" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. Go基础入门</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 安装Go</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#windows">1.1.1. 1.Windows系统中安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux">1.1.2. 2.Linux系统中安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mac-os">1.1.3. 3.Mac OS版本安装</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="1.2%E5%BC%80%E5%90%AFGo%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F.html">1.2. 开启Go的第一个程序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.3Go%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E4%B8%8E%E4%BD%BF%E7%94%A8.html">1.3. Go基础语法与使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Go基础入门</a> &raquo;</li>
+      <li><span class="section-number">1.1. </span>安装Go</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/1.Go基础入门/1.1安装Go.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#go" id="id1">安装Go</a></p>
+<ul>
+<li><p><a class="reference internal" href="#windows" id="id2">1.Windows系统中安装</a></p></li>
+<li><p><a class="reference internal" href="#linux" id="id3">2.Linux系统中安装</a></p></li>
+<li><p><a class="reference internal" href="#mac-os" id="id4">3.Mac OS版本安装</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="go">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">1.1. </span>安装Go</a><a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
+<section id="windows">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">1.1.1. </span>1.Windows系统中安装</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>安装包下载地址为：<a class="reference external" href="https://golang.org/dl/">https://golang.org/dl/</a>。</p>
+<p>如果打不开可以使用这个地址：<a class="reference external" href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a>。</p>
+<p>下载格式为MSI的安装程序。双击启动安装并遵循提示。默认在位置C:，并且添加目录C:。</p>
+<p>如果安装文件是MSI格式，Go语言的环境变量会自动设置完成。</p>
+<p>我下载的包为：</p>
+<p>go1.16.4.windows-amd64.msi</p>
+<p>新建系统变量</p>
+<ul class="simple">
+<li><p>GOROOT：Go安装路径（例：<code class="docutils literal notranslate"><span class="pre">D:\Program</span> <span class="pre">Files\go</span></code>）。</p></li>
+<li><p>GOPATH：Go工程的路径（例：<code class="docutils literal notranslate"><span class="pre">D:\go_studay\go_path</span></code>）。设置一个新的环境变量名GOPATH，变量值<code class="docutils literal notranslate"><span class="pre">D:\go_studay\go_path</span></code></p></li>
+</ul>
+<blockquote>
+<div><p>需要把GOPATH中的可执行目录也配置到环境变量中，否则自行下载的第三方Go语言工具将无法使用。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Path：在Path中增加<code class="docutils literal notranslate"><span class="pre">D:\Program</span> <span class="pre">Files\go\bin;%GOPATH%\bin</span></code></p></li>
+</ul>
+<p>工作目录用来存放开发者的代码，对应Golang里的GOPATH这个环境变量。该环境变量被指定之后，编译源代码所生成的文件都会放到此目录下。</p>
+<p>GOPATH主要包含三个目录：bin、pkg、src。bin目录主要存放可执行文件；</p>
+<p>pkg目录主要存放编译好的库文件，如*.a文件；</p>
+<p>src目录主要存放Go的源文件。接下来查看安装配置是否成功，使用快捷键Win+R，输入cmd，打开命令行提示符窗口，在命令行中输入go
+env，查看配置信息，不同环境下显示会略有差异。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span><span class="o">&gt;</span><span class="n">go</span> <span class="n">env</span>
+<span class="nb">set</span> <span class="n">GO111MODULE</span><span class="o">=</span><span class="n">on</span>
+<span class="nb">set</span> <span class="n">GOARCH</span><span class="o">=</span><span class="n">amd64</span>
+<span class="nb">set</span> <span class="n">GOBIN</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GOCACHE</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">go</span><span class="o">-</span><span class="n">build</span>
+<span class="nb">set</span> <span class="n">GOENV</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span>\<span class="n">AppData</span>\<span class="n">Roaming</span>\<span class="n">go</span>\<span class="n">env</span>
+<span class="nb">set</span> <span class="n">GOEXE</span><span class="o">=.</span><span class="n">exe</span>
+<span class="nb">set</span> <span class="n">GOFLAGS</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GOHOSTARCH</span><span class="o">=</span><span class="n">amd64</span>
+<span class="nb">set</span> <span class="n">GOHOSTOS</span><span class="o">=</span><span class="n">windows</span>
+<span class="nb">set</span> <span class="n">GONOPROXY</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GONOSUMDB</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GOOS</span><span class="o">=</span><span class="n">windows</span>
+<span class="nb">set</span> <span class="n">GOPATH</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">go_studay</span>\<span class="n">go_path</span>\
+<span class="nb">set</span> <span class="n">GOPRIVATE</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GOPROXY</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">goproxy</span><span class="o">/</span>
+<span class="nb">set</span> <span class="n">GOROOT</span><span class="o">=</span><span class="n">c</span><span class="p">:</span>\<span class="n">go</span>
+<span class="nb">set</span> <span class="n">GOSUMDB</span><span class="o">=</span><span class="nb">sum</span><span class="o">.</span><span class="n">golang</span><span class="o">.</span><span class="n">org</span>
+<span class="nb">set</span> <span class="n">GOTMPDIR</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">GOTOOLDIR</span><span class="o">=</span><span class="n">c</span><span class="p">:</span>\<span class="n">go</span>\<span class="n">pkg</span>\<span class="n">tool</span>\<span class="n">windows_amd64</span>
+<span class="nb">set</span> <span class="n">GCCGO</span><span class="o">=</span><span class="n">gccgo</span>
+<span class="nb">set</span> <span class="n">AR</span><span class="o">=</span><span class="n">ar</span>
+<span class="nb">set</span> <span class="n">CC</span><span class="o">=</span><span class="n">gcc</span>
+<span class="nb">set</span> <span class="n">CXX</span><span class="o">=</span><span class="n">g</span><span class="o">++</span>
+<span class="nb">set</span> <span class="n">CGO_ENABLED</span><span class="o">=</span><span class="mi">1</span>
+<span class="nb">set</span> <span class="n">GOMOD</span><span class="o">=</span><span class="n">NUL</span>
+<span class="nb">set</span> <span class="n">CGO_CFLAGS</span><span class="o">=-</span><span class="n">g</span> <span class="o">-</span><span class="n">O2</span>
+<span class="nb">set</span> <span class="n">CGO_CPPFLAGS</span><span class="o">=</span>
+<span class="nb">set</span> <span class="n">CGO_CXXFLAGS</span><span class="o">=-</span><span class="n">g</span> <span class="o">-</span><span class="n">O2</span>
+<span class="nb">set</span> <span class="n">CGO_FFLAGS</span><span class="o">=-</span><span class="n">g</span> <span class="o">-</span><span class="n">O2</span>
+<span class="nb">set</span> <span class="n">CGO_LDFLAGS</span><span class="o">=-</span><span class="n">g</span> <span class="o">-</span><span class="n">O2</span>
+<span class="nb">set</span> <span class="n">PKG_CONFIG</span><span class="o">=</span><span class="n">pkg</span><span class="o">-</span><span class="n">config</span>
+<span class="nb">set</span> <span class="n">GOGCCFLAGS</span><span class="o">=-</span><span class="n">m64</span> <span class="o">-</span><span class="n">mthreads</span> <span class="o">-</span><span class="n">fno</span><span class="o">-</span><span class="n">caret</span><span class="o">-</span><span class="n">diagnostics</span> <span class="o">-</span><span class="n">Qunused</span><span class="o">-</span><span class="n">arguments</span> <span class="o">-</span><span class="n">fmessage</span><span class="o">-</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span> <span class="o">-</span><span class="n">fdebug</span><span class="o">-</span><span class="n">prefix</span><span class="o">-</span><span class="nb">map</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">go</span><span class="o">-</span><span class="n">build003953122</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">go</span><span class="o">-</span><span class="n">build</span> <span class="o">-</span><span class="n">gno</span><span class="o">-</span><span class="n">record</span><span class="o">-</span><span class="n">gcc</span><span class="o">-</span><span class="n">switches</span>
+</pre></div>
+</div>
+<p>输入go version查看版本号</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span><span class="o">&gt;</span><span class="n">go</span> <span class="n">version</span>
+<span class="n">go</span> <span class="n">version</span> <span class="n">go1</span><span class="o">.</span><span class="mf">16.4</span> <span class="n">windows</span><span class="o">/</span><span class="n">amd64</span>
+</pre></div>
+</div>
+</section>
+<section id="linux">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">1.1.2. </span>2.Linux系统中安装</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>访问Go官方网站</p>
+<ol class="arabic simple">
+<li><p>下载安装包</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ wget https://golang.google.cn/dl/go1.16.4.linux-amd64.tar.gz
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>在当前目录下解压安装包</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ tar zxvf go1.16.4.linux-amd64.tar.gz
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>将“go”文件夹移动到常用的目录下(/usr/local)。</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mv ./go /usr/local/
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>配置go环境变量</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mkdir -p /usr/share/nginx/go
+
+$ cat &gt;&gt; /etc/profile <span class="s">&lt;&lt;-&#39;EOF&#39;</span>
+<span class="s">export GOROOT=/usr/local/go</span>
+<span class="s">export GOPATH=/usr/share/nginx/go</span>
+<span class="s">export PATH=$PATH:$GOROOT/bin:$GOPATH/bin</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>运行命令让环境变量生效</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> /etc/profile
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>查看go版本</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ go version
+go version go1.16.4 linux/amd64
+</pre></div>
+</div>
+</section>
+<section id="mac-os">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">1.1.3. </span>3.Mac OS版本安装</a><a class="headerlink" href="#mac-os" title="Permalink to this headline">¶</a></h2>
+<p>Mac OS环境下，下载格式为osx的安装程序。双击启动安装。</p>
+<p>按照提示，在/usr/local/go中安装Golang，并且将文件夹/usr/local/go/bin添加到PATH环境变量中。</p>
+<p>1．Mac系统下安装双击pkg包，顺着指引，即可安装成功。在命令行输入go
+version后，如果获取到Go语言的版本号，则代表安装成功。</p>
+<p>2．Mac系统下配置环境变量</p>
+<p>（1）打开终端输入cd ~进入用户主目录。</p>
+<p>（2）输入ls -all命令查看是否存在.bash_profile。</p>
+<p>（3）使用vim .bash_profile打开文件。</p>
+<p>（4）输入i进入vim编辑模式。</p>
+<p>（5）输入下面代码，其中GOPATH是日常开发的根目录。</p>
+<p>GOBIN是GOPATH下的bin目录。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export GOPATH=/Users/steven/Documents/go_project
+export GOROOT= /Usr/local/go
+export GOBIN=$GOROOT/bin
+export PATH=$PATH:$GOBIN
+</pre></div>
+</div>
+<p>（6）按esc键，并输入wq保存并退出编辑。可输入vim
+.bash_profile查看是否保存成功。</p>
+<p>（7）输入source
+~/.bash_profile完成对Golang环境变量的配置，配置成功没有提示。</p>
+<p>（8）输入go env查看配置结果。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="1. Go基础入门" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="1.2%E5%BC%80%E5%90%AFGo%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F.html" class="btn btn-neutral float-right" title="1.2. 开启Go的第一个程序" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

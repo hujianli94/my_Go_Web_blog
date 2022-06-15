@@ -1,0 +1,974 @@
+.. contents::
+   :depth: 3
+..
+
+Go基础语法与使用
+================
+
+1. 基础语法
+-----------
+
+1.1. Go语言标记
+~~~~~~~~~~~~~~~
+
+Go程序由关键字、字符串、常量、标识符、符号等多种标记组成。
+
+1.2 行分隔符
+~~~~~~~~~~~~
+
+如果多行语句在一行，必须用；分隔符隔开，Go编辑器会自动在行尾加速；分隔符，所以不需要手动再语句后面再加；
+
+1.3 注释
+~~~~~~~~
+
+单行注释
+
+::
+
+   //
+
+多行注册
+
+::
+
+   /*
+   多行注释
+   多行注释
+   */
+
+1.4 标识符
+~~~~~~~~~~
+
+标识符实际上就是一个或者多个字符、数字、下划线(_)组成的字符串序列。
+
+标识符的命名需要遵守以下规则：
+
+-  由 26 个英文字母、0~9、\ ``_``\ 组成；
+-  不能以数字开头，例如 var 1num int 是错误的；
+-  Go语言中严格区分大小写；
+-  标识符不能包含空格；
+-  不能以系统保留关键字作为标识符，比如 break，if 等等。
+
+命名标识符时还需要注意以下几点：
+
+-  标识符的命名要尽量采取简短且有意义；
+-  不能和标准库中的包名重复；
+-  为变量、函数、常量命名时采用驼峰命名法，例如 stuName、getVal
+
+正确命名的标识符
+
+::
+
+   product  user add  user_name   abc_123
+   resultValue name1  _tmp k
+
+错误命名的标识符
+
+::
+
+   switch      (错误命名，Go语言的关键字) 
+   3ab         (错误命名: 以数字开通)
+   c-d         (错误命名：运算符是不允许的)
+
+1.5 字符串拼接
+~~~~~~~~~~~~~~
+
+字符串可以通过“+”号实现字符串连接。
+
+如下所示：
+
+::
+
+   package main
+   import "fmt"
+   func main () {
+       fmt.Println("Go web 编程实战" + "----从入门到精通")
+   }
+
+1.6 Go语言的关键字
+~~~~~~~~~~~~~~~~~~
+
+Go语言中的关键字一共有 25 个：
+
+======== =========== ====== ========= ======
+break    default     func   interface select
+======== =========== ====== ========= ======
+case     defer       go     map       struct
+chan     else        goto   package   switch
+const    fallthrough if     range     type
+continue for         import return    var
+======== =========== ====== ========= ======
+
+1.7 Go语言中的空格
+~~~~~~~~~~~~~~~~~~
+
+空格让代码更容易阅读，Goland编辑器可以使用“Ctrl+Alt+L”命令进行快速格式化。
+
+2. 变量
+-------
+
+2.1 声明
+~~~~~~~~
+
+声明变量的一般形式是使用 var 关键字：
+
+var name type
+
+其中，var 是声明变量的关键字，name 是变量名，type 是变量的类型。
+
+2.1.1 标准格式
+^^^^^^^^^^^^^^
+
+Go语言的变量声明的标准格式为：
+
+::
+
+   var 变量名 变量类型
+
+变量声明以关键字 var 开头，后置变量类型，行尾无须分号。
+
+2.1.2 批量格式
+^^^^^^^^^^^^^^
+
+::
+
+   var (
+       a int
+       b string
+       c []float32
+       d func() bool
+       e struct {
+           x int
+       }
+   )
+
+2.1.3 简短格式
+^^^^^^^^^^^^^^
+
+除 var 关键字外，还可使用更加简短的变量定义和初始化语法。
+
+::
+
+   名字 := 表达式
+
+需要注意的是，简短模式（short variable declaration）有以下限制：
+
+-  定义变量，同时显式初始化。
+-  不能提供数据类型。
+-  只能用在函数内部。
+
+和 var
+形式声明语句一样，简短变量声明语句也可以用来声明和初始化一组变量：
+
+::
+
+   i, j := 0, 1
+
+下面通过一段代码来演示简短格式变量声明的基本样式。
+
+::
+
+   func main() {   
+       x:=100   
+       a,s:=1, "abc"
+   }
+
+2.2 赋值
+~~~~~~~~
+
+2.2.1 单个变量赋值
+^^^^^^^^^^^^^^^^^^
+
+::
+
+   var a int = 100
+   var b int = 200
+
+   var attack = 40
+   var defence = 20
+   var damageRate float32 = 0.17
+
+   // 短变量赋值
+   hp := 100
+
+2.2.2 多个变量赋值
+^^^^^^^^^^^^^^^^^^
+
+声明一个用户的年龄、名字、余额
+
+::
+
+   var (
+       age int=18
+       name string = "shirdon"
+       balance float32 = 99999.99
+   )
+
+另外一种声明形式
+
+::
+
+   var age,name,balance = 18,"shirdon",99999.99
+
+简单的形式
+
+::
+
+   age,name,balance := 18,"shirdon",99999.99
+
+变量的交换
+
+::
+
+   d,c:="D","C"
+   c,d = d,c
+
+2.2.3 变量作用域
+~~~~~~~~~~~~~~~~
+
+1. 局部变量
+^^^^^^^^^^^
+
+局部变量作用域只在函数体内。
+
+局部变量不是一直存在的，它只在定义它的函数被调用后存在，函数调用结束后这个局部变量就会被销毁。
+
+::
+
+   package main
+   import (
+       "fmt"
+   )
+   func main() {
+       //声明局部变量 a 和 b 并赋值
+       var a int = 3
+       var b int = 4
+       //声明局部变量 c 并计算 a 和 b 的和
+       c := a + b
+       fmt.Printf("a = %d, b = %d, c = %d\n", a, b, c)
+   }
+
+2. 全局变量
+^^^^^^^^^^^
+
+在函数体外声明的变量称之为全局变量，全局变量只需要在一个源文件中定义，就可以在所有源文件中使用，当然，不包含这个全局变量的源文件需要使用“import”关键字引入全局变量所在的源文件之后才能使用这个全局变量。
+
+全局变量声明必须以 var
+关键字开头，如果想要在外部包中使用全局变量的首字母必须大写。
+
+::
+
+   package main
+   import "fmt"
+   //声明全局变量
+   var c int
+   func main() {
+       //声明局部变量
+       var a, b int
+       //初始化参数
+       a = 3
+       b = 4
+       c = a + b
+       fmt.Printf("a = %d, b = %d, c = %d\n", a, b, c)
+   }
+
+3. 常量
+-------
+
+常量的定义格式和变量的声明语法类似：\ ``const name [type] = value``\ ，例如：
+
+const pi = 3.14159 // 相当于 math.Pi 的近似值
+
+在Go语言中，你可以省略类型说明符
+[type]，因为编译器可以根据变量的值来推断其类型。
+
+-  显式类型定义： const b string = “abc”
+-  隐式类型定义： const b = “abc”
+
+和变量声明一样，可以批量声明多个常量:
+
+::
+
+   const (
+       e  = 2.7182818
+       pi = 3.1415926
+   )
+
+如果是批量声明的常量，除了第一个外其它的常量右边的初始化表达式都可以省略，如果省略初始化表达式则表示使用前面常量的初始化表达式，对应的常量类型也是一样的。例如：
+
+::
+
+   const (
+       a = 1
+       b
+       c = 2
+       d
+   )
+   fmt.Println(a, b, c, d) // "1 1 2 2"
+
+3.1 iota 常量生成器
+~~~~~~~~~~~~~~~~~~~
+
+常量声明可以使用 iota
+常量生成器初始化，它用于生成一组以相似规则初始化的常量，但是不用每行都写一遍初始化表达式。在一个
+const 声明语句中，在第一个声明的常量所在的行，iota 将会被置为
+0，然后在每一个有常量声明的行加一。
+
+::
+
+   type Weekday int
+   const (
+       Sunday Weekday = iota
+       Monday
+       Tuesday
+       Wednesday
+       Thursday
+       Friday
+       Saturday
+   )
+
+周日将对应 0，周一为 1，以此类推。
+
+3.2 延迟明确常量的具体类型
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Go语言的常量有一个不同寻常指出：虽然一个常量可以有任意一个确定的基础类型（例如\ ``int``\ 或\ ``float64``\ ，或者是类似\ ``time.Duration``\ 这样的基础类型），但是许多常量并没有一个明确的基础类型。编译器为这些没有明确的基础类型的数字常量，提供比基础类型更高精度的算数运算。
+
+Go语言有6种未明确类型的常量类型：\ **无类型的布尔型、无类型的整数、无类型的字符、无类型的浮点数、无类型的复数、无类型的字符串。**
+
+例如，无类型的浮点数常量math.Pi，可以直接用于任何需要浮点数或复数的地方：
+
+::
+
+   var a float32 = math.Pi
+   var b float64 = math.Pi
+   var c complex128 = math.Pi
+
+如果math.Pi被确定未特定类型（比如float64），则结果精度可能会不一样。同时在需要float32或complex128类型值得地方，需要对其进行一个明确得强制类型转换：
+
+::
+
+   const Pi64 float64 = math.Pi
+   var a float32 = float32(Pi64)
+   var b float64 = Pi64
+   var c complex128 = complex128(Pi64)
+
+对于常量面值，不同的写法会对应不同得类型。例如\ ``0``\ 、\ ``0.0``\ 、\ ``0i``\ 和\ ``\u0000``\ 虽然有着相同的常量值，但是它们分别对应无类型的整数、无类型的浮点数、无类型的复数和无类型的字符等不同的常量类型。同样，\ ``true``\ 和\ ``false``\ 也是无类型的布尔类型，字符串面值常量是无类型的字符串类型。
+
+4. 运算符
+---------
+
+运算符的优先级
+
+表达式如下：
+
+::
+
+   var a, b, c int = 3, 6, 9
+   d := a + b * c
+
+与其他语言的优先级是一样的，这里不做扩展。
+
+5. 流程控制语句
+---------------
+
+5.1 1. ``if-else``\ （分支结构）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+在Go语言中，关键字\ ``if``\ 用于判断某个条件（布尔型或逻辑型）。如果该条件成立，则会执行\ ``if``\ 后面由大括号\ ``{}``\ 括起来的代码块，否则就忽略该代码块继续执行后续的代码。
+
+::
+
+   if b > 10 {
+       return 1
+   }
+
+如果存在第2个分支，则可以在上面代码的基础上添加\ ``else``\ 关键字及另一代码块，见下方代码。这个代码块中的代码只有在\ ``if``\ 条件不满足时才会执行。\ ``if{}``\ 和\ ``else{}``\ 中的两个代码块是相互独立的分支，两者只能执行其中一个。
+
+::
+
+   if b > 10 {
+       return 1
+   }else{
+       return 2
+   }
+
+如果存在第3分支，则可以使用下面这种3个独立分支的形式：
+
+::
+
+   if b > 10 {
+       return 1
+   }else if b == 10{
+       return 2
+   }else{
+       return 3
+   }
+
+一般来说，\ ``else-if``\ 分支的数量是没有限制的。但是为了代码的可读性，最好不要在\ ``if``\ 后面加入太多的\ ``else-if``\ 结构。如果必须使用这种形式，则尽可能把先满足的条件放在前面。
+
+关键字\ ``if``\ 和\ ``else``\ 之后的左大括号\ ``{``\ 必须和关键字在同一行。如果使用了\ ``else-if``\ 结构，则前段代码块的右大括号\ ``}``\ 必须和\ ``else if``\ 语句在同一行。这两条规则都是被编译器强制规定的，如果不满足，则编译不能通过。
+
+5.1.2 ``for``\ 循环
+~~~~~~~~~~~~~~~~~~~
+
+Go语言种的循环语句只支持\ ``for``\ 关键字，不支持\ ``while``\ 和\ ``do-while``\ 结构。
+
+::
+
+   product := 1
+   for i := 1; i < 5; i++{
+       product *= i
+   }
+
+无限循环场景
+
+::
+
+   i := 0
+   for {
+       i++
+       if i > 50 {
+           break
+       }
+   }
+
+在使用循环语句时，需要注意以下几点：
+
+-  左花括号{必须与for处于同一行。
+
+-  Go语言种的for循环与C语言一样，都允许在循环条件中定义和初始化变量。唯一的区别是，Go语言不支持以逗号为间隔的多个赋值语句，必须使用平行赋值的方式来初始化多个变量。
+
+-  Go语言的for循环同样支持用continue和break来控制循环，但它提供了一个更高级的break——可以选择中断哪一个循环，如下例：
+
+::
+
+   JumpLoop:
+       for j := 0; j < 5; j++{
+           for i := 0; i < 5; i++{
+               if i > 2{
+                   break JumpLoop
+               }
+               fmt.Println(i)
+           }
+       }
+
+在上述代码中，\ ``break``\ 语句终止的是\ ``JumpLoop``\ 标签对应的\ ``for``\ 循环。\ ``for``\ 中的初始语句是在第1次循环前执行的语句。一般使用初始语句进行变量初始化，但如果变量在\ ``for``\ 循环中被声明，则其作用域只是这个\ ``for``\ 的范围。初始语句可以被忽略，但是初始语句之后的\ **分号**\ 必须要写，代码如下：
+
+::
+
+   j := 2
+   for ; j > 0; j--{
+       fmt.Println(j)
+   }
+
+在上面这段代码中，将\ ``j``\ 放在\ ``for``\ 的前面进行初始化，\ ``for``\ 中没有初始语句，此时\ ``j``\ 的作用域比在初始语句中声明的\ ``j``\ 的作用域要大
+
+for中的条件表达式是控制是否循环的开关。在每次循环开始前，都会判断条件表达式，如果表达式为true，则循环继续；否则结束循环。条件表达式可以被忽略，忽略条件表达式后默认形成无限循环。
+
+下面代码会忽略条件表达式，但是保留结束语句：
+
+::
+
+   var i int 
+   JumpLoop:
+   for ; ; i++{
+       if i > 10 {
+           // println(i)
+           break JumpLoop
+       }
+   }
+
+美观的写法
+
+::
+
+   var i int
+   for {
+       if i > 10 {
+           break
+       }
+       i++
+   }
+
+在\ ``for``\ 循环中，如果循环被\ ``break``\ 、\ ``goto``\ 、\ ``return``\ 、\ ``panic``\ 等语句强制退出，则之后的语句不会被执行。
+
+5.1.3 ``for-range``\ 循环
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``for-range``\ 循环结构是Go语言特有的一种的迭代结构，其引用十分广泛。\ ``for-range``\ 可以遍历数组、切片、字符串、\ ``map``\ 及通道（\ ``channel``\ ）。
+
+``for-range``\ 的语法结构：
+
+::
+
+   for key, val := range 复合变量值 {
+       // ...逻辑语句
+   }
+
+需要注意的是，\ ``val``\ 始终为集合中对应索引值的一个复制值。因此，它一般只具有“只读”属性，对它所做的任何修改都不会影响集合中原有的值。一个字符串是\ ``Unicode``\ 编码的字符（或称之为\ ``rune``\ ）集合，因此也可以用它来迭代字符串：
+
+::
+
+   for position, char := range str{
+       // ...逻辑语句
+   }
+
+每个\ ``rune``\ 字符和索引在\ ``for-range``\ 循环中的值是一一对应的，它能够自动根据\ ``UTF-8``\ 规则识别\ ``Unicode``\ 编码的字符。
+
+通过\ ``for-range``\ 遍历的返回值有一定的规律：
+
+-  数组、切片、字符串返回索引和值。
+-  ``map``\ 返回值和键。
+-  通道(``channel``)只返回通道内的值。
+
+（1）遍历数组、切片。
+在遍历代码中，\ ``key``\ 和\ ``value``\ 分别代表切片的下标及下标对应的值。
+
+::
+
+   for key, value := range []int{0, 1, -1, -2}{
+       fmt.Printf("key:%d value:%d\n", key, value)
+   }
+
+（2）遍历字符串。
+Go语言和其他语言类似：可以通过\ ``for-range``\ 的组合对字符串进行遍历。在遍历时，\ ``key``\ 和\ ``value``\ 分别代表字符串的索引和字符串中的一个字符。
+
+::
+
+   var str = "hi 加油"
+   for key, value := range str{
+       fmt.Printf("key:%d value:0x%x\n", key, value)
+   }
+
+以上代码的运行结果如下：
+
+.. code:: go
+
+   key:0 value:0x68
+   key:1 value:0x69
+   key:2 value:0x20
+   key:3 value:0x52a0
+   key:4 value:0x6cb9
+
+代码中的遍历\ ``value``\ 的实际类型是\ ``rune``\ 类型，以十六进制打印出来就是字符的编码。
+
+（3）遍历\ ``map``\ 。
+
+对于\ ``map``\ 类型，\ ``for-range``\ 在遍历时，\ ``key``\ 和\ ``value``\ 分别代表\ ``map``\ 的索引键\ ``key``\ 和索引键对应的值。下面的代码演示了如何遍历\ ``map``\ ：
+
+::
+
+   m := map[string]int{
+       "go": 100,
+       "web": 100,
+   }
+   for key, value := range m {
+       fmt.Println(key, value)
+   }
+
+（4）遍历通道（\ ``channel``\ ）。
+
+通道可以通过\ ``for-range``\ 进行遍历。不同于\ ``slice``\ 和\ ``map``\ ，在遍历通道时只输出一个值，即通道内的类型对应的数据。
+
+下面代码展示了通道的遍历方法：
+
+::
+
+   c := make(chan int)   // 创建了一个整型类型的通道
+   go func(){            // 启动了一个goroutine
+       c <- 7            // 将数据推送进通道
+       c <- 8
+       c <- 9
+   }()
+   for v := range c {
+       fmt.Println(v)
+   }
+
+以上代码的逻辑如下：
+
+1.创建一个整型类型的通道并实例化； 2.通过关键字go启动了一个goroutine；
+3.将数字传入通道，实现的功能是往通道中推送数据7、8、9；
+4.结束并关闭通道（这段goroutine在声明结束后马上被执行）；
+5.用for-range语句对通道c进行遍历，即不断地从通道中接收数据知道通道被关闭。
+
+在使用\ ``for-range``\ 循环遍历某个对象时，往往不会同时使用\ ``key``\ 和\ ``value``\ 的值，而是只需要其中一个的值。这时可以采用一些技巧让代码变得更简单。
+
+::
+
+   m := map[string]int{
+       "shirdon": 100,
+       "ronger": 98,
+   }
+   for _, value := range m {
+       fmt.Println(value)
+   }
+
+5.1.4 ``switch-case``\ 语句
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Go语言改进了传统的switch-case语句的语法设计：case与case之间是独立的代码块。不需要break跳出当前case代码块，以避免执行到下一行。
+
+代码示例如下：
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       var a = "love"
+       switch a {
+       case "love":
+           fmt.Println("love")
+       case "programming":
+           fmt.Println("programming")
+       default:
+           fmt.Println("none")
+       }
+   }
+
+(1) 一个分支多个值
+
+::
+
+   var language = "golang"
+       switch language {
+       case "golang", "java":
+           fmt.Println("program")
+   }
+
+(2) 分支表达式
+
+::
+
+   var r int = 11
+       switch {
+       case r > 10 && r < 20:
+           fmt.Println(r)
+       }
+
+5.1.5 ``goto``\ 语句
+~~~~~~~~~~~~~~~~~~~~
+
+goto语句可以跳转到指定标签，进行代码间的无条件跳转。
+
+在快速跳出循环，避免重复退出的方面有一定的帮助，goto语句可以简化代码上实现过程。
+
+传统的连续退出两层循环的代码示例：
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       var isBreak bool
+       for x := 0; x < 20; x++ {                   // 外循环
+           for y := 0; y < 20; y++ {               // 内循环
+               if y == 2 {                         // 满足某个条件时, 退出循环
+                   isBreak = true  // 设置退出标记
+                   break           // 退出本次循环
+               }
+           }
+       if isBreak {// 根据标记, 还需要退出一次循环
+               break
+          }
+   }
+       fmt.Println("over")
+   }
+
+使用goto语句进行优化
+
+.. code:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       for x := 0; x < 20; x++ {
+           for y := 0; y < 20; y++ {
+               if y == 2 {
+                   // 跳转到标签
+                   goto breakHere
+               }
+           }
+       }
+       // 手动返回, 避免执行进入标签
+       return
+       // 标签
+   breakHere:
+       fmt.Println("done")
+   }
+
+“goto breakTag” 来跳转到指明的标签处，breakTag 是自定义的标签。
+
+goto在\ ``多错误处理``\ 中优势
+
+::
+
+   func main() {
+       err := getUserInfo()
+       if err != nil {
+           fmt.Println(err)
+           exitProcess()
+       }
+
+       err = getEmail()
+       if err != nil {
+           fmt.Println(err)
+           exitProcess()
+       }
+       
+       fmt.Println("over")
+   }
+
+::
+
+   func main() {
+       err := getUserInfo()
+       if err != nil {
+           goto doExit
+       }
+
+       err = getEmail()
+       if err != nil {
+           goto doExit
+       }
+       
+       fmt.Println("over")
+       return
+
+   doExit:
+       fmt.Println(err)
+       exitProcess()
+   }
+
+6. Go数据类型
+-------------
+
++---------+------------------------------------------------------------+
+| 类型    | 说明                                                       |
++=========+============================================================+
+| 布尔型  | true或false                                                |
++---------+------------------------------------------------------------+
+| 数      | uint8、uint16、uint32、uint64、int8、int16、int32、int64   |
+| 字类型  | 、float32（IEEE-754）、float64（                           |
+|         | IEEE-754）、complex64、complex128、byte（uint8）、rune（i  |
+|         | nt32）、uint（32或64）、int（32或64）、uintptr（存放指针） |
++---------+------------------------------------------------------------+
+| 字符    | 一串固定长度的字符连接起来的字符序列，utf-8编码            |
+| 串类型  |                                                            |
++---------+------------------------------------------------------------+
+| 复      | 数组、切片、map、结构体                                    |
+| 合类型  |                                                            |
++---------+------------------------------------------------------------+
+
+6.1 布尔型
+~~~~~~~~~~
+
+只有两个相同类型的值才能比较：
+
+-  值的类型是接口（interface），两者必须都实现了相同的接口。
+-  一个是常量，另一个不是常量，类型必须和常量类型相同。
+-  类型不同，必须转换为相同类型，才能比较。
+
+&&优先级高于||，有短路现象。
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func bool2int(b bool) int {
+       if b {
+           return 1
+       } else {
+           return 0
+       }
+   }
+
+   func int2bool(i int) bool { return i != 0 }
+
+   func main() {
+       fmt.Println(bool2int(true)) //1
+       fmt.Println(int2bool(0))    //false
+   }
+
+6.2 数字类型
+~~~~~~~~~~~~
+
+位运算采用补码。int、uint和uintptr，长度由操作系统类型决定。
+
+6.3 字符串类型
+~~~~~~~~~~~~~~
+
+由一串固定长度的字符连接起来的字符序列，utf-8编码。值类型，字节的定长数组。
+
+.. code:: go
+
+   //声明和初始化
+   str := "string"
+
+字符串字面量用"或`创建
+
+-  "创建可解析的字符串，支持转义，不能引用多行
+-  \`创建原生的字符串字面量，不支持转义，可多行，不能包含反引号字符
+
+.. code:: go
+
+   str1 := "\"hello\"\nI love you"
+   str2 := `"hello"
+   I love you
+   `
+
+.. code:: go
+
+   //字符串连接
+   str := "I love" + " Go Web"
+   str += " programming"
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+       "unicode/utf8"
+   )
+
+   func main() {
+       str := "我喜欢Go Web"
+       fmt.Println(len(str))                    //15
+       fmt.Println(utf8.RuneCountInString(str)) //9
+       fmt.Println(str[9])                      //71
+       fmt.Println(string(str[9]))              //G
+       fmt.Println(str[:3])                     //我
+       fmt.Println(string(str[:3]))             //我
+       fmt.Println(str[3:])                     //喜欢Go Web
+       fmt.Println([]rune(str))                //[25105 21916 27426 71 111 32 87 101 98]
+   }
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       str := "我喜欢Go Web"
+       chars := []rune(str)
+       for ind, char := range chars {
+           fmt.Printf("%d: %s\n", ind, string(char))
+       }
+       for ind, char := range str {
+           fmt.Printf("%d: %s\n", ind, string(char))
+       }
+       for ind, char := range str {
+           fmt.Printf("%d: %U %c\n", ind, char, char)
+       }
+   }
+
+::
+
+   var buffer bytes.Buffer
+   for {
+       if piece, ok := getNextString(); ok {
+           buffer.WriteString(piece)
+       } else {
+           break
+       }
+   }
+   fmt.Println(buffer.String())
+
+不能通过str[i]方式修改字符串中的字符。
+只能将字符串内容复制到可写变量（[]byte或[]rune），然后修改。转换类型过程中会自动复制数据。
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       str := "hi 世界"
+       by := []byte(str)
+       by[2] = ','
+       fmt.Printf("%s\n", str) //hi 世界     
+       fmt.Printf("%s\n", by)  //hi 世界
+       fmt.Printf("%s\n", string(by))  //hi 世界
+   }
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       str := "hi 世界"
+       by := []rune(str)
+       by[3] = '中'
+       by[4] = '国'
+       fmt.Println(str) //hi 世界
+       fmt.Println(by)  //[104 105 32 20013 22269]
+       fmt.Println(string(by))     //hi 中国
+   }
+
+6.4 指针类型
+~~~~~~~~~~~~
+
+指针类型指存储内存地址的变量类型。
+
+::
+
+   var b int = 66
+   var p * int = &b
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       var score int = 100
+       var name string = "barry"
+       fmt.Printf("%p %p\n", &score, &name) //0xc0000ac058 0xc000088230
+   }
+
+.. code:: go
+
+   package main
+
+   import (
+       "fmt"
+   )
+
+   func main() {
+       var address string = "hangzhou, China"
+       ptr := &address
+
+       fmt.Printf("address type: %T\n", address)     //address type: string
+       fmt.Printf("address value: %v\n", address)    //address value: hangzhou, China
+       fmt.Printf("address address: %p\n", &address) //address address: 0xc00003a240
+
+       fmt.Printf("ptr type: %T\n", ptr)             //ptr type: *string
+       fmt.Printf("ptr value: %v\n", ptr)            //ptr value: 0xc00003a240
+       fmt.Printf("ptr address: %p\n", &ptr)         //ptr address: 0xc000006028
+       fmt.Printf("point value of ptr : %v\n", *ptr) //point value of ptr : hangzhou, China
+   }
