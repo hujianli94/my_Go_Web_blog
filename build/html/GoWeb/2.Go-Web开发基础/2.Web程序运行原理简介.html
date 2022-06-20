@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2. Web程序运行原理简介 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.3. net/http包" href="3.net-http%E5%8C%85.html" />
+    <link rel="prev" title="2.1. helloWorldWeb" href="1.helloWorldWeb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Go-Web开发基础</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.helloWorldWeb.html">2.1. helloWorldWeb</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. Web程序运行原理简介</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.2.1. 1.Web基本原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#http">2.2.2. 2.HTTP简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2.3. 3.HTTP请求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.2.4. 4.HTTP响应</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uriurl">2.2.5. 5.URI与URL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#https">2.2.6. 6.HTTPS简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#http2">2.2.7. 7.HTTP2简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.2.8. 8.Web应用程序的组成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="3.net-http%E5%8C%85.html">2.3. net/http包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.html-template%E5%8C%85.html">2.4. html/template包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Go-Web开发基础</a> &raquo;</li>
+      <li><span class="section-number">2.2. </span>Web程序运行原理简介</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/2.Go-Web开发基础/2.Web程序运行原理简介.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#web" id="id5">Web程序运行原理简介</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id6">1.Web基本原理</a></p></li>
+<li><p><a class="reference internal" href="#http" id="id7">2.HTTP简介</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id8">3.HTTP请求</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">4.HTTP响应</a></p></li>
+<li><p><a class="reference internal" href="#uriurl" id="id10">5.URI与URL</a></p></li>
+<li><p><a class="reference internal" href="#https" id="id11">6.HTTPS简介</a></p></li>
+<li><p><a class="reference internal" href="#http2" id="id12">7.HTTP2简介</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">8.Web应用程序的组成</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mvc" id="id14">8.1 MVC软件架构模型</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="web">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">2.2. </span>Web程序运行原理简介</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">2.2.1. </span>1.Web基本原理</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>1.运行原理 （1）用户打开客户端浏览器，输入URL地址。
+（2）客户端浏览器通过HTTP协议向服务器端发送浏览请求。
+（3）服务器端通过CGI程序接收请求，调用解释引擎处理“动态内容”，访问数据库并处理数据，通过HTTP协议将得到的处理结果返回给客户端浏览器。
+（4）客户端浏览器解释并显示HTML页面。</p>
+<p>DNS（Domain Name System，域名系统） 将主机名和域名转换为IP地址。
+DNS解析过程：
+（1）用户打开浏览器，输入URL地址。浏览器从URL中抽取域名（主机名），传给DNS应用程序的客户端。
+（2）DNS客户端向DNS服务器端发送查询报文，其中包含主机名。
+（3）DNS服务器端向DNS客户端发送回答报文，其中包含该主机名对应IP地址。
+（4）浏览器收到DNS的IP地址后，向该IP地址定位的HTTP服务器端发起TCP连接。</p>
+</section>
+<section id="http">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">2.2.2. </span>2.HTTP简介</a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h2>
+<p>HTTP（Hyper Text Transfer
+Protocal，超文本传输协议），简单请求-响应协议，运行在TCP协议上，无状态。
+它指定客户端发送给服务器端的消息和得到的响应。请求和响应消息头是ASCII码；消息内容则类似MIME格式。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">2.2.3. </span>3.HTTP请求</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>客户端发送到服务器端的请求消息。</p>
+<p>1.请求行（Request Line） 请求方法、URI、HTTP协议/协议版本组成。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>请求方法</p></th>
+<th class="head"><p>方法描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p>请求页面，并
+返回页面内容，请求参数包含在URL中，提交数据最多1024byte</p></td>
+</tr>
+<tr class="row-odd"><td><p>HEAD</p></td>
+<td><p>类似GET，只获取报头</p></td>
+</tr>
+<tr class="row-even"><td><p>POST</p></td>
+<td><p>提交表单或上传文件，数据（含请求参数）包含在请求体中</p></td>
+</tr>
+<tr class="row-odd"><td><p>PUT</p></td>
+<td><p>取代指定内容的文档</p></td>
+</tr>
+<tr class="row-even"><td><p>DELETE</p></td>
+<td><p>删除指定资源</p></td>
+</tr>
+<tr class="row-odd"><td><p>OPTIONS</p></td>
+<td><p>查看服务器的性能</p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECT</p></td>
+<td><p>服务器当作跳板，访问其他网页</p></td>
+</tr>
+<tr class="row-odd"><td><p>TRACE</p></td>
+<td><p>回显服务器收到的请求，用于测试或诊断</p></td>
+</tr>
+</tbody>
+</table>
+<p>2.请求头（Request Header）</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 37%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>请求头</p></th>
+<th class="head"><p>示例</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Accept</p></td>
+<td><p>Accept: text/plain,
+text/html</p></td>
+<td><p>客
+户端能够接收的内容类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>Accept-charset</p></td>
+<td><p>Accept-charset:
+iso-8859-5</p></td>
+<td><p>字符编码集</p></td>
+</tr>
+<tr class="row-even"><td><p>Accept-Encoding</p></td>
+<td><p>Accept-Encoding:
+compress, gzip</p></td>
+<td><p>压缩编码类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>Accept-Language</p></td>
+<td><p>Accept-Language: en,
+zh</p></td>
+<td><p>语言</p></td>
+</tr>
+<tr class="row-even"><td><p>Accept-Ranges</p></td>
+<td><p>Accept-Ranges: bytes</p></td>
+<td><p>子范围字段</p></td>
+</tr>
+<tr class="row-odd"><td><p>Authorization</p></td>
+<td><p>Authorization: Basic
+db
+XleoOEpePOetpoe2Ftyd==</p></td>
+<td><p>授权证书</p></td>
+</tr>
+<tr class="row-even"><td><p>Cache-Control</p></td>
+<td><p>Cache-Control:
+no-cache</p></td>
+<td><p>缓存机制</p></td>
+</tr>
+<tr class="row-odd"><td><p>Connection</p></td>
+<td><p>Connection: close</p></td>
+<td><p>是否需要持久连接（
+HTTP1.1默认持久连接）</p></td>
+</tr>
+<tr class="row-even"><td><p>Cookie</p></td>
+<td><p>Cookie: $version=1;
+Skin=new;</p></td>
+<td><p>请
+求域名下的所有cookie值</p></td>
+</tr>
+<tr class="row-odd"><td><p>Content-Length</p></td>
+<td><p>Content-Length: 348</p></td>
+<td><p>内容长度</p></td>
+</tr>
+</tbody>
+</table>
+<p>3.请求体（Request Body） HTTP请求中传输数据的实体。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.2.4. </span>4.HTTP响应</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>服务器端返回给客户端。</p>
+<p>1.响应状态码（Response Status Code）</p>
+<p>表示服务器的响应状态。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 30%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>状态码</p></th>
+<th class="head"><p>说明</p></th>
+<th class="head"><p>详情</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>100</p></td>
+<td><p>继续</p></td>
+<td><p>服务器
+收到部分请求，等待客户端继续提出请求</p></td>
+</tr>
+<tr class="row-odd"><td><p>101</p></td>
+<td><p>切换协议</p></td>
+<td><p>请求者已要求服务器
+切换协议，服务器已确认并准备切换协议</p></td>
+</tr>
+<tr class="row-even"><td><p>200</p></td>
+<td><p>成功</p></td>
+<td><p>成功处理请求</p></td>
+</tr>
+<tr class="row-odd"><td><p>201</p></td>
+<td><p>已创建</p></td>
+<td><p>服务器创建了新的资源</p></td>
+</tr>
+<tr class="row-even"><td><p>202</p></td>
+<td><p>已接受</p></td>
+<td><p>已接收请求，但尚未处理</p></td>
+</tr>
+<tr class="row-odd"><td><p>203</p></td>
+<td><p>非授权信息</p></td>
+<td><p>成功处理请求，但返回信息来自另一个源</p></td>
+</tr>
+<tr class="row-even"><td><p>204</p></td>
+<td><p>无内容</p></td>
+<td><p>成功处理请求，无返回内容</p></td>
+</tr>
+<tr class="row-odd"><td><p>205</p></td>
+<td><p>重置内容</p></td>
+<td><p>成功处理请求，内容重置</p></td>
+</tr>
+<tr class="row-even"><td><p>206</p></td>
+<td><p>部分内容</p></td>
+<td><p>成功处理部分内容</p></td>
+</tr>
+<tr class="row-odd"><td><p>300</p></td>
+<td><p>多种选择</p></td>
+<td><p>可执行多种操作</p></td>
+</tr>
+<tr class="row-even"><td><p>301</p></td>
+<td><p>永久移动</p></td>
+<td><p>永久重定向</p></td>
+</tr>
+<tr class="row-odd"><td><p>302</p></td>
+<td><p>临时移动</p></td>
+<td><p>暂时重定向</p></td>
+</tr>
+<tr class="row-even"><td><p>303</p></td>
+<td><p>查看其他位置</p></td>
+<td><p>重定向目标文档应通过GET获取</p></td>
+</tr>
+<tr class="row-odd"><td><p>304</p></td>
+<td><p>未修改</p></td>
+<td><p>使用上次网页资源</p></td>
+</tr>
+<tr class="row-even"><td><p>305</p></td>
+<td><p>使用代理</p></td>
+<td><p>应使用代理访问</p></td>
+</tr>
+<tr class="row-odd"><td><p>307</p></td>
+<td><p>临时重定向</p></td>
+<td><p>临时从其他位置响应</p></td>
+</tr>
+<tr class="row-even"><td><p>400</p></td>
+<td><p>错误请求</p></td>
+<td><p>无法解析</p></td>
+</tr>
+<tr class="row-odd"><td><p>401</p></td>
+<td><p>未授权</p></td>
+<td><p>无身份验证或验证未通过</p></td>
+</tr>
+<tr class="row-even"><td><p>403</p></td>
+<td><p>禁止访问</p></td>
+<td><p>拒绝</p></td>
+</tr>
+<tr class="row-odd"><td><p>404</p></td>
+<td><p>未找到</p></td>
+<td><p>找不到</p></td>
+</tr>
+<tr class="row-even"><td><p>405</p></td>
+<td><p>方法禁用</p></td>
+<td><p>禁用指定方法</p></td>
+</tr>
+<tr class="row-odd"><td><p>406</p></td>
+<td><p>不接受</p></td>
+<td><p>无法使用内容响应</p></td>
+</tr>
+<tr class="row-even"><td><p>407</p></td>
+<td><p>需要代理授权</p></td>
+<td><p>需要使用代理授权</p></td>
+</tr>
+<tr class="row-odd"><td><p>408</p></td>
+<td><p>请求超时</p></td>
+<td><p>请求超时</p></td>
+</tr>
+<tr class="row-even"><td><p>409</p></td>
+<td><p>冲突</p></td>
+<td><p>完成请求时发生冲突</p></td>
+</tr>
+<tr class="row-odd"><td><p>410</p></td>
+<td><p>已删除</p></td>
+<td><p>资源永久删除</p></td>
+</tr>
+<tr class="row-even"><td><p>411</p></td>
+<td><p>需要有效长度</p></td>
+<td><p>不接受标头字段不含有效内容长度</p></td>
+</tr>
+<tr class="row-odd"><td><p>412</p></td>
+<td><p>未满足前提条件</p></td>
+<td><p>服务器未满足某个前提条件</p></td>
+</tr>
+<tr class="row-even"><td><p>413</p></td>
+<td><p>请求实体过大</p></td>
+<td><p>超出能力</p></td>
+</tr>
+<tr class="row-odd"><td><p>414</p></td>
+<td><p>请求URI过长</p></td>
+<td><p>网址过长，无法处理</p></td>
+</tr>
+<tr class="row-even"><td><p>415</p></td>
+<td><p>不支持类型</p></td>
+<td><p>格式不支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>416</p></td>
+<td><p>请求范围不符</p></td>
+<td><p>页面无法提供请求范围</p></td>
+</tr>
+<tr class="row-even"><td><p>417</p></td>
+<td><p>未满足期望值</p></td>
+<td><p>未满足期望请求标头字段</p></td>
+</tr>
+<tr class="row-odd"><td><p>500</p></td>
+<td><p>服务器内部发生错误</p></td>
+<td><p>服务器错误</p></td>
+</tr>
+<tr class="row-even"><td><p>501</p></td>
+<td><p>未实现</p></td>
+<td><p>不具备功能</p></td>
+</tr>
+<tr class="row-odd"><td><p>502</p></td>
+<td><p>错误网关</p></td>
+<td><p>收到无效响应</p></td>
+</tr>
+<tr class="row-even"><td><p>503</p></td>
+<td><p>服务不可用</p></td>
+<td><p>无法使用</p></td>
+</tr>
+<tr class="row-odd"><td><p>504</p></td>
+<td><p>网关超时</p></td>
+<td><p>没及时收到请求</p></td>
+</tr>
+<tr class="row-even"><td><p>505</p></td>
+<td><p>HTTP版本不支持</p></td>
+<td><p>不支持HTTP协议版本</p></td>
+</tr>
+</tbody>
+</table>
+<p>2.响应头（Response Headers） 包含服务器对请求的应答信息。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>响应头</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Allow</p></td>
+<td><p>服务器支持的请求方法</p></td>
+</tr>
+<tr class="row-odd"><td><p>Content-Encondig</p></td>
+<td><p>文档编码方法。</p></td>
+</tr>
+<tr class="row-even"><td><p>Content-Length</p></td>
+<td><p>内容长度，浏览器持久HTTP连接时需要</p></td>
+</tr>
+<tr class="row-odd"><td><p>Content-Type</p></td>
+<td><p>文档的MIME类型</p></td>
+</tr>
+<tr class="row-even"><td><p>Date</p></td>
+<td><p>GMT时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>Expires</p></td>
+<td><p>过期时间后，不再缓存</p></td>
+</tr>
+<tr class="row-even"><td><p>Last-Modified</p></td>
+<td><p>文档最后改动时间。通过
+比较客户端头if-Modified-Since，可能返回304（Not
+Modified）。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>客户端应去哪里提取文档。</p></td>
+</tr>
+<tr class="row-even"><td><p>Refresh</p></td>
+<td><p>浏览器应刷新时间，秒</p></td>
+</tr>
+<tr class="row-odd"><td><p>Server</p></td>
+<td><p>服务器名字</p></td>
+</tr>
+<tr class="row-even"><td><p>Set-Cookie</p></td>
+<td><p>设置页面关联Cookie</p></td>
+</tr>
+<tr class="row-odd"><td><p>WWW-Authenticate</p></td>
+<td><p>客
+户应在Authorization中提供授权信息，通常返回401。</p></td>
+</tr>
+</tbody>
+</table>
+<p>3.响应体（Response Body） HTTP请求返回的内容。
+HTML，二进制数据，JSON文档，XML文档等。</p>
+</section>
+<section id="uriurl">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">2.2.5. </span>5.URI与URL</a><a class="headerlink" href="#uriurl" title="Permalink to this headline">¶</a></h2>
+<p>1.URI（Uniform Resource Identifier，统一资源标识符）
+用来标识Web上每一种可用资源，概念。由资源的命名机制、存放资源的主机名、资源自身的名称等组成。</p>
+<p>2.URL（Uniform Resource Locator，统一资源定位符）
+用于描述网络上的资源（描述信息资源的字符串），实现。使用统一格式，包括文件、服务器地址和目录等。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>scheme://host[:port#]/path/.../[?query-string][#anchor]
+//协议（服务方式）
+//主机域名或IP地址（可含端口号）
+//具体地址，目录和文件名等
+</pre></div>
+</div>
+<p>3.URN（Uniform Resource Name，统一资源名）
+带有名字的因特网资源，是URL的更新形式，不依赖位置，可减少失效链接个数。</p>
+</section>
+<section id="https">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">2.2.6. </span>6.HTTPS简介</a><a class="headerlink" href="#https" title="Permalink to this headline">¶</a></h2>
+<p>HTTPS（Hyper Text Transfer Protocol over SecureSocket
+Layer），在HTTP基础上，通过传输加密和身份认证保证传输过程的安全型。</p>
+<p>HTTP + SSL/TLS。</p>
+<p>TLS（Transport Layer Security，传输层安全性协议），及其前身SSL（Secure
+Socket Layer，安全套接字层），保障通信安全和数据完整性。</p>
+</section>
+<section id="http2">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">2.2.7. </span>7.HTTP2简介</a><a class="headerlink" href="#http2" title="Permalink to this headline">¶</a></h2>
+<p>1.HTTP协议历史</p>
+<ul class="simple">
+<li><p>HTTP 0.9 只支持GET方法，不支持MIME类型和HTTP各种头信息等。</p></li>
+<li><p>HTTP 1.0 增加很多方法、各种HTTP头信息，以及对多媒体对象的处理。</p></li>
+<li><p>HTTP 1.1
+主流HTTP协议，改善结构性缺陷，明确语义，增删特性，支持更复杂的Web应用程序。</p></li>
+<li><p>HTTP 2 优化性能，兼容HTTP
+1.1语义，是二进制协议，头部采用HPACK压缩，支持多路复用、服务器推送等。</p></li>
+</ul>
+<p>2.HTTP 1.1与HTTP 2的对比</p>
+<ul class="simple">
+<li><p>头信息压缩 HTTP 1.1中，每一次发送和响应，都有HTTP头信息。HTTP
+2压缩头信息，减少带宽。</p></li>
+<li><p>推送功能 HTTP
+2之前，只能客户端发送数据，服务器端返回数据。HTTP2中，服务器可以主动向客户端发起一些数据传输（如css和png等），服务器可以并行发送html，css，js等数据。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">2.2.8. </span>8.Web应用程序的组成</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>1.处理器（hendler）
+接收HTTP请求并处理。调用模板引擎生成html文档返给客户端。</p>
+<section id="mvc">
+<h3><a class="toc-backref" href="#id14">8.1 MVC软件架构模型</a><a class="headerlink" href="#mvc" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>模型（Model）
+处理与业务逻辑相关的数据，以及封装对数据的处理方法。有对数据直接访问的权力，例如访问数据库。</p></li>
+<li><p>视图（View） 实现有目的的显示数据，一般没有程序的逻辑。</p></li>
+<li><p>控制器（Controller）
+组织不同层面，控制流程，处理用户请求，模型交互等事件，并做出响应。</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>模板引擎（template engine）</p></li>
+</ol>
+<p>分离界面与数据（内容），组合模板（template）与数据（data），生成html文档。</p>
+<p>分为置换型（模板内容中特定标记替换）、解释型和编译型等。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1.helloWorldWeb.html" class="btn btn-neutral float-left" title="2.1. helloWorldWeb" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3.net-http%E5%8C%85.html" class="btn btn-neutral float-right" title="2.3. net/http包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
