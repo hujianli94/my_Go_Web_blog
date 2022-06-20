@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.1. 简单Go Web服务器 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.2. 处理请求" href="2.%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82.html" />
+    <link rel="prev" title="3. 接收和处理Go-Web请求" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 接收和处理Go-Web请求</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.1. 简单Go Web服务器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.1.1. 1.接收请求</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82.html">3.2. 处理请求</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>接收和处理Go-Web请求</a> &raquo;</li>
+      <li><span class="section-number">3.1. </span>简单Go Web服务器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/3.接收和处理Go-Web请求/1.简单Go-Web服务器.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#go-web" id="id6">简单Go Web服务器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id7">1.接收请求</a></p>
+<ul>
+<li><p><a class="reference internal" href="#servemuxdefaultservemux" id="id8">1.1 ServeMux和DefaultServeMux</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">1.2 处理器和处理器函数</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id10">1.3 串联处理器和处理器函数</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id11">1.4 构建模型</a></p></li>
+<li><p><a class="reference internal" href="#html" id="id12">1.5 生成HTML表单</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="go-web">
+<h1><a class="toc-backref" href="#id6"><span class="section-number">3.1. </span>简单Go Web服务器</a><a class="headerlink" href="#go-web" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">helloWorld</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;Hello Go Web!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">,</span> <span class="nx">helloWorld</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8081&quot;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Go Web服务器请求和响应流程：</p>
+<ol class="arabic simple">
+<li><p>客户端发送请求；</p></li>
+<li><p>服务器端的多路复用器收到请求；</p></li>
+<li><p>多路复用器根据请求的URL找到注册的处理器，转交请求给处理器；</p></li>
+<li><p>处理器执行程序逻辑，如必要，与数据库交互，得到处理结果；</p></li>
+<li><p>处理器调用模板引擎将指定模板和上一步结果渲染成客户端可识别的数据格式（通常HTML）；</p></li>
+<li><p>服务器将数据通过HTTP响应返回给客户端；</p></li>
+<li><p>客户端拿到数据，执行对应的操作（例如渲染出来呈现给用户）。</p></li>
+</ol>
+<section id="id1">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">3.1.1. </span>1.接收请求</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="servemuxdefaultservemux">
+<h3><a class="toc-backref" href="#id8">1.1 ServeMux和DefaultServeMux</a><a class="headerlink" href="#servemuxdefaultservemux" title="Permalink to this headline">¶</a></h3>
+<section id="id2">
+<h4>1.ServeMux和DefaultServeMux简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>多路复用器用于转发请求到处理器。</p>
+<p>结构体ServeMux中，包含URL到相应处理器的映射。它会根据请求URL找出最匹配的URL，然后调用对应处理器的ServeHTTP()方法来处理请求。</p>
+<p>DefaultServeMux是ServeMux的一个实例，默认的多路复用器。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">DefaultServeMux</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">defaultServeMux</span>
+<span class="n">var</span> <span class="n">defaultServeMux</span> <span class="n">ServeMux</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">为指定URL注册处理器</span>
+<span class="n">func</span> <span class="n">HandleFunc</span><span class="p">(</span><span class="n">pattern</span> <span class="n">string</span><span class="p">,</span> <span class="n">handler</span> <span class="n">func</span><span class="p">(</span><span class="n">ResponseWrite</span><span class="p">,</span> <span class="o">*</span><span class="n">Request</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">DefaultServeMux</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="n">Handle</span><span class="p">(</span><span class="n">pattern</span> <span class="n">string</span><span class="p">,</span> <span class="n">handler</span> <span class="n">Handler</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DefaultServeMux</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="p">(</span><span class="n">sh</span> <span class="n">serverHandler</span><span class="p">)</span> <span class="n">ServeHTTP</span><span class="p">(</span><span class="n">rw</span> <span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">req</span> <span class="o">*</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">handler</span> <span class="o">:=</span> <span class="n">sh</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">Handler</span>
+    <span class="k">if</span> <span class="n">handler</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">DefaultServeMux</span>
+    <span class="p">}</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">ServeHTTP</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">handle1</span> <span class="kd">struct</span><span class="p">{}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h1</span> <span class="o">*</span><span class="nx">handle1</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;hi, handle1&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">handle2</span> <span class="kd">struct</span><span class="p">{}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h2</span> <span class="o">*</span><span class="nx">handle2</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;hi, handle2&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">handle1</span> <span class="o">:=</span> <span class="nx">handle1</span><span class="p">{}</span>
+    <span class="nx">handle2</span> <span class="o">:=</span> <span class="nx">handle2</span><span class="p">{}</span>
+
+    <span class="nx">server</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span>    <span class="s">&quot;0.0.0.0:8085&quot;</span><span class="p">,</span>
+        <span class="nx">Handler</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="nx">http</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/handle1&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">handle1</span><span class="p">)</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/handle2&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">handle2</span><span class="p">)</span>
+    <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">hi</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;hi, web&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">NewServeMux</span><span class="p">()</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="nx">hi</span><span class="p">)</span>
+
+    <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span>         <span class="s">&quot;0.0.0.0:8081&quot;</span><span class="p">,</span>
+        <span class="nx">Handler</span><span class="p">:</span>      <span class="nx">mux</span><span class="p">,</span>
+        <span class="nx">ReadTimeout</span><span class="p">:</span>  <span class="mi">5</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
+        <span class="nx">WriteTimeout</span><span class="p">:</span> <span class="mi">5</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="servemuxurl">
+<h4>2.ServeMux的URL路由匹配<a class="headerlink" href="#servemuxurl" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">indexHandler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;欢迎来到Go Web首页!处理器为:indexHandler!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">hiHandler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;欢迎来到Go Web首页!处理器为:hiHandler!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">webHandler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;欢迎来到Go Web首页!处理器为:webHandler!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">NewServeMux</span><span class="p">()</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="nx">indexHandler</span><span class="p">)</span>     <span class="c1">// &quot;/&quot;, &quot;/hi/&quot;</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hi&quot;</span><span class="p">,</span> <span class="nx">hiHandler</span><span class="p">)</span>      <span class="c1">// &quot;/hi&quot;</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hi/web&quot;</span><span class="p">,</span> <span class="nx">webHandler</span><span class="p">)</span> <span class="c1">// &quot;/hi/web&quot;</span>
+
+    <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span>    <span class="s">&quot;:8083&quot;</span><span class="p">,</span>
+        <span class="nx">Handler</span><span class="p">:</span> <span class="nx">mux</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">hiHandler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;Hi, Go HandleFunc&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">welcomeHandler</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">welcomeHandler</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;Hi, %s&quot;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">NewServeMux</span><span class="p">()</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hi&quot;</span><span class="p">,</span> <span class="nx">hiHandler</span><span class="p">)</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/welcome/goweb&quot;</span><span class="p">,</span> <span class="nx">welcomeHandler</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span> <span class="s">&quot;test&quot;</span><span class="p">})</span>
+
+    <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span>    <span class="s">&quot;:8085&quot;</span><span class="p">,</span>
+        <span class="nx">Handler</span><span class="p">:</span> <span class="nx">mux</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="httprouter">
+<h4>3.HttpRouter简介<a class="headerlink" href="#httprouter" title="Permalink to this headline">¶</a></h4>
+<p>使用变量实现URL模式匹配。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+
+    <span class="s">&quot;github.com/julienschmidt/httprouter&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">Index</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">_</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="nx">Index</span><span class="p">)</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8082&quot;</span><span class="p">,</span> <span class="nx">router</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>**URL包括两种匹配模式：/user/:name精确匹配、/employee/<em>name匹配所有的模式。</em>*</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;net/http&quot;</span>
+
+    <span class="s">&quot;github.com/julienschmidt/httprouter&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/MainData&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">_</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;default get&quot;</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">POST</span><span class="p">(</span><span class="s">&quot;/MainData&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">_</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;default post&quot;</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="c1">//精确匹配</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/user/name&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;user name:&quot;</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">ByName</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)))</span>
+    <span class="p">})</span>
+    <span class="c1">//匹配所有</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/employee/*name&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;employee name:&quot;</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">ByName</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)))</span>
+    <span class="p">})</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8081&quot;</span><span class="p">,</span> <span class="nx">router</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Handler处理链处理不同二级域名</strong></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;github.com/julienschmidt/httprouter&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">HostMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">hs</span> <span class="nx">HostMap</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//根据域名获取对应的Handler路由，然后调用处理（分发机制）</span>
+    <span class="k">if</span> <span class="nx">handler</span> <span class="o">:=</span> <span class="nx">hs</span><span class="p">[</span><span class="nx">r</span><span class="p">.</span><span class="nx">Host</span><span class="p">];</span> <span class="nx">handler</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">handler</span><span class="p">.</span><span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">http</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;Forbidden&quot;</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">userRouter</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="nx">userRouter</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;sub1&quot;</span><span class="p">))</span>
+    <span class="p">})</span>
+
+    <span class="nx">dataRouter</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="nx">dataRouter</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">_</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;sub2&quot;</span><span class="p">))</span>
+    <span class="p">})</span>
+
+    <span class="c1">//分别用于处理不同的二级域名</span>
+    <span class="nx">hs</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">HostMap</span><span class="p">)</span>
+    <span class="nx">hs</span><span class="p">[</span><span class="s">&quot;sub1.localhost:8888&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="nx">userRouter</span>
+    <span class="nx">hs</span><span class="p">[</span><span class="s">&quot;sub2.localhost:8888&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="nx">dataRouter</span>
+
+    <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8888&quot;</span><span class="p">,</span> <span class="nx">hs</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>httprouter提供了很方便的静态文件服务，可以把一个目录托管在服务器上，以供访问。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">router</span><span class="o">.</span><span class="n">ServeFiles</span><span class="p">(</span><span class="s2">&quot;/static/*filepath&quot;</span><span class="p">,</span><span class="n">http</span><span class="o">.</span><span class="n">Dir</span><span class="p">(</span><span class="s2">&quot;./&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+
+    <span class="s">&quot;github.com/julienschmidt/httprouter&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="c1">//访问静态文件</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">ServeFiles</span><span class="p">(</span><span class="s">&quot;/static/*filepath&quot;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Dir</span><span class="p">(</span><span class="s">&quot;./&quot;</span><span class="p">))</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8086&quot;</span><span class="p">,</span> <span class="nx">router</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>httprouter
+异常捕获，httprouter允许使用者，设置PanicHandler用于处理HTTP请求中发生的panic。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+
+    <span class="s">&quot;github.com/julienschmidt/httprouter&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">Index</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">_</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">router</span> <span class="o">:=</span> <span class="nx">httprouter</span><span class="p">.</span><span class="nx">New</span><span class="p">()</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">GET</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="nx">Index</span><span class="p">)</span>
+  <span class="c1">//捕获异常</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">PanicHandler</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+        <span class="nx">w</span><span class="p">.</span><span class="nx">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;error:%s&quot;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8080&quot;</span><span class="p">,</span> <span class="nx">router</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>httprouter还有不少有用的小功能，比如对404进行处理，我们通过设置Router.NotFound来实现，我们看看Router这个结构体的配置，可以发现更多有用的功能。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Router</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">//是否通过重定向，给路径自定加斜杠</span>
+    <span class="nx">RedirectTrailingSlash</span> <span class="kt">bool</span>
+    <span class="c1">//是否通过重定向，自动修复路径，比如双斜杠等自动修复为单斜杠</span>
+    <span class="nx">RedirectFixedPath</span> <span class="kt">bool</span>
+    <span class="c1">//是否检测当前请求的方法被允许</span>
+    <span class="nx">HandleMethodNotAllowed</span> <span class="kt">bool</span>
+    <span class="c1">//是否自定答复OPTION请求</span>
+    <span class="nx">HandleOPTIONS</span> <span class="kt">bool</span>
+    <span class="c1">//404默认处理</span>
+    <span class="nx">NotFound</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
+    <span class="c1">//不被允许的方法默认处理</span>
+    <span class="nx">MethodNotAllowed</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
+    <span class="c1">//异常统一处理</span>
+    <span class="nx">PanicHandler</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="kd">interface</span><span class="p">{})</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id9">1.2 处理器和处理器函数</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>处理器是实现了Handler接口的结构。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">Handler</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">func</span> <span class="n">ServeHTTP</span><span class="p">(</span><span class="n">w</span> <span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">Request</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">WelcomeHandler</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Language</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">WelcomeHandler</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">Language</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">NewServeMux</span><span class="p">()</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/cn&quot;</span><span class="p">,</span> <span class="nx">WelcomeHandler</span><span class="p">{</span><span class="nx">Language</span><span class="p">:</span> <span class="s">&quot;欢迎一起来学Go Web!&quot;</span><span class="p">})</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/en&quot;</span><span class="p">,</span> <span class="nx">WelcomeHandler</span><span class="p">{</span><span class="nx">Language</span><span class="p">:</span> <span class="s">&quot;Welcome you, let&#39;s learn Go Web!&quot;</span><span class="p">})</span>
+
+    <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span>    <span class="s">&quot;:8082&quot;</span><span class="p">,</span>
+        <span class="nx">Handler</span><span class="p">:</span> <span class="nx">mux</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>处理器函数实现了匿名函数func(w http.ResponseWriter, r *http.Request)。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">mux</span> <span class="o">*</span><span class="nx">ServeMux</span><span class="p">)</span> <span class="nx">HandleFunc</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handler</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">handler</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;http: nil handler&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="nx">pattern</span><span class="p">,</span> <span class="nx">HandlerFunc</span><span class="p">(</span><span class="nx">handler</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">HandlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">f</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id10">1.3 串联处理器和处理器函数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;reflect&quot;</span>
+    <span class="s">&quot;runtime&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">hello</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">log</span><span class="p">(</span><span class="nx">h</span> <span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">name</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">FuncForPC</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">h</span><span class="p">).</span><span class="nx">Pointer</span><span class="p">()).</span><span class="nx">Name</span><span class="p">()</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Handler function called  - &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">)</span>
+        <span class="nx">h</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">server</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+        <span class="nx">Addr</span><span class="p">:</span> <span class="s">&quot;127.0.0.1:8080&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">,</span> <span class="nx">log</span><span class="p">(</span><span class="nx">hello</span><span class="p">))</span>
+    <span class="nx">server</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id11">1.4 构建模型</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>构建模型增删查改数据库。</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="k">user</span> <span class="p">(</span>
+    <span class="n">uid</span> <span class="nb">bigint</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="s1">&#39;&#39;</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">phone</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="s1">&#39;&#39;</span> <span class="k">null</span>
+<span class="p">)</span> <span class="n">charset</span><span class="o">=</span><span class="n">utf8mb4</span> <span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">model</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/go-sql-driver/mysql&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">DB</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">DB</span>
+
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Uid</span>   <span class="kt">int</span>
+    <span class="nx">Name</span>  <span class="kt">string</span>
+    <span class="nx">Phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">//初始化数据库连接</span>
+<span class="kd">func</span> <span class="nx">init</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="nx">DB</span><span class="p">,</span> <span class="nx">_</span> <span class="p">=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;mysql&quot;</span><span class="p">,</span>
+        <span class="s">&quot;root:123456@tcp(127.0.0.1:3306)/chapter3&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//获取用户信息</span>
+<span class="kd">func</span> <span class="nx">GetUser</span><span class="p">(</span><span class="nx">uid</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">u</span> <span class="nx">User</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 非常重要：确保QueryRow之后调用Scan方法，否则持有的数据库链接不会被释放</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">DB</span><span class="p">.</span><span class="nx">QueryRow</span><span class="p">(</span><span class="s">&quot;select uid, name, phone from `user` where uid=?&quot;</span><span class="p">,</span> <span class="nx">uid</span><span class="p">).</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Uid</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Phone</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;scan failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">u</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="html">
+<h3><a class="toc-backref" href="#id12">1.5 生成HTML表单</a><a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h3>
+<p>view/t3.html</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Welcome to my page<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    {{range .}}
+        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-align:center&quot;</span><span class="p">&gt;</span>{{.}}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    {{end}}
+        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-align:center&quot;</span><span class="p">&gt;</span>Welcome to my page<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-align:center&quot;</span><span class="p">&gt;</span>this is the user info page<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">controller</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;gitee.com/shirdonl/goWebActualCombat/chapter3/model&quot;</span>
+    <span class="s">&quot;html/template&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;strconv&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">UserController</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">UserController</span><span class="p">)</span> <span class="nx">GetUser</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="nx">query</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Query</span><span class="p">()</span>
+    <span class="nx">uid</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">Atoi</span><span class="p">(</span><span class="nx">query</span><span class="p">[</span><span class="s">&quot;uid&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1">//此处调用模型从数据库中获取数据</span>
+    <span class="nx">user</span> <span class="o">:=</span> <span class="nx">model</span><span class="p">.</span><span class="nx">GetUser</span><span class="p">(</span><span class="nx">uid</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span>
+
+    <span class="nx">t</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">ParseFiles</span><span class="p">(</span><span class="s">&quot;view/t3.html&quot;</span><span class="p">)</span>
+    <span class="nx">userInfo</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">Phone</span><span class="p">}</span>
+    <span class="nx">t</span><span class="p">.</span><span class="nx">Execute</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">userInfo</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;gitee.com/shirdonl/goWebActualCombat/chapter3/controller&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/getUser&quot;</span><span class="p">,</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">UserController</span><span class="p">{}.</span><span class="nx">GetUser</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8088&quot;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="3. 接收和处理Go-Web请求" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82.html" class="btn btn-neutral float-right" title="3.2. 处理请求" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

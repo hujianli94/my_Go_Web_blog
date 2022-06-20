@@ -124,16 +124,16 @@
 <h1><a class="toc-backref" href="#id5"><span class="section-number">2.2. </span>Web程序运行原理简介</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h1>
 <section id="id1">
 <h2><a class="toc-backref" href="#id6"><span class="section-number">2.2.1. </span>1.Web基本原理</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>1.运行原理 （1）用户打开客户端浏览器，输入URL地址。
-（2）客户端浏览器通过HTTP协议向服务器端发送浏览请求。
-（3）服务器端通过CGI程序接收请求，调用解释引擎处理“动态内容”，访问数据库并处理数据，通过HTTP协议将得到的处理结果返回给客户端浏览器。
-（4）客户端浏览器解释并显示HTML页面。</p>
+<p>1.运行原理 （1）用户打开客户端浏览器，输入URL地址。</p>
+<p>（2）客户端浏览器通过HTTP协议向服务器端发送浏览请求。</p>
+<p>（3）服务器端通过CGI程序接收请求，调用解释引擎处理“动态内容”，访问数据库并处理数据，通过HTTP协议将得到的处理结果返回给客户端浏览器。</p>
+<p>（4）客户端浏览器解释并显示HTML页面。</p>
 <p>DNS（Domain Name System，域名系统） 将主机名和域名转换为IP地址。
-DNS解析过程：
-（1）用户打开浏览器，输入URL地址。浏览器从URL中抽取域名（主机名），传给DNS应用程序的客户端。
-（2）DNS客户端向DNS服务器端发送查询报文，其中包含主机名。
-（3）DNS服务器端向DNS客户端发送回答报文，其中包含该主机名对应IP地址。
-（4）浏览器收到DNS的IP地址后，向该IP地址定位的HTTP服务器端发起TCP连接。</p>
+DNS解析过程：</p>
+<p>（1）用户打开浏览器，输入URL地址。浏览器从URL中抽取域名（主机名），传给DNS应用程序的客户端。</p>
+<p>（2）DNS客户端向DNS服务器端发送查询报文，其中包含主机名。</p>
+<p>（3）DNS服务器端向DNS客户端发送回答报文，其中包含该主机名对应IP地址。</p>
+<p>（4）浏览器收到DNS的IP地址后，向该IP地址定位的HTTP服务器端发起TCP连接。</p>
 </section>
 <section id="http">
 <h2><a class="toc-backref" href="#id7"><span class="section-number">2.2.2. </span>2.HTTP简介</a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h2>
@@ -250,7 +250,8 @@ Skin=new;</p></td>
 </tr>
 </tbody>
 </table>
-<p>3.请求体（Request Body） HTTP请求中传输数据的实体。</p>
+<p>3.请求体（Request Body）</p>
+<p>HTTP请求中传输数据的实体。</p>
 </section>
 <section id="id3">
 <h2><a class="toc-backref" href="#id9"><span class="section-number">2.2.4. </span>4.HTTP响应</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -483,8 +484,9 @@ Modified）。</p></td>
 </tr>
 </tbody>
 </table>
-<p>3.响应体（Response Body） HTTP请求返回的内容。
-HTML，二进制数据，JSON文档，XML文档等。</p>
+<p>3.响应体（Response Body）</p>
+<p>HTTP请求返回的内容。</p>
+<p>HTML，二进制数据，JSON文档，XML文档等。</p>
 </section>
 <section id="uriurl">
 <h2><a class="toc-backref" href="#id10"><span class="section-number">2.2.5. </span>5.URI与URL</a><a class="headerlink" href="#uriurl" title="Permalink to this headline">¶</a></h2>

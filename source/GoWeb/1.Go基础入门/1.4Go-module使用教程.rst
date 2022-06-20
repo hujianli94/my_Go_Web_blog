@@ -38,8 +38,13 @@ Gitee GoProxy仓使用帮助 代理上游
 1.2详细步骤
 ~~~~~~~~~~~
 
-（1）升级到Go1.13 （2）运行go env -w GO111MODULE=on （3）运行go env -w
-GOPROXY=https://goproxy.cn,direct 可以通过运行go env查看
+（1）升级到Go1.13
+
+（2）运行go env -w GO111MODULE=on
+
+（3）运行go env -w GOPROXY=https://goproxy.cn,direct
+``可以通过运行go env查看``
+
 （4）在项目根目录下执行\ ``go mod init``\ 执行成功后生成go.mod文件
 
 1.3其他指令
@@ -47,23 +52,23 @@ GOPROXY=https://goproxy.cn,direct 可以通过运行go env查看
 
 ::
 
-   go get -u //更新现有的依赖
-   go mod tidy //整理模块（拉取缺少的模块，移除不用的模块）
-   go mod download//下载依赖包
-   go mod graph //打印现有依赖结构
-   go mod vendor //将依赖复制到vendor下
-   go mod verify //校验依赖
+   go get -u               //更新现有的依赖
+   go mod tidy             //整理模块（拉取缺少的模块，移除不用的模块）
+   go mod download         //下载依赖包
+   go mod graph            //打印现有依赖结构
+   go mod vendor           //将依赖复制到vendor下
+   go mod verify           //校验依赖
 
 1.4 go.mod文件解析
 ~~~~~~~~~~~~~~~~~~
 
 ::
 
-   module：模块名称，使用指令go mod init <OPTIONAL_MODULE_PATH>可设置
-   require：依赖包列表以及版本
-   exclude：禁用依赖包列表
-   replace：替换依赖包列表
-   go：go版本号
+   module：     //模块名称，使用指令go mod init <OPTIONAL_MODULE_PATH>可设置
+   require：        //依赖包列表以及版本
+   exclude：        //禁用依赖包列表
+   replace：        //替换依赖包列表
+   go：         //go版本号
 
 2.使用go module导入本地包
 -------------------------
@@ -313,3 +318,7 @@ GOPROXY=https://goproxy.cn,direct 可以通过运行go env查看
 此时，我们就可以正常编译\ ``p1``\ 这个项目了。
 
 说再多也没用，自己动手试试吧。
+
+   参考文献:
+
+   https://www.cnblogs.com/haiyux/p/15162661.html

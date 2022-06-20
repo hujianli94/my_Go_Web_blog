@@ -146,28 +146,30 @@
 </section>
 <section id="id3">
 <h3><a class="toc-backref" href="#id21">1.2详细步骤</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>（1）升级到Go1.13 （2）运行go env -w GO111MODULE=on （3）运行go env -w
-GOPROXY=https://goproxy.cn,direct 可以通过运行go env查看
-（4）在项目根目录下执行<code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">mod</span> <span class="pre">init</span></code>执行成功后生成go.mod文件</p>
+<p>（1）升级到Go1.13</p>
+<p>（2）运行go env -w GO111MODULE=on</p>
+<p>（3）运行go env -w GOPROXY=https://goproxy.cn,direct
+<code class="docutils literal notranslate"><span class="pre">可以通过运行go</span> <span class="pre">env查看</span></code></p>
+<p>（4）在项目根目录下执行<code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">mod</span> <span class="pre">init</span></code>执行成功后生成go.mod文件</p>
 </section>
 <section id="id4">
 <h3><a class="toc-backref" href="#id22">1.3其他指令</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>go get -u //更新现有的依赖
-go mod tidy //整理模块（拉取缺少的模块，移除不用的模块）
-go mod download//下载依赖包
-go mod graph //打印现有依赖结构
-go mod vendor //将依赖复制到vendor下
-go mod verify //校验依赖
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>go get -u               //更新现有的依赖
+go mod tidy             //整理模块（拉取缺少的模块，移除不用的模块）
+go mod download         //下载依赖包
+go mod graph            //打印现有依赖结构
+go mod vendor           //将依赖复制到vendor下
+go mod verify           //校验依赖
 </pre></div>
 </div>
 </section>
 <section id="go-mod">
 <h3><a class="toc-backref" href="#id23">1.4 go.mod文件解析</a><a class="headerlink" href="#go-mod" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module：模块名称，使用指令go mod init &lt;OPTIONAL_MODULE_PATH&gt;可设置
-require：依赖包列表以及版本
-exclude：禁用依赖包列表
-replace：替换依赖包列表
-go：go版本号
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module：     //模块名称，使用指令go mod init &lt;OPTIONAL_MODULE_PATH&gt;可设置
+require：        //依赖包列表以及版本
+exclude：        //禁用依赖包列表
+replace：        //替换依赖包列表
+go：         //go版本号
 </pre></div>
 </div>
 </section>
@@ -370,6 +372,10 @@ go：go版本号
 </div>
 <p>此时，我们就可以正常编译<code class="docutils literal notranslate"><span class="pre">p1</span></code>这个项目了。</p>
 <p>说再多也没用，自己动手试试吧。</p>
+<blockquote>
+<div><p>参考文献:</p>
+<p><a class="reference external" href="https://www.cnblogs.com/haiyux/p/15162661.html">https://www.cnblogs.com/haiyux/p/15162661.html</a></p>
+</div></blockquote>
 </section>
 </section>
 </section>
