@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.2. Redis的安装及使用 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.3. MongoDB的安装及使用" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" />
+    <link rel="prev" title="4.1. MySQL的安装与使用" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 使用Go访问数据库</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html">4.1. MySQL的安装与使用</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.2. Redis的安装及使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.2.1. 1.Redis的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.2.2. 2.Redis基础入门</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#goredis">4.2.3. 3.Go访问Redis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>使用Go访问数据库</a> &raquo;</li>
+      <li><span class="section-number">4.2. </span>Redis的安装及使用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/4.使用Go访问数据库/2.Redis的安装及使用.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#redis" id="id12">Redis的安装及使用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id13">1.Redis的安装</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id14">2.Redis基础入门</a></p>
+<ul>
+<li><p><a class="reference internal" href="#string" id="id15">1.字符串（String）</a></p></li>
+<li><p><a class="reference internal" href="#hash" id="id16">2.哈希（Hash）</a></p></li>
+<li><p><a class="reference internal" href="#list" id="id17">3.列表（List）</a></p></li>
+<li><p><a class="reference internal" href="#set" id="id18">4.集合（Set）</a></p></li>
+<li><p><a class="reference internal" href="#sorted-sets" id="id19">5.有序集合（Sorted Sets）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#goredis" id="id20">3.Go访问Redis</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id21">3.1 Redis连接</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id22">3.2 Redis设置和获取字符串</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id23">3.3 Redis批量设置和获取字符串</a></p></li>
+<li><p><a class="reference internal" href="#redis-hash" id="id24">3.4 Redis hash操作</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="redis">
+<h1><a class="toc-backref" href="#id12"><span class="section-number">4.2. </span>Redis的安装及使用</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<p>Redis是一个开源、ANSI
+C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value型数据库。
+数据结构服务器，可用于缓存、事件发布或订阅、高速队列等场景。</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">4.2.1. </span>1.Redis的安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>下载地址：<a class="reference external" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">服务端运行</span>
+<span class="n">redis</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">exe</span> <span class="n">redis</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">conf</span>
+
+
+<span class="o">//</span> <span class="n">客户端连接</span>
+<span class="n">redis</span><span class="o">-</span><span class="n">cli</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">h</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="o">-</span><span class="n">p</span> <span class="mi">6379</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.2.2. </span>2.Redis基础入门</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="string">
+<h3><a class="toc-backref" href="#id15">1.字符串（String）</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
+<p>Key和Value组成。类比变量。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keys *               //查看所有key
+
+set key value        //创建
+set abc &quot; a b c&quot;
+
+get key             //读取key，不存在返回nil
+
+set key new_value   //不存在创建，存在则修改
+
+set key value NX    //不存在创建，存在则返回nil
+
+append key value    //不存在创建，存在则拼接字符串，返回len(拼接后字符串)
+
+//key对应string非数字，报错
+incr key            //数字value+1
+
+decr key            //数字value-1
+
+incrby key n        //数字value+n
+
+decrby key n        //数字value-n
+
+del key             //删除，存在返回1，不存在返回0
+</pre></div>
+</div>
+</section>
+<section id="hash">
+<h3><a class="toc-backref" href="#id16">2.哈希（Hash）</a><a class="headerlink" href="#hash" title="Permalink to this headline">¶</a></h3>
+<p>Key，Field和Value组成。类比结构体。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hset key field value                            //添加1个键值对
+hmset key field1 value1 [field2 value2]         //添加多个键值对
+hsetnx key field value                          //已存在字段则不修改
+
+hget key field                                  //获得1个字段值
+hmget key field1 [field2]                       //获得多个字段值
+hgetall key                                     //获得所有字段名和值
+HEXISTS key field                               //字段存在返回1，不存在返回0
+hlen key                                        //获得字段数量
+</pre></div>
+</div>
+</section>
+<section id="list">
+<h3><a class="toc-backref" href="#id17">3.列表（List）</a><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
+<p>类比管道。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lpush key value                 //左边插入值
+rpush key value                 //右边插入值
+
+llen key                        //获得列表长度
+
+lrange key 开始索引 结束索引     //0最左边数据，-1最右边数据
+
+lpop key                        //弹出最左边数据
+rpop key                        //弹出最右边数据
+</pre></div>
+</div>
+</section>
+<section id="set">
+<h3><a class="toc-backref" href="#id18">4.集合（Set）</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<p>数据无序，不重复。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sadd</span> <span class="n">key</span> <span class="n">value1</span> <span class="n">value2</span> <span class="o">***</span>  <span class="o">//</span><span class="n">添加set元素</span>
+
+<span class="n">scard</span> <span class="n">key</span>   <span class="o">//</span><span class="n">返回集合中元素数量</span>
+
+<span class="n">smembers</span> <span class="n">key</span>    <span class="o">//</span><span class="n">返回集合中所有元素</span>
+</pre></div>
+</div>
+</section>
+<section id="sorted-sets">
+<h3><a class="toc-backref" href="#id19">5.有序集合（Sorted Sets）</a><a class="headerlink" href="#sorted-sets" title="Permalink to this headline">¶</a></h3>
+<p>集合中的数据有序。关联double类型分数。元素不能重复，分数可以重复。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>zadd key score1 member1 [score2 member2]                //添加数据
+
+zadd key NX score member                                //不存在则修改数据，存在则不修改
+
+//按分数值递增获取分数区间[min max]的数据
+zrangebyscore key min max [WITHSCORES] [LIMIT offset count]
+
+//指定成员排名，分数递增
+zrank key member
+
+zscore key member                                       //获取成员分数，不是成员或key不存在返回nil
+
+zcount key min max                                      //获取指定分数区间，成员个数
+</pre></div>
+</div>
+</section>
+</section>
+<section id="goredis">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">4.2.3. </span>3.Go访问Redis</a><a class="headerlink" href="#goredis" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id21">3.1 Redis连接</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id22">3.2 Redis设置和获取字符串</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;jack&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="c1">//OK</span>
+
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;Get&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="c1">//jack</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id23">3.3 Redis批量设置和获取字符串</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;MSet&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;jack&quot;</span><span class="p">,</span> <span class="s">&quot;phone&quot;</span><span class="p">,</span> <span class="s">&quot;123456789&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="c1">//OK</span>
+
+    <span class="nx">res2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Strings</span><span class="p">(</span><span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;MGet&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;phone&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%T\n&quot;</span><span class="p">,</span> <span class="nx">res2</span><span class="p">)</span> <span class="c1">//[]string</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res2</span><span class="p">)</span>        <span class="c1">//[jack 123456789]</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="redis-hash">
+<h3><a class="toc-backref" href="#id24">3.4 Redis hash操作</a><a class="headerlink" href="#redis-hash" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;HSet&quot;</span><span class="p">,</span> <span class="s">&quot;names&quot;</span><span class="p">,</span> <span class="s">&quot;jim&quot;</span><span class="p">,</span> <span class="s">&quot;barry&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+
+    <span class="nx">res2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;HGet&quot;</span><span class="p">,</span> <span class="s">&quot;names&quot;</span><span class="p">,</span> <span class="s">&quot;jim&quot;</span><span class="p">)</span>
+    <span class="c1">//res2, err := redis.Strings(conn.Do(&quot;HGet&quot;, &quot;names&quot;, &quot;jim&quot;))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;hget error: &quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%T\n&quot;</span><span class="p">,</span> <span class="nx">res2</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res2</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">res2</span><span class="p">.([]</span><span class="kt">uint8</span><span class="p">)))</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id6">
+<h4>3.5 设置过期时间<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">conn</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="s2">&quot;expire&quot;</span><span class="p">,</span> <span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;expire error: &quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4>3.6 Redis队列<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;lpush&quot;</span><span class="p">,</span> <span class="s">&quot;Queue&quot;</span><span class="p">,</span> <span class="s">&quot;jim&quot;</span><span class="p">,</span> <span class="s">&quot;barry&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;lpush error: &quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">r</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;lpop&quot;</span><span class="p">,</span> <span class="s">&quot;Queue&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;lpop error: &quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nx">res4</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Int</span><span class="p">(</span><span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;llen&quot;</span><span class="p">,</span> <span class="s">&quot;Queue&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;llen error: &quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res4</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4>3.7 Redis连接池<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>建立网络连接耗时，连接池实现多个客户端与服务器连接且不释放，需要时获取已建立的连接，使用完后还给连接池。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">pool</span> <span class="o">*</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Pool</span>
+
+<span class="kd">func</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">pool</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Pool</span><span class="p">{</span>
+        <span class="nx">MaxIdle</span><span class="p">:</span>     <span class="mi">16</span><span class="p">,</span>    <span class="c1">//最大空闲连接数</span>
+        <span class="nx">MaxActive</span><span class="p">:</span>   <span class="mi">1024</span><span class="p">,</span>  <span class="c1">//最大激活连接数</span>
+        <span class="nx">IdleTimeout</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>   <span class="c1">//最大空闲连接等待时间</span>
+        <span class="nx">Dial</span><span class="p">:</span> <span class="kd">func</span><span class="p">()</span> <span class="p">(</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Conn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">c</span> <span class="o">:=</span> <span class="nx">pool</span><span class="p">.</span><span class="nx">Get</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;jack&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">r</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;Get&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h4>3.8 Redis管道<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>客户端发送多个命令到服务器端而无须等待响应，最后一次性读取多个响应。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;conn redis failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">c</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;SET&quot;</span><span class="p">,</span> <span class="s">&quot;username1&quot;</span><span class="p">,</span> <span class="s">&quot;jim&quot;</span><span class="p">)</span> <span class="c1">//输出缓冲区写入命令</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;SET&quot;</span><span class="p">,</span> <span class="s">&quot;username2&quot;</span><span class="p">,</span> <span class="s">&quot;jack&quot;</span><span class="p">)</span>
+
+    <span class="nx">c</span><span class="p">.</span><span class="nx">Flush</span><span class="p">()</span> <span class="c1">//清空输出缓冲区，并写入服务器端</span>
+
+    <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span> <span class="c1">//FIFO顺序读取服务器端响应</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;v:%v,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;v:%v,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+
+    <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span> <span class="c1">// 一直等待</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;v:%v,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h4>3.9 Redis并发<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;connect redis error :&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;HSET&quot;</span><span class="p">,</span> <span class="s">&quot;students&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;jim&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;19&quot;</span><span class="p">)</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;HSET&quot;</span><span class="p">,</span> <span class="s">&quot;students&quot;</span><span class="p">,</span> <span class="s">&quot;score&quot;</span><span class="p">,</span> <span class="s">&quot;100&quot;</span><span class="p">)</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;HGET&quot;</span><span class="p">,</span> <span class="s">&quot;students&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">)</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Flush</span><span class="p">()</span>
+
+    <span class="nx">res1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Receive res1:%v\n&quot;</span><span class="p">,</span> <span class="nx">res1</span><span class="p">)</span>
+    <span class="nx">res2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Receive res2:%v\n&quot;</span><span class="p">,</span> <span class="nx">res2</span><span class="p">)</span>
+    <span class="nx">res3</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Receive</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Receive res3:%s\n&quot;</span><span class="p">,</span> <span class="nx">res3</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h4>3.10 Redis事务<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>MULTI：开启事务</p></li>
+<li><p>EXEC：执行事务</p></li>
+<li><p>DISCARD：取消事务</p></li>
+<li><p>WATCH：监视事务中的建变化，一旦改变则取消事务</p></li>
+</ul>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+
+    <span class="s">&quot;github.com/gomodule/redigo/redis&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:6379&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;connect redis error :&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;MULTI&quot;</span><span class="p">)</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;INCR&quot;</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+    <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;INCR&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
+    <span class="nx">r</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">Do</span><span class="p">(</span><span class="s">&quot;EXEC&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">conn</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;DISCARD&quot;</span><span class="p">)</span>
+        <span class="c1">//conn.Do(&quot;DISCARD&quot;)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="c1">//[1 1]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html" class="btn btn-neutral float-left" title="4.1. MySQL的安装与使用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" class="btn btn-neutral float-right" title="4.3. MongoDB的安装及使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

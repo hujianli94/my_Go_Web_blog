@@ -18,8 +18,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5. Go高级网络编程" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" />
-    <link rel="prev" title="3. 接收和处理Go-Web请求" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html" /> 
+    <link rel="next" title="4.1. MySQL的安装与使用" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html" />
+    <link rel="prev" title="3.3. 了解session和cookie" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/3.%E4%BA%86%E8%A7%A3session%E5%92%8Ccookie.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,7 +46,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4. 使用Go访问数据库</a><ul class="simple">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. 使用Go访问数据库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html">4.1. MySQL的安装与使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.2. Redis的安装及使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
@@ -87,6 +90,57 @@
   <section id="go">
 <h1><span class="section-number">4. </span>使用Go访问数据库<a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html">4.1. MySQL的安装与使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id1">4.1.1. 1.MySQL简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id2">4.1.2. 2.MySQL安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id3">4.1.3. 2.MySQL基础入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id4">2.1 数据库管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id5">2.2 数据表操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id6">2.3 数据库语句</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#gomysql">4.1.4. 3.Go访问MySQL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id7">3.1 连接数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#id8">3.2 初始化连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html#sql">3.3 SQL增删改查</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.2. Redis的安装及使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id1">4.2.1. 1.Redis的安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id2">4.2.2. 2.Redis基础入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#string">1.字符串（String）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#hash">2.哈希（Hash）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#list">3.列表（List）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#set">4.集合（Set）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#sorted-sets">5.有序集合（Sorted Sets）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#goredis">4.2.3. 3.Go访问Redis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id3">3.1 Redis连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id4">3.2 Redis设置和获取字符串</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id5">3.3 Redis批量设置和获取字符串</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#redis-hash">3.4 Redis hash操作</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id1">4.3.1. 1.MongoDB的安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id2">4.3.2. 2.MongoDB基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#gomongodb">4.3.3. 3.Go访问MongoDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id3">3.1连接数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id4">3.2 插入一条数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id5">3.3 批量插入数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id6">3.4 查询数据</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html#id7">4.3.4. 4.参考文献</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 
@@ -94,8 +148,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html" class="btn btn-neutral float-left" title="3. 接收和处理Go-Web请求" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" class="btn btn-neutral float-right" title="5. Go高级网络编程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/3.%E4%BA%86%E8%A7%A3session%E5%92%8Ccookie.html" class="btn btn-neutral float-left" title="3.3. 了解session和cookie" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html" class="btn btn-neutral float-right" title="4.1. MySQL的安装与使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
