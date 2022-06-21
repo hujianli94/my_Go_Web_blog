@@ -18,7 +18,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5. Go高级网络编程" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" />
+    <link rel="next" title="4.2. Redis的安装及使用" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" />
     <link rel="prev" title="4. 使用Go访问数据库" href="index.html" /> 
 </head>
 
@@ -52,8 +52,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#id2">4.1.2. 2.MySQL安装</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">4.1.3. 2.MySQL基础入门</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gomysql">4.1.4. 3.Go访问MySQL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">4.1.5. 4.参考文献</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.2. Redis的安装及使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
@@ -95,36 +98,37 @@
   <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#mysql" id="id11">MySQL的安装与使用</a></p>
+<li><p><a class="reference internal" href="#mysql" id="id12">MySQL的安装与使用</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id1" id="id12">1.MySQL简介</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id13">2.MySQL安装</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id14">2.MySQL基础入门</a></p>
+<li><p><a class="reference internal" href="#id1" id="id13">1.MySQL简介</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id14">2.MySQL安装</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id15">2.MySQL基础入门</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id4" id="id15">2.1 数据库管理</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id16">2.2 数据表操作</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id17">2.3 数据库语句</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id16">2.1 数据库管理</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id17">2.2 数据表操作</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id18">2.3 数据库语句</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#gomysql" id="id18">3.Go访问MySQL</a></p>
+<li><p><a class="reference internal" href="#gomysql" id="id19">3.Go访问MySQL</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id7" id="id19">3.1 连接数据库</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id20">3.2 初始化连接</a></p></li>
-<li><p><a class="reference internal" href="#sql" id="id21">3.3 SQL增删改查</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id20">3.1 连接数据库</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id21">3.2 初始化连接</a></p></li>
+<li><p><a class="reference internal" href="#sql" id="id22">3.3 SQL增删改查</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#id11" id="id23">4.参考文献</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="mysql">
-<h1><a class="toc-backref" href="#id11"><span class="section-number">4.1. </span>MySQL的安装与使用</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id12"><span class="section-number">4.1. </span>MySQL的安装与使用</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
 <section id="id1">
-<h2><a class="toc-backref" href="#id12"><span class="section-number">4.1.1. </span>1.MySQL简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13"><span class="section-number">4.1.1. </span>1.MySQL简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>RDBMS(Relational Database Management System，关系型数据库管理系统)。</p>
 </section>
 <section id="id2">
-<h2><a class="toc-backref" href="#id13"><span class="section-number">4.1.2. </span>2.MySQL安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.1.2. </span>2.MySQL安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>下载地址：<a class="reference external" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
 <p>（1）删除所有文件和目录，只留下bin目录和share目录。</p>
 <p>（2）管理员身份运行CMD，切换到mysql:raw-latex:<cite>bin目录</cite>，初始化数据库mysqld
@@ -198,9 +202,9 @@ gomysql，gomysql是自己起的数据库服务名字</p>
 </div>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id14"><span class="section-number">4.1.3. </span>2.MySQL基础入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15"><span class="section-number">4.1.3. </span>2.MySQL基础入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="id4">
-<h3><a class="toc-backref" href="#id15">2.1 数据库管理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">2.1 数据库管理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#创建数据库</span>
 <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">database_name</span><span class="p">;</span>
 
@@ -223,7 +227,7 @@ gomysql，gomysql是自己起的数据库服务名字</p>
 </div>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id16">2.2 数据表操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">2.2 数据表操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#查看数据表
 show tables;#查看数据库中所有表
 DESC[RIBE] user;    #表格信息展示表的字段信息
@@ -275,7 +279,7 @@ DROP TABLE user_new;
 </div>
 </section>
 <section id="id6">
-<h3><a class="toc-backref" href="#id17">2.3 数据库语句</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">2.3 数据库语句</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#插入数据
 INSERT [INTO] 表名 [(列名1，列名2，...)] VALUES (值1，值2，...);
 INSERT INTO `user` (`phone`, `password`, `add_time`, `last_ip`, `email`, `status`) VALUES (&#39;138888888&#39;, DEFAULT, DEFAULT, &#39;123.55.66.3&#39;, &#39;test@163.com&#39;, 1);
@@ -300,7 +304,7 @@ DELETE FROM `user`;
 </section>
 </section>
 <section id="gomysql">
-<h2><a class="toc-backref" href="#id18"><span class="section-number">4.1.4. </span>3.Go访问MySQL</a><a class="headerlink" href="#gomysql" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19"><span class="section-number">4.1.4. </span>3.Go访问MySQL</a><a class="headerlink" href="#gomysql" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql –uroot –p123456 -Dtest&lt;C:\test.sql
 source C:\test.sql
 </pre></div>
@@ -322,7 +326,7 @@ INSERT INTO `user` (`uid`, `name`, `phone`) VALUES (111, &#39;yx&#39;, &#39;1388
 </pre></div>
 </div>
 <section id="id7">
-<h3><a class="toc-backref" href="#id19">3.1 连接数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">3.1 连接数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -343,7 +347,7 @@ INSERT INTO `user` (`uid`, `name`, `phone`) VALUES (111, &#39;yx&#39;, &#39;1388
 </div>
 </section>
 <section id="id8">
-<h3><a class="toc-backref" href="#id20">3.2 初始化连接</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">3.2 初始化连接</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -387,7 +391,7 @@ INSERT INTO `user` (`uid`, `name`, `phone`) VALUES (111, &#39;yx&#39;, &#39;1388
 </div>
 </section>
 <section id="sql">
-<h3><a class="toc-backref" href="#id21">3.3 SQL增删改查</a><a class="headerlink" href="#sql" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">3.3 SQL增删改查</a><a class="headerlink" href="#sql" title="Permalink to this headline">¶</a></h3>
 <section id="queryrow">
 <h4>1.QueryRow()单行查询<a class="headerlink" href="#queryrow" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">QueryRow</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="o">*</span><span class="nx">Row</span>
@@ -830,6 +834,10 @@ table）和串行化（serializable）。</p></td>
 </section>
 </section>
 </section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">4.1.5. </span>4.参考文献</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.yuque.com/wslynn/ivwx9d/ub4wst">https://www.yuque.com/wslynn/ivwx9d/ub4wst</a></p>
+</section>
 </section>
 
 
@@ -837,7 +845,7 @@ table）和串行化（serializable）。</p></td>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="4. 使用Go访问数据库" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" class="btn btn-neutral float-right" title="5. Go高级网络编程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html" class="btn btn-neutral float-right" title="4.2. Redis的安装及使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

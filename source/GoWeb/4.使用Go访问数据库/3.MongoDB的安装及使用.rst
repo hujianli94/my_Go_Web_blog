@@ -466,5 +466,6 @@ MongoDB的安装及使用
 ----------
 
 https://www.liwenzhou.com/posts/Go/go_mongodb/
+https://www.yuque.com/wslynn/ivwx9d/ldkvkf
 https://docs.mongodb.com/manual/mongo/
 https://www.mongodb.com/blog/post/mongodb-go-driver-tutorial

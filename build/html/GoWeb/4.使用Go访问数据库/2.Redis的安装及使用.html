@@ -52,6 +52,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">4.2.1. 1.Redis的安装</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">4.2.2. 2.Redis基础入门</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#goredis">4.2.3. 3.Go访问Redis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">4.2.4. 4.参考文献</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a></li>
@@ -96,37 +97,38 @@
   <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#redis" id="id12">Redis的安装及使用</a></p>
+<li><p><a class="reference internal" href="#redis" id="id13">Redis的安装及使用</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id1" id="id13">1.Redis的安装</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id14">2.Redis基础入门</a></p>
+<li><p><a class="reference internal" href="#id1" id="id14">1.Redis的安装</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id15">2.Redis基础入门</a></p>
 <ul>
-<li><p><a class="reference internal" href="#string" id="id15">1.字符串（String）</a></p></li>
-<li><p><a class="reference internal" href="#hash" id="id16">2.哈希（Hash）</a></p></li>
-<li><p><a class="reference internal" href="#list" id="id17">3.列表（List）</a></p></li>
-<li><p><a class="reference internal" href="#set" id="id18">4.集合（Set）</a></p></li>
-<li><p><a class="reference internal" href="#sorted-sets" id="id19">5.有序集合（Sorted Sets）</a></p></li>
+<li><p><a class="reference internal" href="#string" id="id16">1.字符串（String）</a></p></li>
+<li><p><a class="reference internal" href="#hash" id="id17">2.哈希（Hash）</a></p></li>
+<li><p><a class="reference internal" href="#list" id="id18">3.列表（List）</a></p></li>
+<li><p><a class="reference internal" href="#set" id="id19">4.集合（Set）</a></p></li>
+<li><p><a class="reference internal" href="#sorted-sets" id="id20">5.有序集合（Sorted Sets）</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#goredis" id="id20">3.Go访问Redis</a></p>
+<li><p><a class="reference internal" href="#goredis" id="id21">3.Go访问Redis</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id3" id="id21">3.1 Redis连接</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id22">3.2 Redis设置和获取字符串</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id23">3.3 Redis批量设置和获取字符串</a></p></li>
-<li><p><a class="reference internal" href="#redis-hash" id="id24">3.4 Redis hash操作</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id22">3.1 Redis连接</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id23">3.2 Redis设置和获取字符串</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id24">3.3 Redis批量设置和获取字符串</a></p></li>
+<li><p><a class="reference internal" href="#redis-hash" id="id25">3.4 Redis hash操作</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#id12" id="id26">4.参考文献</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="redis">
-<h1><a class="toc-backref" href="#id12"><span class="section-number">4.2. </span>Redis的安装及使用</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id13"><span class="section-number">4.2. </span>Redis的安装及使用</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
 <p>Redis是一个开源、ANSI
 C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value型数据库。
 数据结构服务器，可用于缓存、事件发布或订阅、高速队列等场景。</p>
 <section id="id1">
-<h2><a class="toc-backref" href="#id13"><span class="section-number">4.2.1. </span>1.Redis的安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.2.1. </span>1.Redis的安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>下载地址：<a class="reference external" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">服务端运行</span>
 <span class="n">redis</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">exe</span> <span class="n">redis</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">conf</span>
@@ -138,9 +140,9 @@ C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-
 </div>
 </section>
 <section id="id2">
-<h2><a class="toc-backref" href="#id14"><span class="section-number">4.2.2. </span>2.Redis基础入门</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15"><span class="section-number">4.2.2. </span>2.Redis基础入门</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <section id="string">
-<h3><a class="toc-backref" href="#id15">1.字符串（String）</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">1.字符串（String）</a><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h3>
 <p>Key和Value组成。类比变量。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keys *               //查看所有key
 
@@ -169,7 +171,7 @@ del key             //删除，存在返回1，不存在返回0
 </div>
 </section>
 <section id="hash">
-<h3><a class="toc-backref" href="#id16">2.哈希（Hash）</a><a class="headerlink" href="#hash" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">2.哈希（Hash）</a><a class="headerlink" href="#hash" title="Permalink to this headline">¶</a></h3>
 <p>Key，Field和Value组成。类比结构体。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hset key field value                            //添加1个键值对
 hmset key field1 value1 [field2 value2]         //添加多个键值对
@@ -184,7 +186,7 @@ hlen key                                        //获得字段数量
 </div>
 </section>
 <section id="list">
-<h3><a class="toc-backref" href="#id17">3.列表（List）</a><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">3.列表（List）</a><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
 <p>类比管道。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lpush key value                 //左边插入值
 rpush key value                 //右边插入值
@@ -199,7 +201,7 @@ rpop key                        //弹出最右边数据
 </div>
 </section>
 <section id="set">
-<h3><a class="toc-backref" href="#id18">4.集合（Set）</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">4.集合（Set）</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
 <p>数据无序，不重复。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sadd</span> <span class="n">key</span> <span class="n">value1</span> <span class="n">value2</span> <span class="o">***</span>  <span class="o">//</span><span class="n">添加set元素</span>
 
@@ -210,7 +212,7 @@ rpop key                        //弹出最右边数据
 </div>
 </section>
 <section id="sorted-sets">
-<h3><a class="toc-backref" href="#id19">5.有序集合（Sorted Sets）</a><a class="headerlink" href="#sorted-sets" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">5.有序集合（Sorted Sets）</a><a class="headerlink" href="#sorted-sets" title="Permalink to this headline">¶</a></h3>
 <p>集合中的数据有序。关联double类型分数。元素不能重复，分数可以重复。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>zadd key score1 member1 [score2 member2]                //添加数据
 
@@ -230,9 +232,9 @@ zcount key min max                                      //获取指定分数区�
 </section>
 </section>
 <section id="goredis">
-<h2><a class="toc-backref" href="#id20"><span class="section-number">4.2.3. </span>3.Go访问Redis</a><a class="headerlink" href="#goredis" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21"><span class="section-number">4.2.3. </span>3.Go访问Redis</a><a class="headerlink" href="#goredis" title="Permalink to this headline">¶</a></h2>
 <section id="id3">
-<h3><a class="toc-backref" href="#id21">3.1 Redis连接</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">3.1 Redis连接</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -253,7 +255,7 @@ zcount key min max                                      //获取指定分数区�
 </div>
 </section>
 <section id="id4">
-<h3><a class="toc-backref" href="#id22">3.2 Redis设置和获取字符串</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">3.2 Redis设置和获取字符串</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -288,7 +290,7 @@ zcount key min max                                      //获取指定分数区�
 </div>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id23">3.3 Redis批量设置和获取字符串</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">3.3 Redis批量设置和获取字符串</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -325,7 +327,7 @@ zcount key min max                                      //获取指定分数区�
 </div>
 </section>
 <section id="redis-hash">
-<h3><a class="toc-backref" href="#id24">3.4 Redis hash操作</a><a class="headerlink" href="#redis-hash" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">3.4 Redis hash操作</a><a class="headerlink" href="#redis-hash" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
@@ -565,6 +567,10 @@ zcount key min max                                      //获取指定分数区�
 </div>
 </section>
 </section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">4.2.4. </span>4.参考文献</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.yuque.com/coolops/golang/knfv7w">https://www.yuque.com/coolops/golang/knfv7w</a></p>
 </section>
 </section>
 

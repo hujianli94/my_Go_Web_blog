@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.5. SQLite的安装及使用 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. Go高级网络编程" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" />
+    <link rel="prev" title="4.4. Go的常见ORM库" href="4.Go%E7%9A%84%E5%B8%B8%E8%A7%81ORM%E5%BA%93.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 使用Go访问数据库</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.html">4.1. MySQL的安装与使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.2. Redis的安装及使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8.html">4.3. MongoDB的安装及使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.Go%E7%9A%84%E5%B8%B8%E8%A7%81ORM%E5%BA%93.html">4.4. Go的常见ORM库</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.5. SQLite的安装及使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.5.1. 1.SQLite的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.5.2. 2.SQLite基础入门</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gosqlite">4.5.3. 3.Go访问SQLite</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>使用Go访问数据库</a> &raquo;</li>
+      <li><span class="section-number">4.5. </span>SQLite的安装及使用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/4.使用Go访问数据库/5.SQLite的安装及使用.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sqlite" id="id8">SQLite的安装及使用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id9">1.SQLite的安装</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">2.SQLite基础入门</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id11">2.1 数据库管理</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id12">2.2 数据表操作</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">2.3 数据库语句</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gosqlite" id="id14">3.Go访问SQLite</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id15">3.1连接数据库</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id16">3.2初始化连接</a></p></li>
+<li><p><a class="reference internal" href="#sql" id="id17">3.3 SQL查询</a></p></li>
+<li><p><a class="reference internal" href="#exec" id="id18">3.4 Exec()执行一次命令（增删改查）</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="sqlite">
+<h1><a class="toc-backref" href="#id8"><span class="section-number">4.5. </span>SQLite的安装及使用</a><a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h1>
+<p>SQLite是一个进程内的库，实现了自给自足的、无服务器的、零配置的、事务性的
+SQL 数据库引擎。</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">4.5.1. </span>1.SQLite的安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>下载地址：<a class="reference external" href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a></p>
+<ol class="arabic simple">
+<li><p>下载sqlite-dll-win64-x64-3360000.zip和sqlite-tools-win32-x86-3360000.zip文件</p></li>
+<li><p>启动sqlite3</p></li>
+</ol>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">4.5.2. </span>2.SQLite基础入门</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id11">2.1 数据库管理</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sqlite3</span> <span class="n">test</span><span class="o">.</span><span class="n">db</span> <span class="o">--</span> <span class="n">创建数据库</span>
+<span class="o">.</span><span class="n">open</span> <span class="n">test</span><span class="o">.</span><span class="n">db</span> <span class="o">--</span> <span class="n">创建数据库</span>
+ <span class="o">.</span><span class="n">databases</span> <span class="o">--</span> <span class="n">查看数据库</span>
+ <span class="o">.</span><span class="n">quit</span> <span class="o">--</span> <span class="n">退出</span>
+ <span class="n">sqlite3</span> <span class="n">testDB</span><span class="o">.</span><span class="n">db</span> <span class="o">.</span><span class="n">dump</span> <span class="o">&gt;</span> <span class="n">testDB</span><span class="o">.</span><span class="n">sql</span> <span class="o">--</span> <span class="n">导出数据库到txt文件</span>
+ <span class="n">sqlite3</span> <span class="n">testDB</span><span class="o">.</span><span class="n">db</span> <span class="o">&lt;</span> <span class="n">testDB</span><span class="o">.</span><span class="n">sql</span> <span class="o">--</span> <span class="n">txt文件导入数据库</span>
+ <span class="n">ATTACH</span> <span class="n">DATABASE</span> <span class="s1">&#39;test.db&#39;</span> <span class="k">as</span> <span class="s1">&#39;TEST&#39;</span><span class="p">;</span> <span class="o">--</span> <span class="n">附加数据库</span>
+ <span class="n">DETACH</span> <span class="n">DATABASE</span> <span class="s1">&#39;TEST&#39;</span><span class="p">;</span> <span class="o">--</span> <span class="n">分离数据库</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id12">2.2 数据表操作</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">创建数据表</span>
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">database_name</span><span class="o">.</span><span class="n">table_name</span><span class="p">(</span>
+   <span class="n">column1</span> <span class="n">datatype</span>  <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">(</span><span class="n">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">columns</span><span class="p">),</span>
+   <span class="n">column2</span> <span class="n">datatype</span><span class="p">,</span>
+   <span class="n">column3</span> <span class="n">datatype</span><span class="p">,</span>
+   <span class="o">.....</span>
+   <span class="n">columnN</span> <span class="n">datatype</span><span class="p">,</span>
+<span class="p">);</span>
+
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">COMPANY</span><span class="p">(</span>
+   <span class="n">ID</span> <span class="n">INT</span> <span class="n">PRIMARY</span> <span class="n">KEY</span>     <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+   <span class="n">NAME</span>           <span class="n">TEXT</span>    <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+   <span class="n">AGE</span>            <span class="n">INT</span>     <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+   <span class="n">ADDRESS</span>        <span class="n">CHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+   <span class="n">SALARY</span>         <span class="n">REAL</span>
+<span class="p">);</span>
+
+<span class="o">--</span> <span class="n">查看数据表</span>
+ <span class="o">.</span><span class="n">tables</span>
+
+<span class="o">--</span> <span class="n">得到表的完整信息</span>
+<span class="o">.</span><span class="n">schema</span> <span class="n">COMPANY</span>
+
+<span class="o">--</span> <span class="n">删除数据表</span>
+<span class="n">DROP</span> <span class="n">TABLE</span> <span class="n">database_name</span><span class="o">.</span><span class="n">table_name</span><span class="p">;</span>
+<span class="n">DROP</span> <span class="n">TABLE</span> <span class="n">COMPANY</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id13">2.3 数据库语句</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">新增数据</span>
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">TABLE_NAME</span> <span class="p">[(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="n">column3</span><span class="p">,</span><span class="o">...</span><span class="n">columnN</span><span class="p">)]</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span><span class="o">...</span><span class="n">valueN</span><span class="p">);</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">TABLE_NAME</span> <span class="n">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span><span class="n">value2</span><span class="p">,</span><span class="n">value3</span><span class="p">,</span><span class="o">...</span><span class="n">valueN</span><span class="p">);</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">COMPANY</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">NAME</span><span class="p">,</span><span class="n">AGE</span><span class="p">,</span><span class="n">ADDRESS</span><span class="p">,</span><span class="n">SALARY</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Kim&#39;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">&#39;South-Hall&#39;</span><span class="p">,</span> <span class="mf">45000.00</span> <span class="p">);</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">COMPANY</span> <span class="n">VALUES</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="s1">&#39;Houston&#39;</span><span class="p">,</span> <span class="mf">10000.00</span> <span class="p">);</span>
+
+<span class="o">--</span> <span class="n">查询数据</span>
+<span class="n">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="n">columnN</span> <span class="n">FROM</span> <span class="n">table_name</span><span class="p">;</span>
+<span class="o">.</span><span class="n">header</span> <span class="n">on</span>
+<span class="o">.</span><span class="n">mode</span> <span class="n">column</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">COMPANY</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="n">ID</span><span class="p">,</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">SALARY</span> <span class="n">FROM</span> <span class="n">COMPANY</span><span class="p">;</span>
+
+<span class="c1">#修改数据</span>
+<span class="n">UPDATE</span> <span class="n">table_name</span>
+<span class="n">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span><span class="o">....</span><span class="p">,</span> <span class="n">columnN</span> <span class="o">=</span> <span class="n">valueN</span>
+<span class="n">WHERE</span> <span class="p">[</span><span class="n">condition</span><span class="p">];</span>
+
+<span class="n">UPDATE</span> <span class="n">COMPANY</span> <span class="n">SET</span> <span class="n">ADDRESS</span> <span class="o">=</span> <span class="s1">&#39;Texas&#39;</span> <span class="n">WHERE</span> <span class="n">ID</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+ <span class="n">UPDATE</span> <span class="n">COMPANY</span> <span class="n">SET</span> <span class="n">ADDRESS</span> <span class="o">=</span> <span class="s1">&#39;Texas&#39;</span><span class="p">,</span> <span class="n">SALARY</span> <span class="o">=</span> <span class="mf">20000.00</span><span class="p">;</span>
+
+
+<span class="c1">#删除数据</span>
+<span class="n">DELETE</span> <span class="n">FROM</span> <span class="n">table_name</span> <span class="n">WHERE</span> <span class="p">[</span><span class="n">condition</span><span class="p">];</span>
+
+<span class="n">DELETE</span> <span class="n">FROM</span> <span class="n">COMPANY</span> <span class="n">WHERE</span> <span class="n">ID</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+<span class="n">DELETE</span> <span class="n">FROM</span> <span class="n">COMPANY</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gosqlite">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.5.3. </span>3.Go访问SQLite</a><a class="headerlink" href="#gosqlite" title="Permalink to this headline">¶</a></h2>
+<p>安装msys2</p>
+<p>配置gcc目录，set
+Path=%Path%;C:</p>
+<p><code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">get</span> <span class="pre">github.com/mattn/go-sqlite3</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sqlite3</span> <span class="n">test</span><span class="o">.</span><span class="n">db</span> <span class="o">&lt;</span> <span class="n">test</span><span class="o">.</span><span class="n">sql</span>
+</pre></div>
+</div>
+<p>创建数据库和数据表</p>
+<p>test.sql</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `user` (
+    `uid` INT PRIMARY KEY NOT NULL,
+    `name` TEXT NOT NULL,
+    `phone` CHAR(50)
+);
+
+INSERT INTO `user` (`uid`, `name`, `phone`) VALUES (15, &#39;yx&#39;, &#39;138888888&#39;);
+INSERT INTO `user` (`uid`, `name`, `phone`) VALUES (111, &#39;yx&#39;, &#39;138888888&#39;);
+</pre></div>
+</div>
+<section id="id6">
+<h3><a class="toc-backref" href="#id15">3.1连接数据库</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/mattn/go-sqlite3&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;sqlite3.exe&quot;</span><span class="p">,</span> <span class="s">`D:\soft\sqlite\test.db`</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id16">3.2初始化连接</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/mattn/go-sqlite3&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">db</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">DB</span>
+
+<span class="c1">// 定义一个初始化数据库的函数</span>
+<span class="kd">func</span> <span class="nx">initDB</span><span class="p">()</span> <span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//连接数据库</span>
+    <span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;sqlite3&quot;</span><span class="p">,</span> <span class="s">`D:\soft\sqlite\test.db`</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 尝试与数据库建立连接（校验dsn是否正确）</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Ping</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">initDB</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;init db failed, err: %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>设置最大连接数 n&lt;=0，无限制，默认0。 不会超过数据库默认配置。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">SetMaxOpenConns</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>设置最大闲置连接数 n&lt;=0，无限制，默认0。 不会超过数据库默认配置。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">SetMaxOpenConns</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sql">
+<h3><a class="toc-backref" href="#id17">3.3 SQL查询</a><a class="headerlink" href="#sql" title="Permalink to this headline">¶</a></h3>
+<section id="queryrow">
+<h4>QueryRow()单行查询<a class="headerlink" href="#queryrow" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">QueryRow</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="o">*</span><span class="nx">Row</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/mattn/go-sqlite3&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">db</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">DB</span>
+
+<span class="c1">// 定义一个初始化数据库的函数</span>
+<span class="kd">func</span> <span class="nx">initDB</span><span class="p">()</span> <span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//连接数据库</span>
+    <span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;sqlite3&quot;</span><span class="p">,</span> <span class="s">`D:\soft\sqlite\test.db`</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 尝试与数据库建立连接（校验dsn是否正确）</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Ping</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Uid</span> <span class="kt">int</span>
+    <span class="nx">Name</span> <span class="kt">string</span>
+    <span class="nx">Phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">queryRow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">u</span> <span class="nx">User</span><span class="p">;</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">QueryRow</span><span class="p">(</span><span class="s">&quot;select uid, name, phone from user where uid=?;&quot;</span><span class="p">,</span> <span class="mi">111</span><span class="p">).</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Uid</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Phone</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;scan failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;uid:%d name:%s phone:%s\n&quot;</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Uid</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Phone</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">initDB</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;init db failed, err: %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">queryRow</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="query">
+<h4>Query()多行查询<a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">Query</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="o">*</span><span class="nx">Rows</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/mattn/go-sqlite3&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">db</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">DB</span>
+
+<span class="c1">// 定义一个初始化数据库的函数</span>
+<span class="kd">func</span> <span class="nx">initDB</span><span class="p">()</span> <span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//连接数据库</span>
+    <span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;sqlite3&quot;</span><span class="p">,</span> <span class="s">`D:\soft\sqlite\test.db`</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 尝试与数据库建立连接（校验dsn是否正确）</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Ping</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Uid</span> <span class="kt">int</span>
+    <span class="nx">Name</span> <span class="kt">string</span>
+    <span class="nx">Phone</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">queryMultiRow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">u</span> <span class="nx">User</span><span class="p">;</span>
+    <span class="nx">rows</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Query</span><span class="p">(</span><span class="s">&quot;select uid, name, phone from user where uid&gt;?;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;query failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">Next</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Uid</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Phone</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;scan failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;uid:%d name:%s phone:%s\n&quot;</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Uid</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">Phone</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">initDB</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;init db failed, err: %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">queryMultiRow</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="exec">
+<h3><a class="toc-backref" href="#id18">3.4 Exec()执行一次命令（增删改查）</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">DB</span><span class="p">)</span> <span class="nx">Exec</span><span class="p">(</span><span class="nx">query</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">Result</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;database/sql&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="nx">_</span> <span class="s">&quot;github.com/mattn/go-sqlite3&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">db</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">DB</span>
+
+<span class="c1">// 定义一个初始化数据库的函数</span>
+<span class="kd">func</span> <span class="nx">initDB</span><span class="p">()</span> <span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//连接数据库</span>
+    <span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">sql</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;sqlite3&quot;</span><span class="p">,</span> <span class="s">`D:\soft\sqlite\test.db`</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="c1">// 尝试与数据库建立连接（校验dsn是否正确）</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Ping</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">//插入数据</span>
+<span class="kd">func</span> <span class="nx">insertRow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ret</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Exec</span><span class="p">(</span><span class="s">&quot;insert into user(uid, name, phone) values(?, ?, ?);&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s">&quot;ml&quot;</span><span class="p">,</span> <span class="s">&quot;15906693677&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;insert failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">uid</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">LastInsertId</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;get lastinsert ID failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;insert success, the id is %d.\n&quot;</span><span class="p">,</span> <span class="nx">uid</span><span class="p">)</span>
+
+<span class="p">}</span>
+
+<span class="c1">//更新数据</span>
+<span class="kd">func</span> <span class="nx">updateRow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ret</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Exec</span><span class="p">(</span><span class="s">&quot;update user set name=? where uid=?;&quot;</span><span class="p">,</span> <span class="s">&quot;tt&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;update failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">RowsAffected</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;get lastinsert ID failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;update success, affected rows:%d\n&quot;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//删除数据</span>
+<span class="kd">func</span> <span class="nx">deleteRow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ret</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">Exec</span><span class="p">(</span><span class="s">&quot;delete from user where uid=?;&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;delete failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">RowsAffected</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;get lastinsert ID failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;delete success, affected rows:%d\n&quot;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">initDB</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;init db failed, err: %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">insertRow</span><span class="p">()</span>
+    <span class="nx">updateRow</span><span class="p">()</span>
+    <span class="nx">deleteRow</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="4.Go%E7%9A%84%E5%B8%B8%E8%A7%81ORM%E5%BA%93.html" class="btn btn-neutral float-left" title="4.4. Go的常见ORM库" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" class="btn btn-neutral float-right" title="5. Go高级网络编程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
