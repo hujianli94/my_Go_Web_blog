@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.3. 处理JSON文件 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.4. 处理CSV文件" href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html" />
+    <link rel="prev" title="6.2. 处理XML文件" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. Go文件处理</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html">6.1. 处理目录与文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html">6.2. 处理XML文件</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.3. 处理JSON文件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.3.1. 1.读取JSON文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.3.2. 2.生成JSON文件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html">6.4. 处理CSV文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html">6.5. 处理日志记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">6.6. 处理正则表达式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>Go文件处理</a> &raquo;</li>
+      <li><span class="section-number">6.3. </span>处理JSON文件</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/6.Go文件处理/3.处理JSON文件.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#json" id="id3">处理JSON文件</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id4">1.读取JSON文件</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id5">2.生成JSON文件</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="json">
+<h1><a class="toc-backref" href="#id3"><span class="section-number">6.3. </span>处理JSON文件</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h1>
+<p>JSON（JavaScript Object
+Notation，JavaScript对象表示法），基于文本，独立于语言的轻量级数据交换格式。</p>
+<p>键用（“”）括起来，值是任意类型。</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;888&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jack&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id1">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">6.3.1. </span>1.读取JSON文件</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">json_parse.json</span></code></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;888&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jack&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;age&quot;</span><span class="p">:</span> <span class="mi">18</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;encoding/json&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io/ioutil&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">//定义配置文件解析后的结构</span>
+<span class="kd">type</span> <span class="nx">MongoConfig</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">MongoAddr</span>       <span class="kt">string</span>
+    <span class="nx">MongoPoolLimit</span>  <span class="kt">int</span>
+    <span class="nx">MongoDb</span>         <span class="kt">string</span>
+    <span class="nx">MongoCollection</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Config</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Port</span>  <span class="kt">string</span>
+    <span class="nx">Mongo</span> <span class="nx">MongoConfig</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">Config</span><span class="p">{}</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">Load</span><span class="p">(</span><span class="s">&quot;json_parse.json&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">v</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Port</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Mongo</span><span class="p">.</span><span class="nx">MongoAddr</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Mongo</span><span class="p">.</span><span class="nx">MongoPoolLimit</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Mongo</span><span class="p">.</span><span class="nx">MongoDb</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Mongo</span><span class="p">.</span><span class="nx">MongoCollection</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">Load</span><span class="p">(</span><span class="nx">filename</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c1">//ReadFile函数会读取文件的全部内容，并将结果以[]byte类型返回</span>
+    <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+
+    <span class="c1">//读取的数据为json格式，需要进行解码</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">Unmarshal</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">27017</span>
+<span class="cm">127.0.0.1</span>
+<span class="cm">500</span>
+<span class="cm">my_db</span>
+<span class="cm">table1</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">6.3.2. </span>2.生成JSON文件</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;encoding/json&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">UserName</span> <span class="kt">string</span>
+    <span class="nx">NickName</span> <span class="kt">string</span> <span class="s">`json:&quot;nickname&quot;`</span>
+    <span class="nx">Email</span>    <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">user</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span>
+        <span class="nx">UserName</span><span class="p">:</span> <span class="s">&quot;Jack&quot;</span><span class="p">,</span>
+        <span class="nx">NickName</span><span class="p">:</span> <span class="s">&quot;Ma&quot;</span><span class="p">,</span>
+        <span class="nx">Email</span><span class="p">:</span>    <span class="s">&quot;xxxxx@qq.com&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1">//data, err := json.Marshal(&amp;user)</span>
+    <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">MarshalIndent</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">user</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;\t&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;json.Marshal failed,err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n&quot;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span>
+
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;json_write.json&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;os.Create err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">file</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">{</span>
+<span class="cm">    &quot;UserName&quot;: &quot;Jack&quot;,</span>
+<span class="cm">    &quot;nickname&quot;: &quot;Ma&quot;,</span>
+<span class="cm">    &quot;Email&quot;: &quot;xxxxx@qq.com&quot;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html" class="btn btn-neutral float-left" title="6.2. 处理XML文件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html" class="btn btn-neutral float-right" title="6.4. 处理CSV文件" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

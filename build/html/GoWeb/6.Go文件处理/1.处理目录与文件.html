@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.1. 处理目录与文件 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.2. 处理XML文件" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html" />
+    <link rel="prev" title="6. Go文件处理" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. Go文件处理</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.1. 处理目录与文件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.1.1. 1.操作目录</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">6.1.2. 2.创建文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">6.1.3. 3.打开与关闭文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">6.1.4. 4.读写文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">6.1.5. 5.移动和重命名文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">6.1.6. 6.删除文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">6.1.7. 7.复制文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">6.1.8. 8.文件链接</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html">6.2. 处理XML文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.%E5%A4%84%E7%90%86JSON%E6%96%87%E4%BB%B6.html">6.3. 处理JSON文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html">6.4. 处理CSV文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html">6.5. 处理日志记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">6.6. 处理正则表达式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>Go文件处理</a> &raquo;</li>
+      <li><span class="section-number">6.1. </span>处理目录与文件</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/6.Go文件处理/1.处理目录与文件.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id21">处理目录与文件</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id22">1.操作目录</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id23">1.1 创建目录</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id24">1.2 重命名目录</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id25">1.3 删除目录</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id26">1.4 遍历目录</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id7" id="id27">2.创建文件</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id28">3.打开与关闭文件</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id29">4.读写文件</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id30">4.1 读文件</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id31">4.2 写文件</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id32">4.3 写文件示例</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id33">4.4 写文件追加示例</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id34">4.5 读写同时进行示例</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id35">4.6 复制文件到另外一个文件</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id36">4.7 实现一个拷贝文件函数</a></p></li>
+<li><p><a class="reference internal" href="#cat" id="id37">4.8 实现一个cat命令</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id17" id="id38">5.移动和重命名文件</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id39">6.删除文件</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id40">7.复制文件</a></p></li>
+<li><p><a class="reference internal" href="#id20" id="id41">8.文件链接</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id21"><span class="section-number">6.1. </span>处理目录与文件</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">6.1.1. </span>1.操作目录</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="p">(</span>
+    <span class="nx">os</span>
+    <span class="nx">path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3><a class="toc-backref" href="#id23">1.1 创建目录</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Mkdir(name string, perm FileMode) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//创建一个名为“test”的目录，perm权限为0777</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Mkdir</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func MkdirAll(path string, perm FileMode) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//根据path创建多级子目录，例如dir1/dir2/dir3</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">MkdirAll</span><span class="p">(</span><span class="s">&quot;./dir1/dir2/dir3&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="nx">uploadDir</span> <span class="o">:=</span> <span class="s">&quot;static/upload/&quot;</span> <span class="o">+</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Format</span><span class="p">(</span><span class="s">&quot;2006/01/02/&quot;</span><span class="p">)</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">MkdirAll</span><span class="p">(</span><span class="nx">uploadDir</span> <span class="p">,</span> <span class="mi">777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span><span class="o">!=</span><span class="kc">nil</span><span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id24">1.2 重命名目录</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Rename(oldpath, newpath string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//创建一个名为“dir_name1”的目录，perm权限为0777</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Mkdir</span><span class="p">(</span><span class="s">&quot;dir_name1&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">oldName</span> <span class="o">:=</span> <span class="s">&quot;dir_name1&quot;</span>
+    <span class="nx">newName</span> <span class="o">:=</span> <span class="s">&quot;dir_name2&quot;</span>
+    <span class="c1">//将dir_name1重命名为dir_name2</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Rename</span><span class="p">(</span><span class="nx">oldName</span><span class="p">,</span> <span class="nx">newName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id25">1.3 删除目录</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Remove(name string) error</span>
+<span class="c1">//非空目录出错</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Remove</span><span class="p">(</span><span class="s">&quot;dir1&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func RemoveAll(name string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//先创建多级子目录</span>
+    <span class="nx">os</span><span class="p">.</span><span class="nx">MkdirAll</span><span class="p">(</span><span class="s">&quot;test1/test2/test3&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="c1">//删除test1目录及其子目录</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="s">&quot;test1&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id26">1.4 遍历目录</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Walk(root string, walkFn WalkFunc) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;path/filepath&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">scan</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">f</span> <span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Scaned: %s\n&quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//根据path创建多级子目录，例如dir1/dir2/dir3</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">MkdirAll</span><span class="p">(</span><span class="s">&quot;test_walk/dir2/dir3&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">root</span> <span class="o">:=</span> <span class="s">`./test_walk`</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Walk</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="nx">scan</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;filepath.Walk() returned %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">6.1.2. </span>2.创建文件</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Create(name string) (*File, error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 创建文件</span>
+    <span class="c1">//文件的创建，Create会根据传入的文件名创建文件，默认权限是0666</span>
+    <span class="nx">fp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./demo.txt&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">fp</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>               <span class="c1">// &amp;{0xc000054180} &lt;nil&gt;</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%T&quot;</span><span class="p">,</span> <span class="nx">fp</span><span class="p">)</span>               <span class="c1">// *os.File 文件指针类型</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件创建失败。&quot;</span><span class="p">)</span>
+        <span class="c1">//创建文件失败的原因有：</span>
+        <span class="c1">//1、路径不存在  2、权限不足  3、打开文件数量超过上限  4、磁盘空间不足等</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c1">// defer延迟调用</span>
+    <span class="k">defer</span> <span class="nx">fp</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span> <span class="c1">//关闭文件，释放资源。</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">6.1.3. </span>3.打开与关闭文件</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Open(name string) (file *File, err Error)</span>
+<span class="c1">//func (f *File) Close() error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 打开文件</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;demo.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;打开文件出错：%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="c1">// 关闭文件</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;关闭文件出错：%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func OpenFile(name string, flag int, perm uint32) (file *File, err Error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 读写方式打开文件</span>
+    <span class="nx">fp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="s">&quot;./demo.txt&quot;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_APPEND</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件打开失败。&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c1">// defer延迟调用</span>
+    <span class="k">defer</span> <span class="nx">fp</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>  <span class="c1">//关闭文件，释放资源。</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">6.1.4. </span>4.读写文件</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<section id="id10">
+<h3><a class="toc-backref" href="#id30">4.1 读文件</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//带缓冲方式读</span>
+<span class="c1">//func NewReader(rd io.Reader) *Reader</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 打开文件</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;demo.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;打开文件出错：%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// 及时关闭文件句柄</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="c1">// bufio.NewReader(rd io.Reader) *Reader</span>
+    <span class="nx">reader</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="c1">// 循环读取文件的内容</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">line</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">reader</span><span class="p">.</span><span class="nx">ReadString</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span> <span class="c1">// 读到一个换行符就结束</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>                   <span class="c1">// io.EOF表示文件的末尾</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="c1">// 输出内容</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//直接读到内存</span>
+<span class="c1">//func ReadFile(filename string)([]byte, error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io/ioutil&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 使用 io/ioutil.ReadFile 方法一次性将文件读取到内存中</span>
+    <span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&quot;read2.txt&quot;</span>
+    <span class="nx">content</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="c1">// log.Fatal(err)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;读取文件出错：%v&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%v\n&quot;</span><span class="p">,</span> <span class="nx">content</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%v\n&quot;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">content</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id31">4.2 写文件</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func (file *File) Write(b []byte) (n int, err Error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="s">&quot;write1.txt&quot;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_RDWR</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="nx">content</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;你好世界！&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;写入成功！&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func (file *File) WriteAt(b []byte, off int64) (n int, err Error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;writeAt.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="nx">file</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;Go Web编程实战派从入门到精通&quot;</span><span class="p">)</span>
+    <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">WriteAt</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;Go语言Web&quot;</span><span class="p">),</span> <span class="mi">24</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func (file *File) WriteString(s string) (ret int, err Error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;WriteString.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="nx">file</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;Go Web编程实战派从入门到精通&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">func (file *File) WriteString(s string) (ret int, err Error) {</span>
+<span class="cm">    return f.Write([]byte(s))</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//新建文件</span>
+    <span class="nx">fout</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./write4.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">fout</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">outstr</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%s:%d\r\n&quot;</span><span class="p">,</span> <span class="s">&quot;Hello Go&quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">//Sprintf格式化</span>
+        <span class="c1">// 写入文件</span>
+        <span class="nx">fout</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="nx">outstr</span><span class="p">)</span>            <span class="c1">//string信息</span>
+        <span class="nx">fout</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;i love go\r\n&quot;</span><span class="p">))</span> <span class="c1">//byte类型</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id32">4.3 写文件示例</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>创建一个新文件 golang.txt，并在其中写入 5
+句“<a class="reference external" href="http://c.biancheng.net/golang/">http://c.biancheng.net/golang/</a>”。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//创建一个新文件，写入内容 5 句 “http://c.biancheng.net/golang/”</span>
+    <span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&quot;./golang.txt&quot;</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件打开失败&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//及时关闭file句柄</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="c1">//写入文件时，使用带缓存的 *Writer</span>
+    <span class="nx">write</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewWriter</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">write</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;http://c.biancheng.net/golang/ \n&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//Flush将缓存的文件真正写入到文件中</span>
+    <span class="nx">write</span><span class="p">.</span><span class="nx">Flush</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id33">4.4 写文件追加示例</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&quot;./golang.txt&quot;</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_APPEND</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件打开失败&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//及时关闭file句柄</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="c1">//写入文件时，使用带缓存的 *Writer</span>
+    <span class="nx">write</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewWriter</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">write</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;C语言中文网 \r\n&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//Flush将缓存的文件真正写入到文件中</span>
+    <span class="nx">write</span><span class="p">.</span><span class="nx">Flush</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id34">4.5 读写同时进行示例</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&quot;./golang.txt&quot;</span>
+    <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_RDWR</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_APPEND</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件打开失败&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//及时关闭file句柄</span>
+    <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="c1">//读原来文件的内容，并且显示在终端</span>
+    <span class="nx">reader</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">str</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">reader</span><span class="p">.</span><span class="nx">ReadString</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//写入文件时，使用带缓存的 *Writer</span>
+    <span class="nx">write</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewWriter</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">write</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;Hello，C语言中文网。 \r\n&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//Flush将缓存的文件真正写入到文件中</span>
+    <span class="nx">write</span><span class="p">.</span><span class="nx">Flush</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id35">4.6 复制文件到另外一个文件</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>（注：这两个文件都已存在）</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io/ioutil&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">file1Path</span> <span class="o">:=</span> <span class="s">&quot;./golang.txt&quot;</span>
+    <span class="nx">file2Path</span> <span class="o">:=</span> <span class="s">&quot;./demo.txt&quot;</span>
+    <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadFile</span><span class="p">(</span><span class="nx">file1Path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;文件打开失败=%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">WriteFile</span><span class="p">(</span><span class="nx">file2Path</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;文件打开失败=%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id36">4.7 实现一个拷贝文件函数</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">// CopyFile 拷贝文件函数</span>
+<span class="kd">func</span> <span class="nx">CopyFile</span><span class="p">(</span><span class="nx">dstName</span><span class="p">,</span> <span class="nx">srcName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">written</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 以读方式打开源文件</span>
+    <span class="nx">src</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">srcName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;open %s failed, err:%v.\n&quot;</span><span class="p">,</span> <span class="nx">srcName</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">src</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="c1">// 以写|创建的方式打开目标文件</span>
+    <span class="nx">dst</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="nx">dstName</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;open %s failed, err:%v.\n&quot;</span><span class="p">,</span> <span class="nx">dstName</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="nx">dst</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Copy</span><span class="p">(</span><span class="nx">dst</span><span class="p">,</span> <span class="nx">src</span><span class="p">)</span> <span class="c1">//调用io.Copy()拷贝内容</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">CopyFile</span><span class="p">(</span><span class="s">&quot;dst.txt&quot;</span><span class="p">,</span> <span class="s">&quot;src.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;copy file failed, err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;copy done!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="cat">
+<h3><a class="toc-backref" href="#id37">4.8 实现一个cat命令</a><a class="headerlink" href="#cat" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;flag&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+<span class="c1">// cat命令实现</span>
+<span class="kd">func</span> <span class="nx">cat</span><span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">bufio</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">buf</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">ReadBytes</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span> <span class="c1">//注意是字符</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+            <span class="c1">// 退出之前将已读到的内容输出</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">Parse</span><span class="p">()</span> <span class="c1">// 解析命令行参数</span>
+    <span class="k">if</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">NArg</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="c1">// 如果没有参数默认从标准输入读取内容</span>
+        <span class="nx">cat</span><span class="p">(</span><span class="nx">bufio</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdin</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="c1">// 依次读取每个指定文件的内容并打印到终端</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">NArg</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">flag</span><span class="p">.</span><span class="nx">Arg</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&quot;reading from %s failed, err:%v\n&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">Arg</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span> <span class="nx">err</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="nx">cat</span><span class="p">(</span><span class="nx">bufio</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">f</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id17">
+<h2><a class="toc-backref" href="#id38"><span class="section-number">6.1.5. </span>5.移动和重命名文件</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Rename(oldpath, newpath string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//创建一个名为&quot;test_rename.txt&quot;的空文件</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test_rename.txt&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//创建一个名为&quot;test_rename&quot;的目录，perm权限为0777</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Mkdir</span><span class="p">(</span><span class="s">&quot;test_rename&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="c1">//将test_rename.txt移动到test_rename目录，并将名字重命名为test_rename_new.txt</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Rename</span><span class="p">(</span><span class="s">&quot;./test_rename.txt&quot;</span><span class="p">,</span> <span class="s">&quot;./test_rename/test_rename_new.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h2><a class="toc-backref" href="#id39"><span class="section-number">6.1.6. </span>6.删除文件</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Remove(name string) error</span>
+<span class="c1">//func RemoveAll(name string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//创建一个名为&quot;test_rename&quot;的目录，perm权限为0777</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Mkdir</span><span class="p">(</span><span class="s">&quot;test_remove&quot;</span><span class="p">,</span> <span class="mo">0777</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;created dir:test_remove&quot;</span><span class="p">)</span>
+    <span class="c1">//创建一个名为&quot;test_remove1.txt&quot;的空文件</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test_remove/test_remove1.txt&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;created file:test_remove1.txt&quot;</span><span class="p">)</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test_remove/test_remove2.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;created file:test_remove2.txt&quot;</span><span class="p">)</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test_remove/test_remove3.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;created file:test_remove3.txt&quot;</span><span class="p">)</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Remove</span><span class="p">(</span><span class="s">&quot;./test_remove/test_remove1.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;removed ./test_remove/test_remove1.txt err : %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;removed file:./test_remove/test_remove1.txt&quot;</span><span class="p">)</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="s">&quot;./test_remove&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;remove all ./test_remove err : %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;removed all files:./test_remove&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h2><a class="toc-backref" href="#id40"><span class="section-number">6.1.7. </span>7.复制文件</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//func Copy(dst Writer, src Reader) (written int64, err error)</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//先创建一个名为：test_copy1.zip文件</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test_copy1.zip&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//打开文件test_copy1.zip，获取文件指针</span>
+    <span class="nx">srcFile</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;./test_copy1.zip&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;open file err = %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">defer</span> <span class="nx">srcFile</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="c1">//打开文件要复制的新文件名test_copy2.zip，获取文件指针</span>
+    <span class="nx">dstFile</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="s">&quot;./test_copy2.zip&quot;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;open file err = %v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">defer</span> <span class="nx">dstFile</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+    <span class="c1">//通过Copy方法</span>
+    <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Copy</span><span class="p">(</span><span class="nx">dstFile</span><span class="p">,</span> <span class="nx">srcFile</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;复制成功，复制的字节数为: &quot;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">//自定义复制方法</span>
+<span class="kd">func</span> <span class="nx">DoCopy</span><span class="p">(</span><span class="nx">srcFileName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">dstFileName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//打开源文件</span>
+    <span class="nx">srcFile</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">srcFileName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;源文件读取失败,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">err</span> <span class="p">=</span> <span class="nx">srcFile</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;源文件关闭失败,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="c1">//创建目标文件,稍后会向这个目标文件写入拷贝内容</span>
+    <span class="nx">distFile</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="nx">dstFileName</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;目标文件创建失败,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">err</span> <span class="p">=</span> <span class="nx">distFile</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;目标文件关闭失败,err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="c1">//定义指定长度的字节切片,每次最多读取指定长度</span>
+    <span class="kd">var</span> <span class="nx">tmp</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1">//循环读取并写入</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">srcFile</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">tmp</span><span class="p">)</span>
+        <span class="nx">n</span><span class="p">,</span> <span class="nx">_</span> <span class="p">=</span> <span class="nx">distFile</span><span class="p">.</span><span class="nx">Write</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[:</span><span class="nx">n</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+                <span class="k">return</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;拷贝过程中发生错误,错误err:%v\n&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//先创建一个.zip文件</span>
+    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./test.zip&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//复制一个名为test2.zip的文件</span>
+    <span class="nx">DoCopy</span><span class="p">(</span><span class="s">&quot;./test.zip&quot;</span><span class="p">,</span> <span class="s">&quot;./test2.zip&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h2><a class="toc-backref" href="#id41"><span class="section-number">6.1.8. </span>8.文件链接</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//硬链接</span>
+<span class="c1">//func Link(oldname, newname string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 创建文件</span>
+    <span class="c1">//文件的创建，Create会根据传入的文件名创建文件，默认权限是0666//-rw-r--r--</span>
+    <span class="nx">fp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./link1.txt&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="c1">// defer延迟调用</span>
+    <span class="k">defer</span> <span class="nx">fp</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span> <span class="c1">//关闭文件，释放资源。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件创建失败。&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Link</span><span class="p">(</span><span class="s">&quot;link1.txt&quot;</span><span class="p">,</span> <span class="s">&quot;link2.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//软链接</span>
+<span class="c1">//func SymLink(oldname, newname string) error</span>
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 创建文件</span>
+    <span class="c1">//文件的创建，Create会根据传入的文件名创建文件，默认权限是0666//-rw-r--r--</span>
+    <span class="nx">fp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;./link2.txt&quot;</span><span class="p">)</span> <span class="c1">// 如果文件已存在，会将文件清空。</span>
+    <span class="c1">// defer延迟调用</span>
+    <span class="k">defer</span> <span class="nx">fp</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span> <span class="c1">//关闭文件，释放资源。</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;文件创建失败。&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Symlink</span><span class="p">(</span><span class="s">&quot;link2.txt&quot;</span><span class="p">,</span> <span class="s">&quot;link3.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;err:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="6. Go文件处理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html" class="btn btn-neutral float-right" title="6.2. 处理XML文件" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

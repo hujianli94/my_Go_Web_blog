@@ -18,8 +18,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Go并发编程" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html" />
-    <link rel="prev" title="5. Go高级网络编程" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" /> 
+    <link rel="next" title="6.1. 处理目录与文件" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html" />
+    <link rel="prev" title="5.3. 微服务" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/3.%E5%BE%AE%E6%9C%8D%E5%8A%A1.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +48,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Go文件处理</a><ul class="simple">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Go文件处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html">6.1. 处理目录与文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html">6.2. 处理XML文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.%E5%A4%84%E7%90%86JSON%E6%96%87%E4%BB%B6.html">6.3. 处理JSON文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html">6.4. 处理CSV文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html">6.5. 处理日志记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">6.6. 处理正则表达式</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
@@ -87,6 +93,69 @@
   <section id="go">
 <h1><span class="section-number">6. </span>Go文件处理<a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html">6.1. 处理目录与文件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id2">6.1.1. 1.操作目录</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id3">1.1 创建目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id4">1.2 重命名目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id5">1.3 删除目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id6">1.4 遍历目录</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id7">6.1.2. 2.创建文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id8">6.1.3. 3.打开与关闭文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id9">6.1.4. 4.读写文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id10">4.1 读文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id11">4.2 写文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id12">4.3 写文件示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id13">4.4 写文件追加示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id14">4.5 读写同时进行示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id15">4.6 复制文件到另外一个文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id16">4.7 实现一个拷贝文件函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#cat">4.8 实现一个cat命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id17">6.1.5. 5.移动和重命名文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id18">6.1.6. 6.删除文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id19">6.1.7. 7.复制文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html#id20">6.1.8. 8.文件链接</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html">6.2. 处理XML文件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html#id1">6.2.1. 1.解析XML文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.%E5%A4%84%E7%90%86XML%E6%96%87%E4%BB%B6.html#id2">6.2.2. 2.生成XML文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3.%E5%A4%84%E7%90%86JSON%E6%96%87%E4%BB%B6.html">6.3. 处理JSON文件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3.%E5%A4%84%E7%90%86JSON%E6%96%87%E4%BB%B6.html#id1">6.3.1. 1.读取JSON文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.%E5%A4%84%E7%90%86JSON%E6%96%87%E4%BB%B6.html#id2">6.3.2. 2.生成JSON文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4.%E5%A4%84%E7%90%86CSV%E6%96%87%E4%BB%B6.html">6.4. 处理CSV文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html">6.5. 处理日志记录</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html#print">6.5.1. 1.Print类函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html#panic">6.5.2. 2.Panic类函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html#fatal">6.5.3. 3.Fatal类函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.%E5%A4%84%E7%90%86%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95.html#logger">6.5.4. 4.自定义Logger类型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">6.6. 处理正则表达式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id2">6.6.1. 1.正则表达式简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id3">1.1 普通字符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id4">1.2 特殊字符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id5">1.3 限定符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id6">1.4 定位符</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#go">6.6.2. 2.使用Go正则表达式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#regexp">2.1 regexp包的常用函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id10">6.6.3. 3. regexp包的应用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.%E5%A4%84%E7%90%86%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id11">6.6.4. 4. 根据正则表达式生产代码</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 
@@ -94,8 +163,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html" class="btn btn-neutral float-left" title="5. Go高级网络编程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html" class="btn btn-neutral float-right" title="7. Go并发编程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/3.%E5%BE%AE%E6%9C%8D%E5%8A%A1.html" class="btn btn-neutral float-left" title="5.3. 微服务" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="1.%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6.html" class="btn btn-neutral float-right" title="6.1. 处理目录与文件" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5.2. Go RPC编程 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.3. 微服务" href="3.%E5%BE%AE%E6%9C%8D%E5%8A%A1.html" />
+    <link rel="prev" title="5.1. Go Socket编程" href="1.Go-Socket%E7%BC%96%E7%A8%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Go高级网络编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.Go-Socket%E7%BC%96%E7%A8%8B.html">5.1. Go Socket编程</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.2. Go RPC编程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rpc">5.2.1. 1.什么是RPC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#golangrpc">5.2.2. 2.golang中如何实现RPC</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="3.%E5%BE%AE%E6%9C%8D%E5%8A%A1.html">5.3. 微服务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../7.Go%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">7. Go并发编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">5. </span>Go高级网络编程</a> &raquo;</li>
+      <li><span class="section-number">5.2. </span>Go RPC编程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/5.Go高级网络编程/2.Go-RPC编程.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#go-rpc" id="id1">Go RPC编程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rpc" id="id2">1.什么是RPC</a></p></li>
+<li><p><a class="reference internal" href="#golangrpc" id="id3">2.golang中如何实现RPC</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gobrpc" id="id4">2.1 gob编码RPC</a></p></li>
+<li><p><a class="reference internal" href="#jsonrpc" id="id5">2.3 Json编码RPC</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="go-rpc">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">5.2. </span>Go RPC编程</a><a class="headerlink" href="#go-rpc" title="Permalink to this headline">¶</a></h1>
+<section id="rpc">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">5.2.1. </span>1.什么是RPC</a><a class="headerlink" href="#rpc" title="Permalink to this headline">¶</a></h2>
+<p>远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。
+该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。
+如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。<a class="reference external" href="https://link.zhihu.com/?target=https%3A//zh.wikipedia.org/wiki/%E9%81%A0%E7%A8%8B%E9%81%8E%E7%A8%8B%E8%AA%BF%E7%94%A8">维基百科：远程过程调用</a></p>
+<p>用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获取用户信息的方法getUserInfo，并把go程序部署在阿里云服务器上面，现在我有一个部署在腾讯云上面的php项目，需要调用golang的getUserInfo方法获取用户信息，php跨机器调用go方法的过程就是RPC调用。</p>
+</section>
+<section id="golangrpc">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">5.2.2. </span>2.golang中如何实现RPC</a><a class="headerlink" href="#golangrpc" title="Permalink to this headline">¶</a></h2>
+<p>在golang中实现RPC非常简单，有封装好的官方库和一些第三方库提供支持。</p>
+<p>Go
+RPC可以利用tcp或http来传递数据，可以对要传递的数据使用多种类型的编解码方式。</p>
+<ul class="simple">
+<li><p>gob编码RPC</p></li>
+<li><p>Json编码RPC</p></li>
+<li><p>其他三方RPC库</p></li>
+</ul>
+<p>golang官方的<code class="docutils literal notranslate"><span class="pre">net/rpc</span></code>库使用<code class="docutils literal notranslate"><span class="pre">encoding/gob</span></code>进行编解码，支持<code class="docutils literal notranslate"><span class="pre">tcp</span></code>或<code class="docutils literal notranslate"><span class="pre">http</span></code>数据传输方式，由于其他语言不支持<code class="docutils literal notranslate"><span class="pre">gob</span></code>编解码方式，<strong>所以使用``net/rpc``库实现的RPC方法没办法进行跨语言调用。</strong></p>
+<p>golang官方还提供了<code class="docutils literal notranslate"><span class="pre">net/rpc/jsonrpc</span></code>库实现RPC方法，JSON
+RPC采用JSON进行数据编解码，因而支持跨语言调用。但目前的jsonrpc库是基于tcp协议实现的，暂时不支持使用http进行数据传输。</p>
+<p>除了golang官方提供的rpc库，还有许多第三方库为在golang中实现RPC提供支持，大部分第三方rpc库的实现都是使用<code class="docutils literal notranslate"><span class="pre">protobuf</span></code>进行数据编解码，根据<code class="docutils literal notranslate"><span class="pre">protobuf</span></code>声明文件自动生成rpc方法定义与服务注册代码，在golang中可以很方便的进行rpc服务调用。</p>
+<section id="gobrpc">
+<h3><a class="toc-backref" href="#id4">2.1 gob编码RPC</a><a class="headerlink" href="#gobrpc" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">server/main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+    <span class="s">&quot;net/rpc&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">Algorithm</span> <span class="kt">int</span>
+
+<span class="c1">//参数结构体</span>
+<span class="kd">type</span> <span class="nx">Args</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="c1">//参数结构体</span>
+<span class="c1">//type Response int</span>
+
+<span class="c1">//定义一个方法求两个数的和</span>
+<span class="c1">//该方法的第一个参数为输入参数，第二个参数为返回值</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">Algorithm</span><span class="p">)</span> <span class="nx">Sum</span><span class="p">(</span><span class="nx">args</span> <span class="o">*</span><span class="nx">Args</span><span class="p">,</span> <span class="nx">reply</span> <span class="o">*</span><span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="o">*</span><span class="nx">reply</span> <span class="p">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">X</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">Y</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Exec Sum &quot;</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//实例化</span>
+    <span class="nx">algorithm</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Algorithm</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Algorithm start&quot;</span><span class="p">,</span> <span class="nx">algorithm</span><span class="p">)</span>
+    <span class="c1">//注册服务</span>
+    <span class="nx">rpc</span><span class="p">.</span><span class="nx">Register</span><span class="p">(</span><span class="nx">algorithm</span><span class="p">)</span>
+    <span class="nx">rpc</span><span class="p">.</span><span class="nx">HandleHTTP</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8808&quot;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;err=====&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">client/main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/rpc&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;strconv&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">//参数结构体</span>
+<span class="kd">type</span> <span class="nx">ArgsTwo</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">client</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rpc</span><span class="p">.</span><span class="nx">DialHTTP</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;127.0.0.1:8808&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;在这里地方发生错误了: DialHTTP&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//获取第一个输入值</span>
+    <span class="nx">i1</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">Atoi</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1">//获取第二个输入值</span>
+    <span class="nx">i2</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">Atoi</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="nx">args</span> <span class="o">:=</span> <span class="nx">ArgsTwo</span><span class="p">{</span><span class="nx">i1</span><span class="p">,</span> <span class="nx">i2</span><span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">reply</span> <span class="kt">int</span>
+    <span class="c1">//调用命名函数，等待它完成，并返回其错误状态。</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">Call</span><span class="p">(</span><span class="s">&quot;Algorithm.Sum&quot;</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">reply</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;Call Sum algorithm error:&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Algorithm 和为: %d+%d=%d\n&quot;</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">X</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">Y</span><span class="p">,</span> <span class="nx">reply</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonrpc">
+<h3><a class="toc-backref" href="#id5">2.3 Json编码RPC</a><a class="headerlink" href="#jsonrpc" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">server/main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net&quot;</span>
+    <span class="s">&quot;net/rpc&quot;</span>
+    <span class="s">&quot;net/rpc/jsonrpc&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">//使用Go提供的net/rpc/jsonrpc标准包</span>
+<span class="kd">func</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;JSON编码RPC,不是gob编码,其他的和RPC概念一模一样。&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">ArgsLanguage</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Java</span><span class="p">,</span> <span class="nx">Go</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Programmer</span> <span class="kt">string</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Programmer</span><span class="p">)</span> <span class="nx">GetSkill</span><span class="p">(</span><span class="nx">al</span> <span class="o">*</span><span class="nx">ArgsLanguage</span><span class="p">,</span> <span class="nx">skill</span> <span class="o">*</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="o">*</span><span class="nx">skill</span> <span class="p">=</span> <span class="s">&quot;Skill1:&quot;</span> <span class="o">+</span> <span class="nx">al</span><span class="p">.</span><span class="nx">Java</span> <span class="o">+</span> <span class="s">&quot;,Skill2:&quot;</span> <span class="o">+</span> <span class="nx">al</span><span class="p">.</span><span class="nx">Go</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//实例化</span>
+    <span class="nx">str</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Programmer</span><span class="p">)</span>
+    <span class="c1">//注册服务</span>
+    <span class="nx">rpc</span><span class="p">.</span><span class="nx">Register</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+
+    <span class="nx">tcpAddr</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">ResolveTCPAddr</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;:8085&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;ResolveTCPAddr err=&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nx">listener</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">ListenTCP</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="nx">tcpAddr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;tcp listen err=&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">listener</span><span class="p">.</span><span class="nx">Accept</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="nx">jsonrpc</span><span class="p">.</span><span class="nx">ServeConn</span><span class="p">(</span><span class="nx">conn</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">client/main.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;net/rpc/jsonrpc&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// 参数结构体可以和服务端不一样</span>
+<span class="c1">// 但是结构体里的字段必须一样</span>
+<span class="kd">type</span> <span class="nx">Send</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Java</span><span class="p">,</span> <span class="nx">Go</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;client start......&quot;</span><span class="p">)</span>
+    <span class="nx">client</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jsonrpc</span><span class="p">.</span><span class="nx">Dial</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="s">&quot;127.0.0.1:8085&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="s">&quot;Dial err=&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">send</span> <span class="o">:=</span> <span class="nx">Send</span><span class="p">{</span><span class="s">&quot;Java&quot;</span><span class="p">,</span> <span class="s">&quot;Go&quot;</span><span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">receive</span> <span class="kt">string</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">Call</span><span class="p">(</span><span class="s">&quot;Programmer.GetSkill&quot;</span><span class="p">,</span> <span class="nx">send</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">receive</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Call err=&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;receive&quot;</span><span class="p">,</span> <span class="nx">receive</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1.Go-Socket%E7%BC%96%E7%A8%8B.html" class="btn btn-neutral float-left" title="5.1. Go Socket编程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3.%E5%BE%AE%E6%9C%8D%E5%8A%A1.html" class="btn btn-neutral float-right" title="5.3. 微服务" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
