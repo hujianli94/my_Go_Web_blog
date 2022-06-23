@@ -319,6 +319,17 @@ Gitee GoProxy仓使用帮助 代理上游
 
 说再多也没用，自己动手试试吧。
 
+4.Golang强制更新第三方依赖版本
+------------------------------
+
+1. 删除go.sum
+2. 删除go.mod中老依赖行
+3. ``go mod tidy``\ 刷新
+
+..
+
    参考文献:
 
    https://www.cnblogs.com/haiyux/p/15162661.html
+
+   https://www.yuque.com/coolops/golang/pgwq4e

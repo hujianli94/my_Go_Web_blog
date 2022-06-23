@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7.4. gogoroutine和channel实现并发 &mdash; 小健Go Web开发实战学习</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.5. sync实现并发" href="5.sync%E5%AE%9E%E7%8E%B0%E5%B9%B6%E5%8F%91.html" />
+    <link rel="prev" title="7.3. Go并发模型简介" href="3.Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Go_Web开发实战学习
+            <img src="../../_static/goweb.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Go Web开发实战学习</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1.Go%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">1. Go基础入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2.Go-Web%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">2. Go-Web开发基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../3.%E6%8E%A5%E6%94%B6%E5%92%8C%E5%A4%84%E7%90%86Go-Web%E8%AF%B7%E6%B1%82/index.html">3. 接收和处理Go-Web请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4.%E4%BD%BF%E7%94%A8Go%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">4. 使用Go访问数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../5.Go%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">5. Go高级网络编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../6.Go%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/index.html">6. Go文件处理</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. Go并发编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.html">7.1. 并发与并行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B.html">7.2. 进程、线程和协程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B.html">7.3. Go并发模型简介</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.4. gogoroutine和channel实现并发</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#goroutine">7.4.1. 1.goroutine简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.4.2. 2.通道</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="5.sync%E5%AE%9E%E7%8E%B0%E5%B9%B6%E5%8F%91.html">7.5. sync实现并发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.Go%E5%B9%B6%E5%8F%91%E7%9A%84Web%E5%BA%94%E7%94%A8.html">7.6. Go并发的Web应用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../8.Go-RESTful-API%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91/index.html">8. Go-RESTful-API接口开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../9.%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAB2C%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1%E7%B3%BB%E7%BB%9F/index.html">9. 开发一个B2C电子商务系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2GO_Web%E5%BA%94%E7%94%A8/index.html">10. 使用Docker部署GO_Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Go_Web开发实战学习</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Go Web开发实战学习</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">7. </span>Go并发编程</a> &raquo;</li>
+      <li><span class="section-number">7.4. </span>gogoroutine和channel实现并发</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/GoWeb/7.Go并发编程/4.goroutine和channel实现并发.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#gogoroutinechannel" id="id9">gogoroutine和channel实现并发</a></p>
+<ul>
+<li><p><a class="reference internal" href="#goroutine" id="id10">1.goroutine简介</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id11">2.通道</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id12">2.1 定义</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">2.2 声明</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id14">2.3 创建</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">2.4 通道发送数据</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">2.5 通道接收数据</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id17">2.6 通道缓冲区</a></p></li>
+<li><p><a class="reference internal" href="#select" id="id18">2.7 select多路复用</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id19">2.8 遍历通道与关闭通道</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="gogoroutinechannel">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">7.4. </span>gogoroutine和channel实现并发</a><a class="headerlink" href="#gogoroutinechannel" title="Permalink to this headline">¶</a></h1>
+<section id="goroutine">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">7.4.1. </span>1.goroutine简介</a><a class="headerlink" href="#goroutine" title="Permalink to this headline">¶</a></h2>
+<p>goroutine
+是一种非常轻量级的实现，可在单个进程里执行成千上万的并发任务，它是Go语言并发设计的核心。</p>
+<p>说到底 goroutine 其实就是线程，但是它比线程更小，十几个 goroutine
+可能体现在底层就是五六个线程，而且Go语言内部也实现了 goroutine
+之间的内存共享。</p>
+<p>使用 go 关键字就可以创建 goroutine，将 go
+声明放到一个需调用的函数之前，在相同地址空间调用运行这个函数，这样该函数执行时便会作为一个独立的并发线程，这种线程在Go语言中则被称为
+goroutine。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//...</span>
+<span class="p">}(</span><span class="nx">var1</span><span class="p">,</span> <span class="nx">var2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Goroutine 是 Go
+语言支持并发的核心，在一个Go程序中同时创建成百上千个goroutine是非常普遍的，一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。区别于操作系统线程由系统内核进行调度，
+goroutine 是由Go运行时（runtime）负责调度。例如Go运行时会智能地将
+m个goroutine
+合理地分配给n个操作系统线程，实现类似m:n的调度机制，不再需要Go开发者自行在代码层面维护一个线程池。</p>
+<p>Goroutine 是 Go 程序中最基本的并发执行单元。每一个 Go 程序都至少包含一个
+goroutine—main goroutine，当 Go 程序启动时它会自动创建。</p>
+<p>在Go语言编程中你不需要去自己写进程、线程、协程，你的技能包里只有一个技能——goroutine，当你需要让某个任务并发执行的时候，你只需要把这个任务包装成一个函数，开启一个
+goroutine 去执行这个函数就可以了，就是这么简单粗暴。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">Echo</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">go</span> <span class="nx">Echo</span><span class="p">(</span><span class="s">&quot;go&quot;</span><span class="p">)</span>
+    <span class="nx">Echo</span><span class="p">(</span><span class="s">&quot;web program&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>goroutine的调度方式是协同式的，没有时间片概念。</p>
+<p>goroutine切换时刻：</p>
+<ul class="simple">
+<li><p>通道接收或发送数据且造成阻塞时。</p></li>
+<li><p>新的goroutine被创建。</p></li>
+<li><p>造成系统调用被阻塞，如操作文件时。</p></li>
+</ul>
+<p>goroutine在多核CPU环境下可以是并行的。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">go</span> <span class="nx">Add</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">//返回值被忽略</span>
+    <span class="p">}</span>
+    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">Add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">c</span> <span class="o">:=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">c</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">7.4.2. </span>2.通道</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id12">2.1 定义</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>channel是用来传递数据的数据结构，可以通过通道共享内置类型、命名类型、结构类型和引用类型的值或者指针。一种特殊类型，任何时候，同时只能有一个goroutine访问通道进行发送或接收数据。</p>
+<p>类似队列，遵循先入先出（First In First out）规则，保证收发数据的顺序。</p>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id13">2.2 声明</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">channel_name</span> <span class="n">chan</span> <span class="nb">type</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id14">2.3 创建</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//通道实例 := make(chan 数据类型)</span>
+<span class="nx">strStream</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
+<span class="nx">done</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">interface</span><span class="p">{})</span>
+<span class="nx">voidStream</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="o">*</span><span class="kd">struct</span><span class="p">{})</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id15">2.4 通道发送数据</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//通道变量 &lt;- 通道值</span>
+<span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">interface</span><span class="p">{})</span>
+<span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">6</span>
+<span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&quot;love&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">interface</span><span class="p">{})</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&quot;sleep&quot;</span>   <span class="c1">//无缓冲通道，无接收方，永远阻塞，报错</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id16">2.5 通道接收数据</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//阻塞接收</span>
+<span class="nx">data</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//非阻塞接收</span>
+<span class="nx">data</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//忽略接收数据</span>
+ <span class="o">&lt;-</span><span class="nx">ch</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">//循环接收数据</span>
+<span class="k">for</span> <span class="nx">data</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span> <span class="p">{</span>
+    <span class="c1">//</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">Sum</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span>
+        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">v</span>
+    <span class="p">}</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">sum</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">s</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">}</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nx">Sum</span><span class="p">(</span><span class="nx">s</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="nx">ch</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nx">Sum</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">:],</span> <span class="nx">ch</span><span class="p">)</span>
+    <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">,</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id17">2.6 通道缓冲区</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ch</span> <span class="pre">:=</span> <span class="pre">make(chan</span> <span class="pre">int,</span> <span class="pre">6)</span></code>
+只要缓冲区未满，发送方和接收方可以处于异步状态。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">6</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">7</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">8</span>
+
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="nx">ch</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="nx">ch</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="nx">ch</span><span class="p">)</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="select">
+<h3><a class="toc-backref" href="#id18">2.7 select多路复用</a><a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h3>
+<p>在某些场景下我们可能需要同时从多个通道接收数据。通道在接收数据时，如果没有数据可以被接收那么当前
+goroutine
+将会发生阻塞。你也许会写出如下代码尝试使用遍历的方式来实现从多个通道中接收值。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>for{
+    // 尝试从ch1接收值
+    data, ok := &lt;-ch1
+    // 尝试从ch2接收值
+    data, ok := &lt;-ch2
+    …
+}
+</pre></div>
+</div>
+<p>这种方式虽然可以实现从多个通道接收值的需求，但是程序的运行性能会差很多。Go
+语言内置了<code class="docutils literal notranslate"><span class="pre">select</span></code>关键字，使用它可以同时响应多个通道的操作。</p>
+<p>Select 的使用方式类似于之前学到的 switch 语句，它也有一系列 case
+分支和一个默认的分支。每个 case
+分支会对应一个通道的通信（接收或发送）过程。select
+会一直等待，直到其中的某个 case 的通信操作完成时，就会执行该 case
+分支对应的语句。具体格式如下：</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="p">{</span>
+<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ch1</span><span class="p">:</span>
+    <span class="c1">//...</span>
+<span class="k">case</span> <span class="nx">data</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch2</span><span class="p">:</span>
+    <span class="c1">//...</span>
+<span class="k">case</span> <span class="nx">ch3</span> <span class="o">&lt;-</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="c1">//...</span>
+<span class="k">default</span><span class="p">:</span>
+    <span class="c1">//默认操作</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Select 语句具有以下特点。</p>
+<ul class="simple">
+<li><p>可处理一个或多个 channel 的发送/接收操作。</p></li>
+<li><p>如果多个 case 同时满足，select 会<strong>随机</strong>选择一个执行。</p></li>
+<li><p>对于没有 case 的 select 会一直阻塞，可用于阻塞 main 函数，防止退出。</p></li>
+</ul>
+<p>下面的示例代码能够在终端打印出10以内的奇数，我们借助这个代码片段来看一下
+select 的具体使用。</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">select</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nx">x</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">:</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+        <span class="k">case</span> <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">i</span><span class="p">:</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>示例中的代码首先是创建了一个缓冲区大小为1的通道 ch，进入 for 循环后：</p>
+<ul class="simple">
+<li><p>第一次循环时 i = 1，select 语句中包含两个 case
+分支，此时由于通道中没有值可以接收，所以<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:=</span> <span class="pre">&lt;-ch</span></code> 这个 case
+分支不满足，而<code class="docutils literal notranslate"><span class="pre">ch</span> <span class="pre">&lt;-</span> <span class="pre">i</span></code>这个分支可以执行，会把1发送到通道中，结束本次
+for 循环；</p></li>
+<li><p>第二次 for 循环时，i =
+2，由于通道缓冲区已满，所以<code class="docutils literal notranslate"><span class="pre">ch</span> <span class="pre">&lt;-</span> <span class="pre">i</span></code>这个分支不满足，而<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:=</span> <span class="pre">&lt;-ch</span></code>这个分支可以执行，从通道接收值1并赋值给变量
+x ，所以会在终端打印出 1；</p></li>
+<li><p>后续的 for 循环以此类推会依次打印出3、5、7、9。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id19">2.8 遍历通道与关闭通道</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">v,</span> <span class="pre">ok</span> <span class="pre">:=</span> <span class="pre">&lt;-ch</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">fibonacci</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">a</span>
+        <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span>
+    <span class="p">}</span>
+    <span class="nb">close</span><span class="p">(</span><span class="nx">ch</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nx">fibonacci</span><span class="p">(</span><span class="nb">cap</span><span class="p">(</span><span class="nx">ch</span><span class="p">),</span> <span class="nx">ch</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="3.Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B.html" class="btn btn-neutral float-left" title="7.3. Go并发模型简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="5.sync%E5%AE%9E%E7%8E%B0%E5%B9%B6%E5%8F%91.html" class="btn btn-neutral float-right" title="7.5. sync实现并发" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
