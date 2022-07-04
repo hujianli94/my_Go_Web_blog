@@ -28,10 +28,12 @@ Notation，JavaScript对象表示法），基于文本，独立于语言的轻�
 .. code:: json
 
    {
-       "id": "888",
-       "info": {
-           "name": "jack",
-           "age": 18
+       "port": "27017",
+       "mongo": {
+           "mongoAddr": "127.0.0.1",
+           "mongoPoolLimit": 500,
+           "mongoDb": "my_db",
+           "mongoCollection": "table1"
        }
    }
 
