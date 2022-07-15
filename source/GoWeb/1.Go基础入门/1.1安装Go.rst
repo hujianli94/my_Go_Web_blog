@@ -115,11 +115,11 @@ env，查看配置信息，不同环境下显示会略有差异。
 
 .. code:: shell
 
-   $ mkdir -p /usr/share/nginx/go
+   $ mkdir -p /usr/share/go
 
    $ cat >> /etc/profile <<-'EOF'
    export GOROOT=/usr/local/go
-   export GOPATH=/usr/share/nginx/go
+   export GOPATH=/usr/share/go
    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
    EOF
 

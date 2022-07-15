@@ -634,7 +634,8 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 </section>
 <section id="for-range">
 <h3><a class="toc-backref" href="#id84">5.1.3 <code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环</a><a class="headerlink" href="#for-range" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环结构是Go语言特有的一种的迭代结构，其引用十分广泛。<code class="docutils literal notranslate"><span class="pre">for-range</span></code>可以遍历数组、切片、字符串、<code class="docutils literal notranslate"><span class="pre">map</span></code>及通道（<code class="docutils literal notranslate"><span class="pre">channel</span></code>）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环结构是Go语言特有的一种的迭代结构，其引用十分广泛。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>可以遍历数组、切片、字符串、<code class="docutils literal notranslate"><span class="pre">map</span></code>及通道（<code class="docutils literal notranslate"><span class="pre">channel</span></code>）。</p>
 <p><code class="docutils literal notranslate"><span class="pre">for-range</span></code>的语法结构：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">:=</span> <span class="nb">range</span> <span class="n">复合变量值</span> <span class="p">{</span>
     <span class="o">//</span> <span class="o">...</span><span class="n">逻辑语句</span>
@@ -656,8 +657,8 @@ const 声明语句中，在第一个声明的常量所在的行，iota 将会被
 </ul>
 <p>（1）遍历数组、切片。
 在遍历代码中，<code class="docutils literal notranslate"><span class="pre">key</span></code>和<code class="docutils literal notranslate"><span class="pre">value</span></code>分别代表切片的下标及下标对应的值。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">:=</span> <span class="nb">range</span> <span class="p">[]</span><span class="nb">int</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">}{</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;key:</span><span class="si">%d</span><span class="s2"> value:</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="o">:=</span> <span class="k">range</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">}{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;key:%d value:%d\n&quot;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -704,10 +705,13 @@ Go语言和其他语言类似：可以通过<code class="docutils literal notran
 </pre></div>
 </div>
 <p>以上代码的逻辑如下：</p>
-<p>1.创建一个整型类型的通道并实例化； 2.通过关键字go启动了一个goroutine；
-3.将数字传入通道，实现的功能是往通道中推送数据7、8、9；
-4.结束并关闭通道（这段goroutine在声明结束后马上被执行）；
-5.用for-range语句对通道c进行遍历，即不断地从通道中接收数据知道通道被关闭。</p>
+<ol class="arabic simple">
+<li><p>创建一个整型类型的通道并实例化；</p></li>
+<li><p>通过关键字go启动了一个goroutine；</p></li>
+<li><p>将数字传入通道，实现的功能是往通道中推送数据7、8、9；</p></li>
+<li><p>结束并关闭通道（这段goroutine在声明结束后马上被执行）；</p></li>
+<li><p>用for-range语句对通道c进行遍历，即不断地从通道中接收数据知道通道被关闭。</p></li>
+</ol>
 <p>在使用<code class="docutils literal notranslate"><span class="pre">for-range</span></code>循环遍历某个对象时，往往不会同时使用<code class="docutils literal notranslate"><span class="pre">key</span></code>和<code class="docutils literal notranslate"><span class="pre">value</span></code>的值，而是只需要其中一个的值。这时可以采用一些技巧让代码变得更简单。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">:=</span> <span class="nb">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span>
     <span class="s2">&quot;shirdon&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
